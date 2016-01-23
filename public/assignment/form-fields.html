@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Forms</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel ="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../experiments/dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Form Maker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Username</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="home.html">Home<span class="sr-only">(current)</span></a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li class="active"><a href="forms.html">Forms</a></li>
+            </ul>
+        </div>
+        <form class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1>Forms: Registration Form</h1>
+            <ul class="nav nav-tabs">
+                <li><a href="#">Forms</a></li>
+                <li class="active"><a href="#">Fields</a></li>
+            </ul>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="first name" class="col-sm-12 control-label">First Name</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="first name" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="last name" class="col-sm-12 control-label">Last Name</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" id="last name" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date of birth" class="col-sm-12 control-label">Date of Birth</label>
+                    <div class="col-sm-12">
+                        <input type="date" class="form-control" id="date of birth" placeholder="Select Date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="gender" class="col-sm-12 control-label">Gender</label>
+                    <select id="gender" class="col-sm-6">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-12 control-label">Roles</label>
+                    <input type="checkbox" class="col-sm-12 control-label" name="admin" value="admin">Admin<br>
+                    <input type="checkbox" class="col-sm-12 control-label" name="student" value="student">Student<br>
+                    <input type="checkbox" class="col-sm-12 control-label" name="user" value="user">User<br>
+                </div>
+            </form>
+        </form>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="../../dist/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="../../assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
