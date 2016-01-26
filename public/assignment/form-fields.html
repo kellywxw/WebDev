@@ -53,40 +53,155 @@
         <form class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1>Forms: Registration Form</h1>
             <ul class="nav nav-tabs">
-                <li><a href="#">Forms</a></li>
-                <li class="active"><a href="#">Fields</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li class="active"><a href="form-fields.html">Fields</a></li>
             </ul>
-            <form class="form-horizontal">
+            <form class="form-group">
                 <div class="form-group">
-                    <label for="first name" class="col-sm-12 control-label">First Name</label>
-                    <div class="col-sm-12">
+                    <label for="first name" class="col-xs-12 control-label">First Name</label>
+                    <div class="col-xs-6">
                         <input type="text" class="form-control" id="first name" placeholder="First Name">
                     </div>
+                    <div class="col-xs-6">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="last name" class="col-sm-12 control-label">Last Name</label>
-                    <div class="col-sm-12">
+                    <label for="last name" class="col-xs-12 control-label">Last Name</label>
+                    <div class="col-xs-6">
                         <input type="text" class="form-control" id="last name" placeholder="Last Name">
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="date of birth" class="col-sm-12 control-label">Date of Birth</label>
-                    <div class="col-sm-12">
-                        <input type="date" class="form-control" id="date of birth" placeholder="Select Date">
+                    <div class="col-xs-6">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="gender" class="col-sm-12 control-label">Gender</label>
-                    <select id="gender" class="col-sm-6">
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                    </select>
+                    <label for="date of birth" class="col-xs-12 control-label">Date of Birth</label>
+                    <div class="col-xs-6">
+                        <input type="date" class="form-control" id="date of birth" placeholder="Select Date">
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-12 control-label">Roles</label>
-                    <input type="checkbox" class="col-sm-12 control-label" name="admin" value="admin">Admin<br>
-                    <input type="checkbox" class="col-sm-12 control-label" name="student" value="student">Student<br>
-                    <input type="checkbox" class="col-sm-12 control-label" name="user" value="user">User<br>
+                    <label for="gender" class="col-xs-12">Gender</label>
+                    <div class="col-xs-6">
+                        <select id="gender" class="col-xs-6">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 control-label">Roles</label>
+                    <div class="col-xs-6">
+                        <input type="checkbox" name="role_btn" value="admin"> Admin<br>
+                        <input type="checkbox" name="role_btn" value="student"> Student<br>
+                        <input type="checkbox" name="role_btn" value="user"> User<br>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 control-label">License Agreement</label>
+                    <div class="col-xs-6">
+                        <input type="radio" name="radio_btn" value="yes"> Yes<br>
+                        <input type="radio" name="radio_btn" value="no"> No<br>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="add field" class="col-xs-12">Add New Field</label>
+                    <div class="col-xs-6">
+                        <select id="add field">
+                            <option value="single Line Text">Single Line Text</option>
+                            <option value="date">Date</option>
+                            <option value="dropdown">Dropdown</option>
+                            <option value="checkboxes">Checkboxes</option>
+                            <option value="radio buttons">Radio buttons</option>
+                            <option value=" paragraph Text Field"> Paragraph Text Field</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                    </div>
                 </div>
             </form>
         </form>
