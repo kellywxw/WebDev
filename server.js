@@ -5,7 +5,7 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/hello', sayHello);
+/*app.get('/hello', sayHello);
 
 app.get('/user', getAllUsers);
 
@@ -19,6 +19,6 @@ function getAllUsers(req, res) {
     ];
 
     res.json(users);
-}
+}*/
 
 app.listen(port, ipaddress);
