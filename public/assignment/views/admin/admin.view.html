@@ -1,0 +1,77 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="AdminController">
+    <h1>Admin</h1>
+    <h2>Users</h2>
+    <div class="table-responsive">
+        <table class="table sortable table-striped ">
+            <thead>
+            <tr>
+                <th><span class="caret"></span> UserName</th>
+                <th><span class="caret"></span> Password</th>
+                <th><span class="caret"></span> Role</th>
+                <th><span class="caret"></span> Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" id="username" placeholder="username">
+                </td>
+                <td>
+                    <input type="password" class="form-control" id="password" placeholder="password">
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="role" placeholder="role1, role2">
+                </td>
+                <td>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>alice</td>
+                <td></td>
+                <td>student</td>
+                <td>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>bob</td>
+                <td></td>
+                <td>faculty | admin</td>
+                <td>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>charlie</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
