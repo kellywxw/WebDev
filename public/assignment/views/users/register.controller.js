@@ -11,15 +11,14 @@
 
 
         function register() {
-            if(newuser.password1 == newuser.password2) {
+            var user = $scope.user;
+            if(user.password1 == user.password2) {
                 UserService
-                    .createUser(newuser, callback)
-                    .then(function(newuser) {
-                        $rootScope.user = newuser;
+                    .createUser(user, callback)
+                    .then(function(user) {
+                        $rootScope.user = user;
                     });
                 $location.url("/profile");
-            } else {
-                $location.url("/register");
             }
         }
     }

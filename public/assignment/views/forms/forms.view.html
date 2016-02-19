@@ -1,4 +1,4 @@
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="FormController">
     <h1>Forms</h1>
     <ul class="nav nav-tabs">
         <li class="active"><a href="#/forms">Forms</a></li>
@@ -16,25 +16,25 @@
             <tbody>
             <tr>
                 <td>
-                    <input  ng-model="user.newForm.title" type="text" class="form-control" id="name" placeholder="name">
+                    <input ng-model="form.title" type="text" class="form-control" id="name" placeholder="name">
                 </td>
                 <td>
-                    <a href="">
-                        <span ng-model="model.addForm()" class="glyphicon glyphicon-plus"></span>
+                    <a ng-click="model.addForm()" class="btn btn-default">
+                        <span class="glyphicon glyphicon-plus"></span>
                     </a>
-                    <a href="">
-                        <span ng-model="model.updateForm()" class="glyphicon glyphicon-ok"></span>
+                    <a ng-click="model.updateForm()" class="btn btn-default">
+                        <span class="glyphicon glyphicon-ok"></span>
                     </a>
                 </td>
             </tr>
-            <tr ng-repeat="form in user.forms">
-                <td><a href="##/user/{{user._id}}/forms/{{form._id}}/fields">{{form.title}}</a></td>
+            <tr ng-repeat="form in forms">
+                <td>{{form.title}}</td>
                 <td>
-                    <a href="">
-                        <span ng-model="model.deleteForm($index)" class="glyphicon glyphicon-remove"></span>
+                    <a ng-click="model.deleteForm($index)">
+                        <span class="glyphicon glyphicon-remove"></span>
                     </a>
-                    <a href="">
-                        <span ng-model="model.selectForm($index)" class="glyphicon glyphicon-pencil"></span>
+                    <a ng-click="model.selectForm($index)">
+                        <span  class="glyphicon glyphicon-pencil"></span>
                     </a>
                 </td>
             </tr>

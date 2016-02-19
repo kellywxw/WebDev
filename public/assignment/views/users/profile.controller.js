@@ -11,7 +11,7 @@
 
         function update() {
             UserService
-                .updateUser($rootScope.user._id, $rootScope.user, callback)
+                .updateUser($rootScope.user._id, $scope.user, callback)
                 .then(function (user) {
                     $rootScope.user = user;
                 });

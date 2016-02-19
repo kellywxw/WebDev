@@ -4,13 +4,16 @@
         .module("FormBuilderApp")
         .controller("FormController", FormController);
 
-    function FormController($rootScope, $location, FormService) {
+    function FormController($scope, $rootScope, $location, FormService) {
 
         var model = this;
         model.addForm = addForm;
         model.updateForm = updateForm;
         model.selectForm = selectForm;
         model.deleteForm = deleteForm;
+
+        var user = $rootScope.user;
+        var form = $scope.form;
 
         function findAllForms() {
             FormService
@@ -22,21 +25,12 @@
 
         function addForm() {
             FormService
-                .createFormForUser(user._id, user.newForm)
-                .then(function(forms) {
-                    user.forms = forms;
-                });
+                .createFormForUser(user._id, form, callback);
         }
 
         function updateForm() {
-            var curForm = user.form;
-            var formId = curForm._id
-
             FormService
-                .updateFormById(formId, curForm)
-                .then(function(forms) {
-                    user.forms = forms;
-                });
+                .updateFormById(form._id, form, callback);
         }
 
         function selectForm(index) {
@@ -48,7 +42,7 @@
             var formId  = user.forms[index]._id;
 
             FormService
-                .deleteFormById(formId)
+                .deleteFormById(formId, callback)
                 .then(function(forms) {
                     user.forms = forms;
                 });

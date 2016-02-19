@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("LoginController", LoginController);
 
-    function LoginController($rootScope, $location, UserService) {
+    function LoginController($scope, $rootScope, $location, UserService) {
 
         var model = this;
 
@@ -17,8 +17,6 @@
                     if (user != null) {
                         $rootScope.user = user;
                         $location.url("/profile");
-                    } else {
-                        $location.url("/login");
                     }
                 });
         }
