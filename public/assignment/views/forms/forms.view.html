@@ -19,10 +19,10 @@
                     <input ng-model="form.title" type="text" class="form-control" id="name" placeholder="name">
                 </td>
                 <td>
-                    <a ng-click="model.addForm()" class="btn btn-default">
+                    <a ng-click="addForm()">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
-                    <a ng-click="model.updateForm()" class="btn btn-default">
+                    <a ng-click="updateForm()">
                         <span class="glyphicon glyphicon-ok"></span>
                     </a>
                 </td>
@@ -30,10 +30,10 @@
             <tr ng-repeat="form in forms">
                 <td>{{form.title}}</td>
                 <td>
-                    <a ng-click="model.deleteForm($index)">
+                    <a ng-click="deleteForm($index)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
-                    <a ng-click="model.selectForm($index)">
+                    <a ng-click="selectForm($index)">
                         <span  class="glyphicon glyphicon-pencil"></span>
                     </a>
                 </td>

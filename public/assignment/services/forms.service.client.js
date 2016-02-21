@@ -20,7 +20,7 @@
         return api;
 
         function createFormForUser(userId, form, callback) {
-            form._id = getID();;
+            form._id = getId();
             form.useId = userId;
             forms.push(form);
             callback(form);
@@ -59,7 +59,7 @@
             callback(forms[i]);
         }
 
-        function getID() {
+        function getId() {
             var day = new Date();
             var id = day.getTime();
             return id;

@@ -14,7 +14,7 @@
         ];
 
         var api = {
-            findUserByUsernameAndPassword : findUserByUsernameAndPassword,
+            findUserByCredentials : findUserByCredentials,
             findAllUsers : findAllUsers,
             createUser : createUser,
             deleteUserById : deleteUserById,
@@ -22,7 +22,7 @@
         };
         return api;
 
-        function findUserByUsernameAndPassword(username, password, callback) {
+        function findUserByCredentials(username, password, callback) {
             var output = null;
             for (var i = 0; i < users.length; i++) {
                 if(users[i].username == username && users[i].password == password) {
@@ -38,7 +38,7 @@
         }
 
         function createUser(user, callback) {
-            user._id = getID();
+            user._id = getId();
             users.push(user);
             callback(user);
         }
@@ -65,7 +65,7 @@
             callback(users[i]);
         }
 
-        function getID() {
+        function getId() {
             var day = new Date();
             var id = day.getTime();
             return id;
