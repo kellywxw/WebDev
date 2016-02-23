@@ -1,0 +1,31 @@
+<div ng-controller="EventController">
+    <div class="box-content">
+        <br>
+        <input ng-model="query" type="text" class="form-control" placeholder="Search">
+        <br>
+        <a ng-click="search(query)" class="btn btn-primary btn-block"></i>ChopChop <i class="glyphicon glyphicon-search"></i></a>
+
+        <section ng-show="events">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Event Poster</th>
+                    <th>Event Title</th>
+                    <th>Event Detail</th>
+                    <th>Event Location</th>
+                    <th>Event Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="event in events">
+                    <><img height="75px" ng-src="{{event.image[url]}}"/></td>
+                    <td>{{event.title}}</td>
+                    <td>{{event.description}}</td>
+                    <td>{{event.city_name}}</td>
+                    <td>{{event.start_time}} - {{event.stop_time}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </section>
+    </div>
+</div>
