@@ -1,7 +1,7 @@
 (function () {
     "use strict";
     angular
-        .module("FormBuilderApp")
+        .module("ChopChopApp")
         .controller("SidebarController", SidebarController);
 
     function SidebarController($scope, $rootScope, $location) {

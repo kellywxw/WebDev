@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Shojumaru);
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
 
 select {
     background-color: #fff;
@@ -318,11 +318,11 @@ div.center, p.center, img.center {
 }
 
 .navbar-brand {
-    font-family: 'Shojumaru', cursive, Arial, serif;
+    font-family: 'Pacifico', italic, bold, cursive, Arial, serif;
     letter-spacing: 2px;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     width: 183px;
-    font-size: 17px;
+    font-size: 22px;
 }
 
 .navbar-brand img {
@@ -532,11 +532,11 @@ ul.github-buttons li {
 @media only screen and (max-width: 767px) {
 
     .navbar-brand {
-        font-family: 'Shojumaru', cursive, Arial, serif;
+        font-family: 'Pacifico', bold, cursive, Arial, serif;
         letter-spacing: 2px;
         text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
         width: 40%;
-        font-size: 14px;
+        font-size: 17px;
     }
 
     .nav-sm {
