@@ -1,0 +1,28 @@
+<div class="navbar navbar-default" role="navigation" ng-controller="HeaderController">
+
+    <div class="navbar-inner">
+        <button type="button" class="navbar-toggle pull-left">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="">ChopChop</a>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar-search pull-left">
+                        <input placeholder="Search" class="search-query form-control col-md-10" name="query"
+                               type="text">
+                    </form>
+                </li>
+                <li ng-show="user == null", ng-class="{'active' : $location.url().indexOf('register') != -1}"><a href="#/register">Register</a></li>
+                <li ng-show="user == null", ng-class="{'active' : $location.url().indexOf('login') != -1}"><a href="#/login">Login</a></li>
+                <li ng-show="user != null", ng-class="{'active' : $location.url().indexOf('username') != -1}"><a href="#/profile">{{user.username}}</a></li>
+                <li ng-show="user != null", ng-class="{'active' : $location.url().indexOf('logout') != -1}"><a  ng-click="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
