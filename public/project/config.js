@@ -6,9 +6,17 @@
 
     function configure($routeProvider) {
         $routeProvider
-            .when("/events", {
-                templateUrl: "views/events/event.view.html",
-                controller: "EventController"
+            .when("/home", {
+                templateUrl: "views/home/home.view.html",
+                controller: "HomeController"
+            })
+            .when("/search", {
+                templateUrl: "views/search/search.view.html",
+                controller: "SearchController"
+            })
+            .when("/searchEvent/:id", {
+                templateUrl: "views/search/searchEvent.view.html",
+                controller: "SearchEventController"
             })
             .when("/register", {
                 templateUrl: "views/users/register.view.html",
@@ -22,20 +30,16 @@
                 templateUrl: "views/users/profile.view.html",
                 controller: "ProfileController"
             })
-            .when("/admin", {
-                templateUrl: "views/admin/admin.view.html",
-                controller: "AdminController"
+            .when("/profileUpdate", {
+                templateUrl: "views/users/profileUpdate.view.html",
+                controller: "ProfileController"
             })
-            .when("/forms", {
-                templateUrl: "views/forms/forms.view.html",
-                controller: "FormController"
-            })
-            .when("/fields", {
-                templateUrl: "views/forms/fields.view.html",
-                controller: "FieldController"
+            .when("/events", {
+                templateUrl: "views/users/events.view.html",
+                controller: "EventController"
             })
             .otherwise({
-                redirectTo: "/"
+                redirectTo: "/home"
             });
     }
 })();

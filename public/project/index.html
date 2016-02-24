@@ -23,38 +23,50 @@
 
     <!-- Controllers -->
     <script src="views/main/main.controller.js"></script>
-    <script src="views/events/event.controller.js"></script>
+    <script src="views/home/home.controller.js"></script>
     <script src="views/header/header.controller.js"></script>
     <script src="views/sidebar/sidebar.controller.js"></script>
+    <script src="views/search/search.controller.js"></script>
+    <script src="views/search/searchEvent.controller.js"></script>
+    <script src="views/users/login.controller.js"></script>
+    <script src="views/users/profile.controller.js"></script>
+    <script src="views/users/register.controller.js"></script>
+    <script src="views/users/events.controller.js"></script>
+
+    <!-- Services -->
+    <script src="services/events.service.client.js"></script>
+    <script src="services/search.service.client.js"></script>
+    <script src="services/user.service.client.js"></script>
+
 
 </head>
 
 <body ng-controller="MainController">
     <div ng-include="'views/header/header.view.html'"></div>
-
     <div class="ch-container">
         <div class="row">
-            <div ng-show="user != null", ng-include="'views/sidebar/sidebar.view.html'"></div>
-
-            <div id="content" class="col-lg-10 col-sm-10">
-                <nav>
-                    <ul class="nav nav-tabs">
-                        <li ng-class="{'active' : $location.url().indexOf('events') != -1}">
-                            <a href="#/events"><i class="glyphicon glyphicon-calendar"></i>Events</a>
-                        </li>
-                        <li  ng-class="{'active' : $location.url().indexOf('profile') != -1}">
-                            <a href="#"><i class="glyphicon glyphicon-user"></i>My ChopChop</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="row" ng-controller="EventController">
-                <div class="box col-md-12">
-                    <div class="box-inner">
-                        <div ng-view></div>
-                    </div>
+            <nav>
+                <ul class="nav nav-tabs">
+                    <li ng-class="{'active' : $location.url().indexOf('search') != -1}">
+                        <a href="#/search"><i class="glyphicon glyphicon-calendar"></i> Events</a>
+                    </li>
+                    <li  ng-show="user == null", ng-class="{'active' : $location.url().indexOf('register') != -1}">
+                        <a href="#/register"><i class="glyphicon glyphicon-user"></i> Sign Up</a>
+                    </li>
+                    <li  ng-show="user == null", ng-class="{'active' : $location.url().indexOf('login') != -1}">
+                        <a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Log In</a>
+                    </li>
+                    <li  ng-show="user != null", ng-class="{'active' : $location.url().indexOf('events') != -1}">
+                        <a href="#/events"><i class="glyphicon glyphicon-user"></i> My ChopChop</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="row" class="col-lg-10 col-sm-10">
+                <div class="box col-md-10">
+                    <div ng-view></div>
                 </div>
             </div>
+            <hr>
             <footer class="row">
                 <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; Kelly Wang 2016</p>
             </footer>
