@@ -26,20 +26,20 @@
                 templateUrl: "views/users/login.view.html",
                 controller: "LoginController"
             })
+            .when("/events", {
+                templateUrl: "views/userinfo/events.view.html",
+                controller: "EventController"
+            })
             .when("/profile", {
-                templateUrl: "views/users/profile.view.html",
+                templateUrl: "views/userinfo/profile.view.html",
                 controller: "ProfileController"
             })
             .when("/profileUpdate", {
-                templateUrl: "views/users/profileUpdate.view.html",
+                templateUrl: "views/userinfo/profileUpdate.view.html",
                 controller: "ProfileController"
             })
-            .when("/events", {
-                templateUrl: "views/users/events.view.html",
-                controller: "EventController"
-            })
             .when("/friends", {
-                templateUrl: "views/friends/friends.view.html",
+                templateUrl: "views/userinfo/friends.view.html",
                 controller: "FriendController"
             })
             .otherwise({

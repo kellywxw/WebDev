@@ -25,14 +25,14 @@
     <script src="views/main/main.controller.js"></script>
     <script src="views/home/home.controller.js"></script>
     <script src="views/header/header.controller.js"></script>
-    <script src="views/sidebar/sidebar.controller.js"></script>
+    <script src="views/navbar/navbar.controller.js"></script>
     <script src="views/search/search.controller.js"></script>
     <script src="views/search/searchEvent.controller.js"></script>
     <script src="views/users/login.controller.js"></script>
-    <script src="views/users/profile.controller.js"></script>
     <script src="views/users/register.controller.js"></script>
-    <script src="views/users/events.controller.js"></script>
-    <script src="views/friends/friends.controller.js"></script>
+    <script src="views/userinfo/profile.controller.js"></script>
+    <script src="views/userinfo/events.controller.js"></script>
+    <script src="views/userinfo/friends.controller.js"></script>
 
     <!-- Services -->
     <script src="services/events.service.client.js"></script>
@@ -46,22 +46,7 @@
     <div ng-include="'views/header/header.view.html'"></div>
     <div class="ch-container">
         <div class="row">
-            <nav>
-                <ul class="nav nav-tabs">
-                    <li ng-class="{'active' : $location.url().indexOf('search') != -1}">
-                        <a href="#/search"><i class="glyphicon glyphicon-calendar"></i> Events</a>
-                    </li>
-                    <li  ng-show="user == null", ng-class="{'active' : $location.url().indexOf('register') != -1}">
-                        <a href="#/register"><i class="glyphicon glyphicon-user"></i> Sign Up</a>
-                    </li>
-                    <li  ng-show="user == null", ng-class="{'active' : $location.url().indexOf('login') != -1}">
-                        <a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Log In</a>
-                    </li>
-                    <li  ng-show="user != null", ng-class="{'active' : $location.url().indexOf('events') != -1}">
-                        <a href="#/events"><i class="glyphicon glyphicon-user"></i> My ChopChop</a>
-                    </li>
-                </ul>
-            </nav>
+            <div ng-include="'views/navbar/navbar.view.html'"></div>
             <div class="row" class="col-lg-10 col-sm-10">
                 <div class="box col-md-10">
                     <div ng-view></div>
