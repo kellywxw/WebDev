@@ -14,6 +14,8 @@
             //SearchService.findEventsByTitle(title, render);
             $http.get("http://eventful.com/json/events/search?app_key=qpTwFsBDbVd95mkr&keywords=" + title)
                 .success(render);
+
+            $https.get("/eventful.com/")
         }
 
         function render(response) {
