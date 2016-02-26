@@ -38,6 +38,10 @@
                 templateUrl: "views/users/events.view.html",
                 controller: "EventController"
             })
+            .when("/friends", {
+                templateUrl: "views/friends/friends.view.html",
+                controller: "FriendController"
+            })
             .otherwise({
                 redirectTo: "/home"
             });
