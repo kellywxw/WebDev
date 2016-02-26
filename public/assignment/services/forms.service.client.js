@@ -29,6 +29,7 @@
 
         function findAllFormsForUser(userId, callback) {
             var output = [];
+            var count = 0;
             for (var i = 0; i < forms.length; i++) {
                 if(forms[i].userId == userId ) {
                     output.push(forms[i]);

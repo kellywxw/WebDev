@@ -51,9 +51,7 @@
         function updateEventById(eventId, newEvent, callback) {
             for (var i = 0; i < events.length; i++) {
                 if(events[i]._id == eventId) {
-                    for (var property in newEvent) {
-                        events[i][property] = newEvent[property];
-                    }
+                    event[i] = newEvent;
                     break;
                 }
             }
