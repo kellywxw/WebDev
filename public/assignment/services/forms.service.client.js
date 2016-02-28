@@ -21,10 +21,13 @@
         return api;
 
         function createFormForUser(userId, form, callback) {
-            form._id = getId();
-            form.useId = userId;
-            forms.push(form);
-            callback(form);
+            var newForm = {
+                _id: getId(),
+                title: form.title,
+                userId: userId
+            }
+            forms.push(newForm);
+            callback(newForm);
         }
 
         function findAllFormsForUser(userId, callback) {

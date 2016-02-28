@@ -18,5 +18,8 @@
         <li   ng-show="user != null", ng-class="{'active' : $location.url().indexOf('friend') != -1}">
             <a href="#/friends"><i class="glyphicon glyphicon-globe"></i>My Friends</a>
         </li>
+        <li ng-show="user != null", ng-class="{'active' : $location.url().indexOf('logout') != -1}">
+            <a  ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> Log Out</a>
+        </li>
     </ul>
 </nav>
