@@ -29,15 +29,15 @@
         }
 
         $scope.updateEvent = function updateEvent() {
-            var form = $scope.selectedEvent;
-            EventService.updateEventById($scope.event._id, $scope.event, callback);
+            var event = $scope.selectedEvent;
+            EventService.updateEventById(event._id, $scope.event, callback);
 
-            function callback (events) {
+            function callback () {
                 $scope.selectedEvent = null;
             };
         }
 
-        $scope.selectForm = function selectForm(index) {
+        $scope.selectEvent = function selectEvent(index) {
             var event = $scope.events[index];
 
             $scope.selectedEvent = event;

@@ -21,10 +21,16 @@
         return api;
 
         function createEventForUser(userId, event, callback) {
-            event._id = getId();
-            event.useId = userId;
-            events.push(event);
-            callback(event);
+            var newEvent = {
+                _id: getId(),
+                image: event.image,
+                title: event.title,
+                location: event.location,
+                date: event.date,
+                userId: userId
+            }
+            events.push(newEvent);
+            callback(newEvent);
         }
 
         function findAllEventsForUser(userId, callback) {
@@ -47,11 +53,12 @@
             callback(events);
         }
 
-
         function updateEventById(eventId, newEvent, callback) {
             for (var i = 0; i < events.length; i++) {
                 if(events[i]._id == eventId) {
-                    event[i] = newEvent;
+                    for (var property in newEvent) {
+                        events[i][property] = newEvent[property];
+                    }
                     break;
                 }
             }
