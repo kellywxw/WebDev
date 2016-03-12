@@ -1,7 +1,7 @@
 <div class="navbar navbar-default" role="navigation" ng-controller="HeaderController">
 
     <div class="navbar-inner">
-        <button type="button" class="navbar-toggle pull-left">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -9,9 +9,8 @@
         </button>
         <a class="navbar-brand" href="#/home">ChopChop</a>
 
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse navbar-default">
             <div class="nav navbar-nav navbar-right">
-
                 <li ng-show="user == null", ng-class="{'active' : $location.url().indexOf('register') != -1}">
                     <a href="#/register"><i class="glyphicon glyphicon-user"></i> Sign Up</a>
                 </li>
@@ -24,8 +23,7 @@
                 <li ng-show="user != null", ng-class="{'active' : $location.url().indexOf('logout') != -1}">
                     <a  ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> Log Out</a>
                 </li>
-            </ul>
+            </div>
         </div>
     </div>
 </div>
-
