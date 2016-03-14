@@ -34,15 +34,13 @@ module.exports = function(app, model) {
     function updateFormById(req, res) {
         var formId = req.params.formId;
         var form = req.body;
-        model.updateFormById(formId, form);
-        var forms = model.findAllForms();
+        var forms = model.updateFormById(formId, form);
         res.json(forms);
     }
 
     function deleteFormById(req, res) {
         var formId = req.params.formId;
-        model.deleteFormById(formId);
-        var forms = model.findAllForms();
+        var forms = model.deleteFormById(formId);
         res.json(forms);
     }
 }

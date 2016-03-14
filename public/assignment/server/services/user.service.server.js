@@ -2,8 +2,8 @@ module.exports = function(app, model) {
     app.post("/api/assignment/user", createUser);
     app.get("/api/assignment/user", findAllUsers);
     app.get("/api/assignment/user/:id", findUserById);
-    app.get("/api/assignment/user/user?username=username", findUserByUsername);
-    app.get("/api/assignment/user/user?username=alice&password=wonderland", findUserByCredentials);
+    app.get("/api/assignment/user/username:=username", findUserByUsername);
+    app.get("/api/assignment/user/username:=username&password:=password", findUserByCredentials);
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
@@ -42,15 +42,13 @@ module.exports = function(app, model) {
     function updateUser(req, res) {
         var userId = req.params.id;
         var user = req.body;
-        model.updateUser(userId,user);
-        var users = model.findAllUsers();
+        var users = model.updateUser(userId,user);
         res.json(users);
     }
 
     function deleteUser(req, res) {
         var userId = req.params.id;
-        model.deleteUser(userId);
-        var users = model.findAllUsers();
+        var users = model.deleteUser(userId);
         res.json(users);
     }
 }

@@ -1,4 +1,5 @@
 var users = require("./user.mock.json");
+var guid = require("guid");
 
 module.exports = function(app) {
     var api = {
@@ -13,7 +14,7 @@ module.exports = function(app) {
     return api;
 
     function createUser(user) {
-        user._id = getId();
+        user._id = guid.create();
         users.push(user);
         return users;
     }
@@ -65,6 +66,7 @@ module.exports = function(app) {
                 break;
             }
         }
+        return users;
     }
 
     function deleteUser(userId) {
@@ -74,13 +76,7 @@ module.exports = function(app) {
                 break;
             }
         }
+        return users;
     }
-
-    function getId() {
-        var day = new Date();
-        var id = day.getTime();
-        return id;
-    }
-
 }
 
