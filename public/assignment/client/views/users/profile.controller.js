@@ -14,6 +14,7 @@
                 .then(userUpdate);
 
             function userUpdate (users) {
+                console.log(users);
             };
         }
     }

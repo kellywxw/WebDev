@@ -30,19 +30,19 @@
 
         function addForm() {
             FormService
-                .createFormForUser(user._id, model.form)
+                .createFormForUser(user._id, model.newForm)
                 .then(formAdd);
 
             function formAdd (forms) {
                 model.forms = forms;
-                model.form = null;
+                model.newForm = null;
             };
         }
 
         function updateForm() {
             var form = model.selectedForm;
             FormService
-                .updateFormById(form._id, model.form)
+                .updateFormById(form._id, model.newForm)
                 .then(formUpdate);
 
             function formUpdate () {

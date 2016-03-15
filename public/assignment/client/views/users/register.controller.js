@@ -9,7 +9,8 @@
         model.register = register;
 
         function register() {
-            if(model.newUser.password1 == model.newUser.password2) {
+            if(model.newUser.username != null &&
+               model.newUser.password == model.newUser.password2) {
                 UserService
                     .createUser(model.newUser)
                     .then(userCreate);
@@ -22,6 +23,7 @@
             }
 
             function getCreatedUser(user) {
+                console.log(user);
                 $rootScope.user = user;
                 $location.url("/profile");
             }

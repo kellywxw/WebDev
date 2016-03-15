@@ -69,7 +69,7 @@
             var deferred = $q.defer();
 
             $http
-                .get("/api/assignment/user/username="+ username + "&password=" + password)
+                .get("/api/assignment/user?username="+ username + "&password=" + password)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
