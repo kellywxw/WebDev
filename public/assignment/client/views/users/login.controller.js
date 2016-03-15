@@ -10,7 +10,7 @@
 
         function login() {
             UserService
-                .findUserByCredentials(model.username, model.password)
+                .findUserByCredentials(model.user.username, model.user.password)
                 .then(userLogin);
 
             function userLogin(user) {

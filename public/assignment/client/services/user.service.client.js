@@ -9,6 +9,7 @@
         var api = {
             createUser : createUser,
             findAllUsers : findAllUsers,
+            findUserById : findUserById,
             findUserByUsername : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
             updateUser : updateUser,
@@ -40,11 +41,23 @@
             return deferred.promise;
         }
 
+        function findUserById(userId) {
+            var deferred = $q.defer();
+
+            $http
+                .get("/api/assignment/user/"+ userId)
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+        }
+
         function findUserByUsername(username) {
             var deferred = $q.defer();
 
             $http
-                .get("/api/assignment/user?username="+ username)
+                .get("/api/assignment/user/username="+ username)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -56,7 +69,7 @@
             var deferred = $q.defer();
 
             $http
-                .get("/api/assignment/user?username="+ username + "&password=" + password)
+                .get("/api/assignment/user/username="+ username + "&password=" + password)
                 .success(function(response) {
                     deferred.resolve(response);
                 });

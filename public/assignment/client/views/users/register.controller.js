@@ -9,16 +9,22 @@
         model.register = register;
 
         function register() {
-            if(model.user.password1 == model.user.password2) {
+            if(model.newUser.password1 == model.newUser.password2) {
                 UserService
-                    .createUser(model.user)
+                    .createUser(model.newUser)
                     .then(userCreate);
             }
 
-            function userCreate (user) {
+            function userCreate (users) {
+                UserService
+                    .findUserByCredentials(model.newUser.username, model.newUser.password)
+                    .then(getCreatedUser);
+            }
+
+            function getCreatedUser(user) {
                 $rootScope.user = user;
                 $location.url("/profile");
-            };
+            }
         }
     }
 })();

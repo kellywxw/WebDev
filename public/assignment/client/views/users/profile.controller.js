@@ -13,9 +13,7 @@
                 .updateUser($rootScope.user._id, model.user)
                 .then(userUpdate);
 
-            function userUpdate (user) {
-                $rootScope.user = user;
-                model.user = user;
+            function userUpdate (users) {
             };
         }
     }

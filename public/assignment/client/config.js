@@ -34,7 +34,7 @@
                 controller: "FormController",
                 controllerAs: "model"
             })
-            .when("/user/:userId/forms/:formId/fields", {
+            .when("/user/:userId/form/:formId/fields", {
                 templateUrl: "views/forms/field.view.html",
                 controller: "FieldController",
                 controllerAs: "model"
@@ -43,7 +43,7 @@
                 templateUrl: "views/forms/field.view.html",
             })
             .otherwise({
-                redirectTo: "/"
+                redirectTo: "/home"
             });
     }
 })();

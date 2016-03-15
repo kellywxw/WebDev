@@ -1,4 +1,4 @@
-module.exports = function(app, model) {
+module.exports = function(app, formModel) {
     app.post("/api/assignment/form/:formId/field", createFieldForForm);
     app.get("/api/assignment/form/:formId/field", getFieldsForForm);
     app.get("/api/assignment/form/:formId/field/:fieldId", getFieldForForm);
@@ -9,20 +9,20 @@ module.exports = function(app, model) {
     function createFieldForForm(req, res) {
         var formId = req.params.formId;
         var field = req.body;
-        var fields = model.createFieldForForm(formId, field);
+        var fields = formModel.createFieldForForm(formId, field);
         res.json(fields);
     }
 
     function getFieldsForForm(req, res) {
         var formId = req.params.formId;
-        var fields = model.getFieldsForForm(formId);
+        var fields = formModel.getFieldsForForm(formId);
         res.json(fields);
     }
 
     function getFieldForForm(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        var field = model.getFieldForForm(formId, fieldId);
+        var field = formModel.getFieldForForm(formId, fieldId);
         res.json(field);
     }
 
@@ -30,14 +30,14 @@ module.exports = function(app, model) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
-        var fields = model.updateField(formId, fieldId, field);
+        var fields = formModel.updateField(formId, fieldId, field);
         res.json(fields);
     }
 
     function deleteFieldFromForm(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        var fields = model.deleteFieldFromForm(formId, fieldId);
+        var fields = formModel.deleteFieldFromForm(formId, fieldId);
         res.json(fields);
     }
 }
