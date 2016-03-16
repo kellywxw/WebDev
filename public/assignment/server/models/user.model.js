@@ -15,8 +15,14 @@ module.exports = function(app) {
 
     function createUser(user) {
         user._id = guid.create();
-        users.push(user);
-        return users;
+        var newUser = {
+            _id: guid.create(),
+            username: user.username,
+            password: user.password,
+            email: user.email
+        }
+        users.push(newUser);
+        return user;
     }
 
     function findAllUsers() {
@@ -48,25 +54,31 @@ module.exports = function(app) {
     function findUserByCredentials(credentials) {
         var user = null;
         for (var i = 0; i < users.length; i++) {
-            if(users[i].username == credentials.username &&
-               users[i].password == credentials.password) {
+            if(users[i].username === credentials.username &&
+               users[i].password === credentials.password) {
                 user = users[i];
                 break;
             }
         }
+        console.log(user);
         return user;
     }
 
     function updateUser(userId, user) {
         for (var i = 0; i < users.length; i++) {
             if(users[i]._id == userId) {
-                for (var property in user) {
-                    users[i][property] = user[property];
+                users[i] = {
+                    _id: userId,
+                    username: user.username,
+                    password: user.password,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                 }
                 break;
             }
         }
-        return users;
+        return users[i];
     }
 
     function deleteUser(userId) {

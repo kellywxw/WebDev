@@ -15,10 +15,12 @@
 
             function userLogin(user) {
                 if (user != null) {
+                    console.log(user);
                     $rootScope.user = user;
                     $location.url("/profile");
                 }
             };
+
         }
     }
 })();

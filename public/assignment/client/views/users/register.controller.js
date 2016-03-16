@@ -10,10 +10,10 @@
 
         function register() {
             if(model.newUser.username != null &&
-               model.newUser.password == model.newUser.password2) {
+               model.newUser.password == model.password2) {
                 UserService
                     .createUser(model.newUser)
-                    .then(userCreate);
+                    .then(getCreatedUser);
             }
 
             function userCreate (users) {
