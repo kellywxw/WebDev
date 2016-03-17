@@ -8,12 +8,21 @@
         var model = this;
         model.update = update;
 
-        model.updatedUser = $rootScope.user;
+        var user = $rootScope.user;
+
+        model.updatedUser = {
+            _id : user._id,
+            username: user.username,
+            password: user.password,
+            firstName : user.firstName,
+            lastName : user.lastName,
+            email: user.email
+        }
 
         function update() {
 
             UserService
-                .updateUser($rootScope.user._id, model.updatedUser)
+                .updateUser(user._id, model.updatedUser)
                 .then(userUpdate);
 
             function userUpdate (users) {

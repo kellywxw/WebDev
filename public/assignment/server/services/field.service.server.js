@@ -9,8 +9,8 @@ module.exports = function(app, formModel) {
     function createFieldForForm(req, res) {
         var formId = req.params.formId;
         var field = req.body;
-        var newField = formModel.createFieldForForm(formId, field);
-        res.json(newField);
+        var fields = formModel.createFieldForForm(formId, field);
+        res.json(fields);
     }
 
     function getFieldsForForm(req, res) {
@@ -30,8 +30,8 @@ module.exports = function(app, formModel) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
-        var updatedField = formModel.updateField(formId, fieldId, field);
-        res.json(updatedField);
+        var fields = formModel.updateField(formId, fieldId, field);
+        res.json(fields);
     }
 
     function deleteFieldFromForm(req, res) {

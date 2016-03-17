@@ -14,6 +14,10 @@
 
         var user = $rootScope.user;
 
+        if(user != null) {
+            loadFormsForUser();
+        }
+
         function loadFormsForUser() {
             FormService
                 .findAllFormsForUser(user._id)
@@ -24,17 +28,14 @@
             };
         }
 
-        if(user != null) {
-            loadFormsForUser();
-        }
-
         function addForm() {
             FormService
                 .createFormForUser(user._id, model.newForm)
                 .then(formAdd);
 
             function formAdd (forms) {
-                model.forms = forms;
+                loadFormsForUser();
+                console.log(model.forms);
                 model.newForm = null;
             };
         }
@@ -46,7 +47,10 @@
                 .then(formUpdate);
 
             function formUpdate () {
+                loadFormsForUser();
+                console.log(model.forms);
                 model.selectedForm = null;
+                model.newForm = null;
             };
         }
 
@@ -55,10 +59,11 @@
 
             model.selectedForm = form;
 
-            model.form = {
+            model.newForm = {
                 _id : form._id,
                 title : form.title,
-                userId : form.userId
+                userId : form.userId,
+                fields:[]
             }
         }
 
@@ -66,14 +71,9 @@
             var formId  = model.forms[index]._id;
             FormService
                 .deleteFormById(formId)
-                .then(formDelete);
+                .then(loadFormsForUser);
 
-            function formDelete (forms) {
-                model.forms = forms;
-            };
+            console.log(model.forms);
         }
     }
-
-
-
 })();

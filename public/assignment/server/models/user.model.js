@@ -32,7 +32,7 @@ module.exports = function(app) {
     function findUserById(userId) {
         var user = null;
         for (var i = 0; i < users.length; i++) {
-            if(users[i]._id === userId) {
+            if(users[i]._id == userId) {
                 user = users[i];
                 break;
             }
@@ -43,7 +43,7 @@ module.exports = function(app) {
     function findUserByUsername(username) {
         var user = null;
         for (var i = 0; i < users.length; i++) {
-            if(users[i].username === username) {
+            if(users[i].username == username) {
                 user = users[i];
                 break;
             }
@@ -54,8 +54,8 @@ module.exports = function(app) {
     function findUserByCredentials(credentials) {
         var user = null;
         for (var i = 0; i < users.length; i++) {
-            if(users[i].username === credentials.username &&
-               users[i].password === credentials.password) {
+            if(users[i].username == credentials.username &&
+               users[i].password == credentials.password) {
                 user = users[i];
                 break;
             }
@@ -66,7 +66,9 @@ module.exports = function(app) {
     function updateUser(userId, updatedUser) {
         for (var i = 0; i < users.length; i++) {
             if (users[i]._id == userId) {
-                users[i] = updatedUser;
+                for (var property in updatedUser) {
+                    users[i][property] = updatedUser[property];
+                }
                 break;
             }
         }
@@ -75,7 +77,7 @@ module.exports = function(app) {
 
     function deleteUser(userId) {
         for (var i = 0; i < users.length; i++) {
-            if(users[i]._id === userId) {
+            if(users[i]._id == userId) {
                 users.splice(i,1);
                 break;
             }

@@ -23,9 +23,11 @@ module.exports = function(app) {
         var newForm = {
             _id: guid.create(),
             title: form.title,
-            userId: userId
+            userId: userId,
+            fields:[]
         }
         forms.push(newForm);
+        console.log(forms);
         return forms;
     }
 
@@ -36,7 +38,7 @@ module.exports = function(app) {
     function findAllFormsForUser(userId) {
         var output = [];
         for (var i = 0; i < forms.length; i++) {
-            if(forms[i].userId === userId ) {
+            if(forms[i].userId == userId ) {
                 output.push(forms[i]);
             }
         }
@@ -46,7 +48,7 @@ module.exports = function(app) {
     function findFormById(formId) {
         var form = null;
         for (var i = 0; i < forms.length; i++) {
-            if(forms[i]._id === formId) {
+            if(forms[i]._id == formId) {
                 form = forms[i];
                 break;
             }
@@ -57,7 +59,7 @@ module.exports = function(app) {
     function findFormByTitle(formTitle) {
         var form = null;
         for (var i = 0; i < forms.length; i++) {
-            if(forms[i].title === formTitle) {
+            if(forms[i].title == formTitle) {
                 form = forms[i];
                 break;
             }
@@ -66,24 +68,27 @@ module.exports = function(app) {
     }
 
     function updateFormById(formId, newForm) {
+        console.log(111);
         for (var i = 0; i < forms.length; i++) {
-            if(forms[i]._id === formId) {
+            if(forms[i]._id == formId) {
                 for (var property in newForm) {
                     forms[i][property] = newForm[property];
                 }
                 break;
             }
         }
-        return forms[i];
+        console.log(forms);
+        return forms;
     }
 
     function deleteFormById(formId) {
         for (var i = 0; i < forms.length; i++) {
-            if(forms[i]._id === formId) {
+            if(forms[i]._id == formId) {
                 forms.splice(i,1);
                 break;
             }
         }
+        console.log(forms);
         return forms;
     }
 
@@ -98,7 +103,7 @@ module.exports = function(app) {
             options: field.options
         }
         form.fields.push(newField);
-        return newField;
+        return form.fields;
     }
 
     function getFieldsForForm(formId) {
@@ -110,7 +115,7 @@ module.exports = function(app) {
         var fields = getFieldsForForm(formId);
         var field = null;
         for (var i = 0; i < fields.length; i++) {
-            if(fields[i]._id === fieldId) {
+            if(fields[i]._id == fieldId) {
                 field = fields[i];
                 break;
             }
@@ -119,18 +124,23 @@ module.exports = function(app) {
     }
 
     function updateField(formId, fieldId, newField) {
-        var field = getFieldForForm(formId, fieldId);
-        for (var property in newField) {
-            field[property] = newField[property];
+        var fields = getFieldsForForm(formId, fieldId);
+        for (var i = 0; i < fields.length; i++) {
+            if(fields[i]._id == fieldId) {
+                for (var property in newField) {
+                    fields[i][property] = newField[property];
+                }
+                break;
+            }
         }
-        return field;
+        return fields;
     }
 
     function deleteFieldFromForm(formId, fieldId) {
         var form = findFormById(formId);
         var fields = form.fields;
         for (var i = 0; i < fields.length; i++) {
-            if(fields[i]._id === fieldId) {
+            if(fields[i]._id == fieldId) {
                 fields.splice(i,1);
                 break;
             }

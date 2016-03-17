@@ -3,7 +3,7 @@ module.exports = function(app, formModel) {
     app.get("/api/assignment/form", findAllForms);
     app.get("/api/assignment/user/:userId/form", findAllFormsForUser);
     app.get("/api/assignment/form/:formId", findFormById);
-    app.put("//api/assignment/form/:formId", updateFormById);
+    app.put("/api/assignment/form/:formId", updateFormById);
     app.delete("/api/assignment/form/:formId", deleteFormById);
 
 
@@ -15,7 +15,6 @@ module.exports = function(app, formModel) {
     }
 
     function findAllForms(req, res) {
-        console.log(123);
         var forms = formModel.findAllForms();
         res.json(forms);
     }
@@ -35,8 +34,10 @@ module.exports = function(app, formModel) {
     function updateFormById(req, res) {
         var formId = req.params.formId;
         var form = req.body;
-        var updatedForm = formModel.updateFormById(formId, form);
-        res.json(updatedForm);
+        console.log(formId);
+        console.log(form);
+        var forms = formModel.updateFormById(formId, form);
+        res.json(forms);
     }
 
     function deleteFormById(req, res) {
