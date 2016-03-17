@@ -86,5 +86,15 @@
                 model.fields = fields;
             };
         }
+
+        function popup() {
+            var i, l, options = [
+                {value:'Lable'}
+
+            ]
+            var myWindow = window.open("", "", "width=300, height=400");
+            myWindow.document.write();
+
+        }
     }
 })();

@@ -7,6 +7,7 @@
     function LoginController($rootScope, $location, UserService) {
         var model = this;
         model.login = login;
+        model.$location = $location;
 
         function login() {
             UserService

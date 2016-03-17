@@ -79,6 +79,40 @@
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </div>
+
+                <div ng-show="fields" ng-switch="field.type">
+                    <div ng-switch-when="TEXT">
+                        <label>Label</label>
+                        <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                        <label>Placeholder</label>
+                        <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                    </div>
+                    <div ng-switch-when="TEXTAREA">
+                        <label>Label</label>
+                        <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                    </div>
+                    <div ng-switch-when="DATE">
+                        <label>Label</label>
+                        <input type="date" class="form-control" placeholder={{field.placeholder}}>
+                    </div>
+                    <div ng-switch-when="OPTIONS">
+                        <label>Label</label>
+                        <select type="text" class="form-control">
+                            <option ng-repeat="option in field.options" value="{{option.value}}">{{option.label}}</option>
+                        </select>
+                    </div>
+                    <div ng-switch-when="CHECKBOXES">
+                        <label>Label</label>
+                        <div ng-repeat="option in field.options">
+                            <label><input type="checkbox" value="{{option.value}}">{{option.label}}</label>
+                        </div>
+                    </div>
+                    <div ng-switch-when="RADIOS">
+                        <div ng-repeat="option in field.options">
+                            <label><input type="radio" value="{{option.value}}">{{option.label}}</label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

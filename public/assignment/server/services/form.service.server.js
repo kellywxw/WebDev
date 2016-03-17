@@ -15,6 +15,7 @@ module.exports = function(app, formModel) {
     }
 
     function findAllForms(req, res) {
+        console.log(123);
         var forms = formModel.findAllForms();
         res.json(forms);
     }
@@ -27,15 +28,15 @@ module.exports = function(app, formModel) {
 
     function findFormById(req, res) {
         var formId = req.params.formId;
-        var form = model.findFormById(formId);
+        var form = formModel.findFormById(formId);
         res.json(form);
     }
 
     function updateFormById(req, res) {
         var formId = req.params.formId;
         var form = req.body;
-        var forms = formModel.updateFormById(formId, form);
-        res.json(forms);
+        var updatedForm = formModel.updateFormById(formId, form);
+        res.json(updatedForm);
     }
 
     function deleteFormById(req, res) {

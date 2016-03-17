@@ -13,7 +13,7 @@
                model.newUser.password == model.password2) {
                 UserService
                     .createUser(model.newUser)
-                    .then(getCreatedUser);
+                    .then(userCreate);
             }
 
             function userCreate (users) {
