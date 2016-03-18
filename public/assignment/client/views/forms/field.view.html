@@ -1,5 +1,5 @@
 <form class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="FieldController">
-    <h1>Form : {{model.selectedForm.title}}</h1>
+    <h1>Form : {{selectedForm.title}}</h1>
     <ul class="nav nav-tabs">
         <li><a href="#/forms">Forms</a></li>
         <li class="active"><a href="#/fields">Fields</a></li>
@@ -107,15 +107,15 @@
                         </div>
                         <div ng-switch-when="OPTIONS">
                             <label>Options</label>
-                            <textarea type="text" class="form-control">{{model.optionText}}</textarea>
+                            <textarea type="text" class="form-control" ng-model="model.optionText"></textarea>
                         </div>
                         <div ng-switch-when="CHECKBOXES">
                             <label>Options</label>
-                            <textarea type="text" class="form-control">{{model.optionText}}</textarea>
+                            <textarea type="text" class="form-control" ng-model="model.optionText"></textarea>
                         </div>
                         <div ng-switch-when="RADIOS">
                             <label>Options</label>
-                            <textarea type="text" class="form-control">{{model.optionText}}</textarea>
+                            <textarea type="text" class="form-control" ng-model="model.optionText"></textarea>
                         </div>
                     </div>
                 </div>

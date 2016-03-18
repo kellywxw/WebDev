@@ -10,7 +10,6 @@
         model.updateField = updateField;
         model.selectField = selectField;
         model.deleteField = deleteField;
-        model.getOptionText = getOptionText;
 
         var userId = $routeParams.userId;
         var formId = $routeParams.formId;
@@ -73,21 +72,37 @@
 
         function selectField(field) {
             model.selectedField = field;
+            var selectedField = model.selectedField;
             var fieldType = model.selectedField.type;
+            var fieldId = selectedField._id;
+            var label = selectedField.label;
+
             if (fieldType == "OPTIONS" || fieldType == "CHECKBOXES" || fieldType == "RADIOS") {
-                getOptionText();
-                console.log(model.optionText);
+                appendOptionText();
+                model.newField = {
+                    "_id": fieldId,
+                    "label": label,
+                    "type": fieldType,
+                    "options": separateOptionText()
+                };
+            } else {
+                model.newField = {
+                    "_id": fieldId,
+                    "label": label,
+                    "type": fieldType
+                };
             }
         }
 
         function updateField() {
             var fieldType = model.selectedField.type;
+            var fieldId = model.selectedField._id;
             if (fieldType == "OPTIONS" || fieldType == "CHECKBOXES" || fieldType == "RADIOS") {
-                separateOptionText(model.newField);
-                console.log(model.optionText);
+                model.newField.options = separateOptionText();
             }
+
             FieldService
-                .updateField(formId, model.selectedField._id, model.newField)
+                .updateField(formId, fieldId, model.newField)
                 .then(fieldUpdate);
 
             function fieldUpdate (fields) {
@@ -98,7 +113,7 @@
         }
 
 
-        function getOptionText() {
+        function appendOptionText() {
             var text = [];
             var options = model.selectedField.options;
             for (var i = 0; i < options.length; i++) {
@@ -108,18 +123,17 @@
             model.optionText = text.join("\n");
         }
 
-        function separateOptionText(newField) {
+        function separateOptionText() {
             var text = model.optionText;
+            console.log(text);
             var output = [];
             var options = text.split("\n");
-            console.log(options);
             for (var i = 0; i < options.length; i++) {
                 var option = options[i].split(": ");
                 var temp = {label: option[0], value: option[1]};
                 output.push(temp);
             }
-            newField.options = output;
-            console.log(model.newField.options);
+            return output;
         }
 
         function deleteField(field) {
