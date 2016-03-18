@@ -68,7 +68,6 @@ module.exports = function(app) {
     }
 
     function updateFormById(formId, newForm) {
-        console.log(111);
         for (var i = 0; i < forms.length; i++) {
             if(forms[i]._id == formId) {
                 for (var property in newForm) {
@@ -108,7 +107,9 @@ module.exports = function(app) {
 
     function getFieldsForForm(formId) {
         var form = findFormById(formId);
-        return form.fields;
+        console.log(form.fields);
+        if(form != null) return form.fields;
+        return null;
     }
 
     function getFieldForForm(formId, fieldId) {

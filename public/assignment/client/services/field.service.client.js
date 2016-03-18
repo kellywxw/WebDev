@@ -19,7 +19,7 @@
             var deferred = $q.defer();
 
             $http
-                .post("/api/assignment/form/", formId + "/field", field)
+                .post("/api/assignment/form/" + formId + "/field", field)
                 .success(function(response) {
                     deferred.resolve(response);
                 });

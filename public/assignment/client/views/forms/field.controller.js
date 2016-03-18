@@ -8,7 +8,9 @@
         var model = this;
         model.addField = addField;
         model.updateField = updateField;
+        model.selectField = selectField;
         model.deleteField = deleteField;
+        model.getOptionText = getOptionText;
 
         var userId = $routeParams.userId;
         var formId = $routeParams.formId;
@@ -27,7 +29,7 @@
 
         function addField(fieldType) {
             var field = {};
-            if (fieldType == "single line text") {
+            if (fieldType == "single Line text") {
                 field = {"_id": null, "label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
             } else if (fieldType == "multi line text") {
                 field = {"_id": null, "label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
@@ -49,7 +51,7 @@
                     {"label": "Option C", "value": "OPTION_C"}
                 ]}
 
-            } else {
+            } else if (fieldType == "radio buttons") {
                 field =
                 {"_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
                     {"label": "Option X", "value": "OPTION_X"},
@@ -63,18 +65,61 @@
                 .then(fieldCreate);
 
             function fieldCreate (fields) {
+                console.log(fields);
                 model.fields = fields;
             };
         }
 
-        function updateField(formId, fieldId, field) {
+
+        function selectField(field) {
+            model.selectedField = field;
+            var fieldType = model.selectedField.type;
+            if (fieldType == "OPTIONS" || fieldType == "CHECKBOXES" || fieldType == "RADIOS") {
+                getOptionText();
+                console.log(model.optionText);
+            }
+        }
+
+        function updateField() {
+            var fieldType = model.selectedField.type;
+            if (fieldType == "OPTIONS" || fieldType == "CHECKBOXES" || fieldType == "RADIOS") {
+                separateOptionText(model.newField);
+                console.log(model.optionText);
+            }
             FieldService
-                .updateField(formId, fieldId, field)
+                .updateField(formId, model.selectedField._id, model.newField)
                 .then(fieldUpdate);
 
             function fieldUpdate (fields) {
                 model.fields = fields;
+                model.newField = null;
             };
+
+        }
+
+
+        function getOptionText() {
+            var text = [];
+            var options = model.selectedField.options;
+            for (var i = 0; i < options.length; i++) {
+                var temp = options[i].label + ": " + options[i].value;
+                text.push(temp);
+            }
+            model.optionText = text.join("\n");
+        }
+
+        function separateOptionText(newField) {
+            var text = model.optionText;
+            var output = [];
+            var options = text.split("\n");
+            console.log(options);
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i].split(": ");
+                var temp = {label: option[0], value: option[1]};
+                output.push(temp);
+            }
+            newField.options = output;
+            console.log(model.newField.options);
         }
 
         function deleteField(field) {
@@ -83,18 +128,9 @@
                 .then(fieldDelete);
 
             function fieldDelete (fields) {
+                console.log(fields);
                 model.fields = fields;
             };
-        }
-
-        function popup() {
-            var i, l, options = [
-                {value:'Lable'}
-
-            ]
-            var myWindow = window.open("", "", "width=300, height=400");
-            myWindow.document.write();
-
         }
     }
 })();
