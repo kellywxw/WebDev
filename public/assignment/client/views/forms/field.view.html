@@ -7,14 +7,7 @@
     <div class="table-responsive">
         <div class="container">
             <table class="table">
-                <thead>
-                <tr>
-                    <th><span class="caret"></span> Field Name</th>
-                    <th><span class="caret"></span> Field Input</th>
-                    <th><span class="caret"></span> Action</th>
-                </tr>
-                </thead>
-                <tbody id="tbody-sortable" jga-sortable jga-axix="y">
+                <tbody ui-sortable="model.fields">
                 <tr ng-repeat="field in model.fields">
                     <td>
                         <label>{{field.label}}:</label>

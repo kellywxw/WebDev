@@ -1,1 +1,0 @@
-$("#sortable tbody").sortable().disableSelection();
