@@ -9,6 +9,7 @@
         var api = {
             createFormForUser : createFormForUser,
             findAllFormsForUser : findAllFormsForUser,
+            findFormById : findFormById,
             updateFormById : updateFormById,
             deleteFormById : deleteFormById
         };
@@ -34,6 +35,18 @@
                 .success(function(response) {
                     deferred.resolve(response);
                 });
+
+            return deferred.promise;
+        }
+
+        function findFormById(formId) {
+            var deferred = $q.defer();
+
+            $http
+                .get('/api/assignment/form/' + formId)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
 
             return deferred.promise;
         }

@@ -1,8 +1,8 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="FormController">
     <h1>Forms</h1>
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#/forms">Forms</a></li>
-        <li><a href="#/fields">Fields</a></li>
+        <li ng-show="user", ng-class="{'active' : $location.url().indexOf('form') != -1}"><a href="#/form">Forms</a></li>
+        <li ng-show="user", ng-class="{'active' : $location.url().indexOf('field') != -1}"><a href="#/field">Fields</a></li>
 
     </ul>
     <div class="table-responsive">

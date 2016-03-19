@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
 
-    function FieldController($routeParams, FieldService) {
+    function FieldController($routeParams, FormService, FieldService) {
         var model = this;
         model.addField = addField;
         model.updateField = updateField;
@@ -13,6 +13,16 @@
 
         var userId = $routeParams.userId;
         var formId = $routeParams.formId;
+
+        function loadForm() {
+            FormService
+                .findFormById(formId)
+                .then(formLoad);
+
+            function formLoad (form) {
+                model.form = form;
+            };
+        }
 
         function loadFieldsForForm() {
             FieldService
@@ -24,6 +34,7 @@
             };
         }
 
+        loadForm();
         loadFieldsForForm();
 
         function addField(fieldType) {
@@ -76,6 +87,7 @@
             var fieldType = model.selectedField.type;
             var fieldId = selectedField._id;
             var label = selectedField.label;
+            var placeholder =  selectedField.placeholder;
 
             if (fieldType == "OPTIONS" || fieldType == "CHECKBOXES" || fieldType == "RADIOS") {
                 appendOptionText();
@@ -83,13 +95,15 @@
                     "_id": fieldId,
                     "label": label,
                     "type": fieldType,
+                    "placeholder": placeholder,
                     "options": separateOptionText()
                 };
             } else {
                 model.newField = {
                     "_id": fieldId,
                     "label": label,
-                    "type": fieldType
+                    "type": fieldType,
+                    "placeholder": placeholder
                 };
             }
         }

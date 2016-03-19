@@ -107,8 +107,10 @@ module.exports = function(app) {
 
     function getFieldsForForm(formId) {
         var form = findFormById(formId);
-        console.log(form.fields);
-        if(form != null) return form.fields;
+        if(form != null) {
+            return form.fields;
+            console.log(form.fields);
+        }
         return null;
     }
 

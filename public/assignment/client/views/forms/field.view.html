@@ -1,67 +1,69 @@
 <form class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="FieldController">
-    <h1>Form : {{selectedForm.title}}</h1>
+    <h1>Form: {{model.form.title}}</h1>
     <ul class="nav nav-tabs">
-        <li><a href="#/forms">Forms</a></li>
-        <li class="active"><a href="#/fields">Fields</a></li>
+        <li ng-show="user"><a href="#/form">Forms</a></li>
+        <li ng-show="user" class="active"><a href="#/field">Fields</a></li>
     </ul>
     <div class="table-responsive">
         <div class="container">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th><span class="caret"></span> Field Name</th>
-                        <th><span class="caret"></span> Field Input</th>
-                        <th><span class="caret"></span> Action</th>
-                    </tr>
+                <tr>
+                    <th><span class="caret"></span> Field Name</th>
+                    <th><span class="caret"></span> Field Input</th>
+                    <th><span class="caret"></span> Action</th>
+                </tr>
                 </thead>
                 <tbody id="tbody-sortable" jga-sortable jga-axix="y">
-                    <tr ng-repeat="field in model.fields">
-                        <td>
-                            <label>{{field.label}}:</label>
-                        </td>
-                        <td ng-switch="field.type">
-                            <div ng-switch-when="TEXT">
-                                <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                <tr ng-repeat="field in model.fields">
+                    <td>
+                        <label>{{field.label}}:</label>
+                    </td>
+                    <td ng-switch="field.type">
+                        <div ng-switch-when="TEXT">
+                            <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                        </div>
+                        <div ng-switch-when="TEXTAREA">
+                            <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                        </div>
+                        <div ng-switch-when="DATE">
+                            <input type="date" class="form-control" placeholder={{field.placeholder}}>
+                        </div>
+                        <div ng-switch-when="OPTIONS">
+                            <select type="text" class="form-control">
+                                <option ng-repeat="option in field.options" value="{{option.value}}"> {{option.label}}</option>
+                            </select>
+                        </div>
+                        <div ng-switch-when="CHECKBOXES">
+                            <div ng-repeat="option in field.options">
+                                <label><input type="checkbox" value="{{option.value}}"> {{option.label}}</label>
                             </div>
-                            <div ng-switch-when="TEXTAREA">
-                                <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                        </div>
+                        <div ng-switch-when="RADIOS">
+                            <div ng-repeat="option in field.options">
+                                <label><input type="radio" value="{{option.value}}"> {{option.label}}</label>
                             </div>
-                            <div ng-switch-when="DATE">
-                                <input type="date" class="form-control" placeholder={{field.placeholder}}>
-                            </div>
-                            <div ng-switch-when="OPTIONS">
-                                <select type="text" class="form-control">
-                                    <option ng-repeat="option in field.options" value="{{option.value}}"> {{option.label}}</option>
-                                </select>
-                            </div>
-                            <div ng-switch-when="CHECKBOXES">
-                                <div ng-repeat="option in field.options">
-                                    <label><input type="checkbox" value="{{option.value}}"> {{option.label}}</label>
-                                </div>
-                            </div>
-                            <div ng-switch-when="RADIOS">
-                                <div ng-repeat="option in field.options">
-                                    <label><input type="radio" value="{{option.value}}"> {{option.label}}</label>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <a ng-click="model.selectField(field)" data-toggle="modal" data-target="#updateField">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </a>
-                            <a>
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                            <a ng-click="model.deleteField(field)">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </a>
-                            <a>
-                                <span class="glyphicon glyphicon-list"></span>
-                            </a>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                    <td>
+                        <a ng-click="model.selectField(field)" data-toggle="modal" data-target="#updateField">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a>
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a ng-click="model.deleteField(field)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a>
+                            <span class="glyphicon glyphicon-list"></span>
+                        </a>
+                    </td>
+                </tr>
                 </tbody>
             </table>
+
+            <hr>
 
             <div class="form-group">
                 <label for="addfield" class="col-xs-12">Add New Field:</label>
@@ -128,4 +130,5 @@
             </div>
         </div>
     </div>
+    </form>
 </form>
