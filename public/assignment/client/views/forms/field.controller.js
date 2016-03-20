@@ -30,6 +30,7 @@
                 .then(fieldsLoad);
 
             function fieldsLoad (fields) {
+                console.log(fields);
                 model.fields = fields;
             };
         }
@@ -120,6 +121,7 @@
                 .then(fieldUpdate);
 
             function fieldUpdate (fields) {
+                console.log(fields);
                 model.fields = fields;
                 model.newField = null;
             };
@@ -139,7 +141,6 @@
 
         function separateOptionText() {
             var text = model.optionText;
-            console.log(text);
             var output = [];
             var options = text.split("\n");
             for (var i = 0; i < options.length; i++) {
