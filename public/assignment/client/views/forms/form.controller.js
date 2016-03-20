@@ -24,6 +24,7 @@
                 .then(formsLoad);
 
             function formsLoad (forms) {
+                console.log(forms);
                 model.forms = forms;
             };
         }
@@ -35,7 +36,6 @@
 
             function formAdd (forms) {
                 loadFormsForUser();
-                console.log(model.forms);
                 model.newForm = null;
             };
         }
@@ -48,7 +48,6 @@
 
             function formUpdate () {
                 loadFormsForUser();
-                console.log(model.forms);
                 model.selectedForm = null;
                 model.newForm = null;
             };
@@ -72,8 +71,6 @@
             FormService
                 .deleteFormById(formId)
                 .then(loadFormsForUser);
-
-            console.log(model.forms);
         }
     }
 })();
