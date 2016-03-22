@@ -1,0 +1,69 @@
+<html lang="en" ng-app="ChopChopApp">
+<head>
+    <meta charset="utf-8">
+    <title>ChopChop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- The styles -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel ="stylesheet">
+    <link href="css/bootstrap-united.min.css" rel="stylesheet">
+    <link href="css/charisma-app.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap.min.js></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.13.4/sortable.min.js"></script>
+
+    <!-- AngularJS Routing -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <!-- Controllers -->
+    <script src="views/main/main.controller.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
+    <script src="views/navbar/navbar.controller.js"></script>
+    <script src="views/search/search.controller.js"></script>
+    <script src="views/search/searchEvent.controller.js"></script>
+    <script src="views/users/login.controller.js"></script>
+    <script src="views/users/register.controller.js"></script>
+    <script src="views/userinfo/profile.controller.js"></script>
+    <script src="views/userinfo/events.controller.js"></script>
+    <script src="views/userinfo/friends.controller.js"></script>
+
+    <!-- Services -->
+    <script src="services/events.service.client.js"></script>
+    <script src="services/eventful.service.client.js"></script>
+    <script src="services/search.service.client.js"></script>
+    <script src="services/user.service.client.js"></script>
+
+
+</head>
+
+<body ng-controller="MainController">
+    <div ng-include="'views/header/header.view.html'"></div>
+    <div class="ch-container">
+        <div class="row">
+            <div ng-include="'views/navbar/navbar.view.html'"></div>
+            <div class="row" class="col-lg-10 col-sm-10">
+                <div class="box col-md-10">
+                    <div ng-view></div>
+                </div>
+            </div>
+            <hr>
+            <footer class="row">
+                <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; Kelly Wang 2016</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

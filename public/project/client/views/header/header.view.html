@@ -1,0 +1,29 @@
+<div class="navbar navbar-default" role="navigation" ng-controller="HeaderController">
+
+    <div class="navbar-inner">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#/home">ChopChop</a>
+
+        <div id="navbar" class="navbar-collapse collapse navbar-default">
+            <div class="nav navbar-nav navbar-right">
+                <li ng-show="user == null", ng-class="{'active': model.$location.url() == '/register'}">
+                    <a href="#/register"><i class="glyphicon glyphicon-user"></i> Sign Up</a>
+                </li>
+                <li ng-show="user == null", ng-class="{'active': model.$location.url() == '/login'}">
+                    <a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Log In</a>
+                </li>
+                <li ng-show="user", ng-class="{'active': model.$location.url().indexOf('/profile')>=0}">
+                    <a href="#/profile"><i class="glyphicon glyphicon-user"></i> {{user.username}}</a>
+                </li>
+                <li ng-show="user", ng-class="{'active': model.$location.url() == '/logout'}">
+                    <a  ng-click="model.logout()"><i class="glyphicon glyphicon-log-out"></i> Log Out</a>
+                </li>
+            </div>
+        </div>
+    </div>
+</div>
