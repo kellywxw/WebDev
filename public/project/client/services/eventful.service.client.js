@@ -16,7 +16,7 @@
             var deferred = $q.defer();
 
             $http
-                .post("/api/project/user/"+userId+"/movie/"+event.eventfulId, event)
+                .post("/api/project/user/"+userId+"/eventful/"+event.eventfulId, event)
                 .success(function(response){
                     deferred.resolve(response);
                 })
@@ -28,7 +28,7 @@
             var deferred = $q.defer();
 
             $http
-                .get("/api/project/event/"+eventfulId+"/user")
+                .get("/api/project/eventful/"+eventfulId+"/user")
                 .success(function(response){
                     deferred.resolve(response);
                 })

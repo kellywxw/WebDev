@@ -1,5 +1,7 @@
+var events = require("./eventful.mock.json");
+var guid = require("guid");
+
 module.exports = function(app) {
-    var events = [];
     var api = {
         createEvent : createEvent,
         findEventByEventfulId : findEventByEventfulId,
@@ -43,10 +45,11 @@ module.exports = function(app) {
                     location: event.location,
                     startDate: event.startDate,
                     endDate: event.endDate,
-                    eventfulId: event.eventfulId
+                    eventfulId: event.eventfulId,
                 });
             }
         }
+        console.log(events);
         return events;
     }
 }

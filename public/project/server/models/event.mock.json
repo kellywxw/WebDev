@@ -3,5 +3,6 @@
   {"_id":222, "poster": null, "title":"Graduation Party", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "userId": 123},
   {"_id":333, "poster": null, "title":"Conference", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "userId": 123},
   {"_id":444, "poster": null, "title":"Camping Trip", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "userId": 234},
-  {"_id":555, "poster": null, "title":"Hiking Trip", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "userId": 234}
+  {"_id":555, "poster": null, "title":"Hiking Trip", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "userId": 234},
+  {"_id":555, "poster": null, "title":"San Fran Trip", "location":"San Fran", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "userId": 234}
 ]

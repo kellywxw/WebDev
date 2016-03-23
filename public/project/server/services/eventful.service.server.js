@@ -1,6 +1,6 @@
 module.exports = function(app, eventfulModel, userModel) {
-    app.post("/api/project/user/:userId/event/:eventfulId", userLikesEvent);
-    app.get("/api/project/event/:eventfulId/user", findUserLikes);
+    app.post("/api/project/user/:userId/eventful/:eventfulId", userLikesEvent);
+    app.get("/api/project/eventful/:eventfulId/user", findUserLikes);
 
     /*
     user likes event

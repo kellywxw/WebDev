@@ -47,8 +47,10 @@ module.exports = function(app, userModel, eventfulModel) {
         var userId = req.params.id;
         var user = userModel.findUserById(userId);
         var eventfulIds = user.likes;
-        var events = eventfulModel.findEventsByEventfulIds(eventfulIds);
-        user.likesEvents = events;
+        console.log(eventfulIds);
+        var eventfulEvents = eventfulModel.findEventsByEventfulIds(eventfulIds);
+        console.log(eventfulEvents);
+        user.likesEvents = eventfulEvents;
         res.json(user);
     }
 
