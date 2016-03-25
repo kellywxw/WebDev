@@ -7,6 +7,7 @@
     function FieldController($routeParams, FormService, FieldService) {
         var model = this;
         model.addField = addField;
+        model.cloneField = cloneField;
         model.updateField = updateField;
         model.selectField = selectField;
         model.deleteField = deleteField;
@@ -81,6 +82,19 @@
             };
         }
 
+        function cloneField(field) {
+            var clonedField = {"_id": null, "label": field.label, "type": field.type,
+                "placeholder": field.placeholder, "options": field.options};
+
+            FieldService
+                .createFieldForForm(formId, clonedField)
+                .then(fieldCreate);
+
+            function fieldCreate (fields) {
+                console.log(fields);
+                model.fields = fields;
+            };
+        }
 
         function selectField(field) {
             model.selectedField = field;
@@ -127,7 +141,6 @@
             };
 
         }
-
 
         function appendOptionText() {
             var text = [];

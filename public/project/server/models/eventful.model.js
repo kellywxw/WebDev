@@ -12,12 +12,12 @@ module.exports = function(app) {
     function createEvent(event) {
         var newEvent = {
             _id: guid.create(),
-            poster: event.poster,
+            poster: event.url,
             title: event.title,
-            location: event.location,
-            startDate: event.startDate,
-            endDate: event.endDate,
-            eventfulId: event.eventfulId
+            location: event.city_name,
+            startDate: event.start_time,
+            endDate: event.stop_time,
+            eventfulId: event.id
         }
         events.push(newEvent);
         console.log(events);
@@ -34,23 +34,24 @@ module.exports = function(app) {
     }
 
     function findEventsByEventfulIds (eventfulIds) {
-        var events = [];
+        console.log(123);
+        var output = [];
         for (var i in eventfulIds) {
             var event= findEventByEventfulId(eventfulIds[i]);
             if (event) {
-                events.push({
+                output.push({
                     _id: event._id,
                     poster: event.poster,
                     title: event.title,
                     location: event.location,
                     startDate: event.startDate,
                     endDate: event.endDate,
-                    eventfulId: event.eventfulId,
+                    eventfulId: event.eventfulId
                 });
             }
         }
-        console.log(events);
-        return events;
+        console.log(output);
+        return ouput;
     }
 }
 
