@@ -1,11 +1,11 @@
 <div ng-controller="SearchController">
     <div class="box-content">
         <br>
-        <input ng-model="model.eventfulEvent.title" type="text" class="form-control" placeholder="Search">
+        <input ng-model="model.title" type="text" class="form-control" placeholder="Search">
         <br>
-        <a ng-click="model.search(model.eventfulEvent)" class="btn btn-primary btn-block"></i>ChopChop <i class="glyphicon glyphicon-search"></i></a>
+        <a ng-click="model.search(model.title)" class="btn btn-primary btn-block"></i>ChopChop <i class="glyphicon glyphicon-search"></i></a>
 
-        <section ng-if="model.data">
+        <section ng-if="model.events">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -13,20 +13,20 @@
                         <th>Event Title</th>
                         <th>Event Location</th>
                         <th>Event Start Time</th>
-                        <th>Event Start Time</th>
+                        <th>Event End Time</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="event in model.data.events">
-                        <><img height="75px" ng-src="{{event.image.thumb.url}}"/></td>
+                    <tr ng-repeat="event in model.events">
+                        <td><img height="75px" ng-src="{{event.image.url}}"/></td>
                         <td>
-                            <a href="#/event/{{event.id}}">
+                            <a href="#/searchEvent/{{event.id}}">
                                 {{event.title}}
                             </a>
                         </td>
                         <td>{{event.city_name}}</td>
-                        <td>{{event.start_time}}</td>
-                        <td>{{event.stop_time}}</td>
+                        <td>{{event.start_time | date}}</td>
+                        <td>{{event.stop_time | date}}</td>
                     </tr>
                 </tbody>
             </table>

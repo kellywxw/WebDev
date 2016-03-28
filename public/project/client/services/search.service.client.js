@@ -15,22 +15,30 @@
         function findEventByTitle(title) {
             var deferred = $q.defer();
 
-            $http
-                .jsonp("http://api.eventful.com/jsonp/events/search?app_key=qpTwFsBDbVd95mkr&keywords=" + title +"&jsonCallback=JSON_CALLBACK&format=jsonp")
-                .success(function(response) {
+            $.ajax({
+                url: "http://api.eventful.com/jsonp/events/search?app_key=qpTwFsBDbVd95mkr&keywords="+ title +"&jsonCallback=JSON_CALLBACK",
+                dataType: 'JSONP',
+                jsonpCallback: 'callback',
+                type: 'GET',
+                success: function (response) {
                     deferred.resolve(response);
-                });
-
+                }
+            });
             return deferred.promise;
         }
 
         function findEventByEventfulId(id) {
-            $http
-                .jsonp("http://www.api.eventful.com/jsonp/events/search?app_key=qpTwFsBDbVd95mkr&id=" + id +"&json_callback=JSON_CALLBACK")
-                .success(function(response) {
-                    deferred.resolve(response);
-                });
+            var deferred = $q.defer();
 
+            $.ajax({
+                url: "http://api.eventful.com/jsonp/events/get?app_key=qpTwFsBDbVd95mkr&id=" + id +"&jsonCallback=JSON_CALLBACK",
+                dataType: 'JSONP',
+                jsonpCallback: 'callback',
+                type: 'GET',
+                success: function (response) {
+                    deferred.resolve(response);
+                }
+            });
             return deferred.promise;
         }
     }

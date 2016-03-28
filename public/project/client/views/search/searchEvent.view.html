@@ -1,16 +1,18 @@
 <div ng-controller="SearchEventController">
     <div class="box-content">
-        <br>
-        <h2>{{model.data.title}}</h2>
-        <img ng-src="model.data.image.medium.url" height="100px" class="pull-left">
-        <button class="btn btn-primary"
-                ng-click="model.favorite(model.data)">
-            <span class="glyphicon glyphicon-star-empty"></span>
+        <h3 class="col-xs-11">{{model.data.title}}</h3>
+        <button class="btn btn-primary" ng-click="model.favorite(model.data)">
+            <span ng-show="model.event.likes.indexOf(user._id) > -1" class="glyphicon glyphicon-star"></span>
+            <span ng-show="!model.event || !model.event.likes || model.event.likes.indexOf(user._id) == -1" class="glyphicon glyphicon-star-empty"></span>
         </button>
-        <p>{{model.data.description}}</p>
-        <h3>{{model.data.city_name}}</h3>
-        <h3>{{model.data.start_time}}</h3>
-        <h3>{{model.data.stop_time}}</h3>
+        <ul>
+            <img ng-show="model.image" ng-src="{{model.image}}" height="250px"/>
+            <li ng-show="model.data.city">Event Location: {{model.data.city}}, {{model.data.region_abbr}}, {{model.data.country}}</li>
+            <li ng-show="model.data.venue_name">Venue: {{model.data.venue_name}}</li>
+            <li ng-show="model.data.start_time">Event Date: {{model.data.start_time | date}}</li>
+            <li ng-show="model.data.performers.performer">Performer: {{model.data.performers.performer.name}}</li>
+            <li ng-show="model.data.price">Cost: {{model.data.price}}</li>
+        </ul>
 
         {{model.userLikes}}
 

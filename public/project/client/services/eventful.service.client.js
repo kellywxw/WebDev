@@ -2,7 +2,7 @@
     "use strict";
     angular
         .module("ChopChopApp")
-        .factory("SearchService", EventfulService);
+        .factory("EventfulService", EventfulService);
 
 
     function EventfulService($http, $q) {
@@ -18,6 +18,7 @@
             $http
                 .post("/api/project/user/"+userId+"/eventful/"+event.eventfulId, event)
                 .success(function(response){
+                    console.log(response);
                     deferred.resolve(response);
                 })
 

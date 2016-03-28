@@ -10,11 +10,12 @@
 
         model.$location = $location;
 
-        function search(event) {
+        function search(title, location) {
             SearchService
-                .findEventByTitle(event.title)
+                .findEventByTitle(title, location)
                 .then(function(response){
-                    model.data = response.data;
+                    model.events = response.events.event;
+                    console.log(model.events);
                 });
         }
     }

@@ -15,13 +15,23 @@
             SearchService
                 .findEventByEventfulId(eventfulId)
                 .then(function(response){
-                model.data = response.data;
-            });
+                    model.data = response;
+                    if(model.data.images) {
+                        if(model.data.images.image.length > 0) {
+                            console.log(model.data.images.image);
+                            model.image = model.data.images.image[0].medium.url;
+                        } else {
+                            console.log(model.data.images.image);
+                            model.image = model.data.images.image.medium.url;
+                        }
+                    }
+                    console.log(model.data);
+                });
 
             EventfulService
                 .findUserLikes (eventfulId)
                 .then(function(response){
-                    model.event = response.data;
+                    model.event = response;
                 });
         }
         init();
