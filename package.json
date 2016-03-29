@@ -27,6 +27,7 @@
     "express": "~3.4.4",
     "express-session": "^1.11.3",
     "guid": "0.0.12",
+    "mongoose": "^4.4.10",
     "multer": "^1.0.6",
     "q": "^1.4.1"
   },

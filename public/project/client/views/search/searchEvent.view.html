@@ -1,12 +1,13 @@
 <div ng-controller="SearchEventController">
     <div class="box-content">
-        <h3 class="col-xs-11">{{model.data.title}}</h3>
-        <button class="btn btn-primary" ng-click="model.favorite(model.data)">
+        <br>
+        <h3 style="text-align: center" class="col-xs-11">{{model.data.title}}</h3>
+        <button class="col-xs-1 btn btn-primary" ng-click="model.favorite(model.data)">
             <span ng-show="model.event.likes.indexOf(user._id) > -1" class="glyphicon glyphicon-star"></span>
             <span ng-show="!model.event || !model.event.likes || model.event.likes.indexOf(user._id) == -1" class="glyphicon glyphicon-star-empty"></span>
         </button>
+        <div style="text-align: center"><img ng-show="model.image" ng-src="{{model.image}}" height="250px"/></div>
         <ul>
-            <img ng-show="model.image" ng-src="{{model.image}}" height="250px"/>
             <li ng-show="model.data.city">Event Location: {{model.data.city}}, {{model.data.region_abbr}}, {{model.data.country}}</li>
             <li ng-show="model.data.venue_name">Venue: {{model.data.venue_name}}</li>
             <li ng-show="model.data.start_time">Event Date: {{model.data.start_time | date}}</li>
