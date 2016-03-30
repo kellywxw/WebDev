@@ -1,6 +1,6 @@
 var q = require("q");
 
-module.exports = function(app, mongoose, db) {
+module.exports = function(mongoose, db) {
     var UserSchema = require("./user.schema.server.js")(mongoose);
     var UserModel = mongoose.model('User', UserSchema);
 
@@ -18,15 +18,15 @@ module.exports = function(app, mongoose, db) {
     function createUser(user) {
         var deferred = q.defer();
 
-        UserModel.create(user, function (err, doc) {
+        UserModel.create(user, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, doc) {
+                UserModel.find(function (err, users) {
                     if (err) {
                         deferred.reject(err);
                     } else {
-                        deferred.resolve(doc);
+                        deferred.resolve(users);
                     }
                 });
             }
@@ -38,11 +38,11 @@ module.exports = function(app, mongoose, db) {
     function findAllUsers() {
         var deferred = q.defer();
 
-        UserModel.find(function (err, doc) {
+        UserModel.find(function (err, users) {
             if (err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(doc);
+                deferred.resolve(users);
             }
         });
 
@@ -52,11 +52,11 @@ module.exports = function(app, mongoose, db) {
     function findUserById(userId) {
         var deferred = q.defer();
 
-        UserModel.findById(userId, function (err, doc) {
+        UserModel.findById(userId, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(doc);
+                deferred.resolve(user);
             }
         });
 
@@ -66,11 +66,11 @@ module.exports = function(app, mongoose, db) {
     function findUserByUsername(username) {
         var deferred = q.defer();
 
-        UserModel.findOne({username: username}, function(err, doc) {
+        UserModel.findOne({username: username}, function(err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(doc);
+                deferred.resolve(user);
             }
         });
 
@@ -84,13 +84,12 @@ module.exports = function(app, mongoose, db) {
             {username: credentials.username,
              password: credentials.password},
 
-            function(err, doc) {
+            function(err, user) {
                 if (err) {
                     deferred.reject(err);
                 } else {
-                    deferred.resolve(doc);
+                    deferred.resolve(user);
                 }
-
             });
 
         return deferred.promise;
@@ -99,15 +98,15 @@ module.exports = function(app, mongoose, db) {
     function updateUser(userId, updatedUser) {
         var deferred = q.defer();
 
-        UserModel.findByIdAndUpdate(userId, updatedUser, function (err, doc) {
+        UserModel.findByIdAndUpdate(userId, updatedUser, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, doc) {
+                UserModel.find(function (err, users) {
                     if (err) {
                         deferred.reject(err);
                     } else {
-                        deferred.resolve(doc);
+                        deferred.resolve(users);
                     }
                 });
             }
@@ -119,15 +118,15 @@ module.exports = function(app, mongoose, db) {
     function deleteUser(userId) {
         var deferred = q.defer();
 
-        UserModel.findByIdAndRemove(userId, function (err, doc) {
+        UserModel.findByIdAndRemove(userId, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, doc) {
+                UserModel.find(function (err, users) {
                     if (err) {
                         deferred.reject(err);
                     } else {
-                        deferred.resolve(doc);
+                        deferred.resolve(users);
                     }
                 });
             }

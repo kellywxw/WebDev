@@ -16,11 +16,10 @@
             password: user.password,
             firstName : user.firstName,
             lastName : user.lastName,
-            email: user.email
+            emails: user.emails
         }
 
         function update() {
-
             UserService
                 .updateUser(user._id, model.updatedUser)
                 .then(userUpdate);

@@ -1,6 +1,6 @@
 var q = require("q");
 
-module.exports = function(app, mongoose, db) {
+module.exports = function(mongoose, db) {
     var FormSchema = require("./form.schema.server.js")(mongoose);
     var Form = mongoose.model('Form', FormSchema);
 
@@ -11,7 +11,8 @@ module.exports = function(app, mongoose, db) {
         findFormById : findFormById,
         findFormByTitle : findFormByTitle,
         updateFormById : updateFormById,
-        deleteFormById : deleteFormById
+        deleteFormById : deleteFormById,
+        getFormModel: getFormModel
     };
     return api;
 
@@ -25,7 +26,6 @@ module.exports = function(app, mongoose, db) {
         var deferred = q.defer();
 
         form.save(function (err, doc) {
-
             if (err) {
                 deferred.reject(err)
             } else {
@@ -88,7 +88,7 @@ module.exports = function(app, mongoose, db) {
     function findFormByTitle(formTitle) {
         var deferred = q.defer();
 
-        Form.findOne({title: formTitle}, function(err, doc) {
+        Form.find({title: formTitle}, function(err, doc) {
             if (err) {
                 deferred.reject(err);
             } else {
@@ -100,6 +100,8 @@ module.exports = function(app, mongoose, db) {
     }
 
     function updateFormById(formId, newForm) {
+        newForm.updated = Date.now();
+
         var deferred = q.defer();
 
         Form.findByIdAndUpdate(formId, newForm, function (err, doc) {
@@ -139,6 +141,10 @@ module.exports = function(app, mongoose, db) {
         });
 
         return deferred.promise;
+    }
+
+    function getFormModel() {
+        return Form;
     }
 }
 
