@@ -4,7 +4,9 @@
         .module("FormBuilderApp")
         .controller("AdminController", AdminController);
 
-    function AdminController($scope, $location) {
-        $scope.$location = $location;
+    function AdminController($location) {
+        var model = this;
+
+        model.$location = $location;
     }
 })();

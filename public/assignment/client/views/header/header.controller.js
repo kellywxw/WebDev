@@ -4,10 +4,18 @@
         .module("FormBuilderApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($scope, $rootScope, $location) {
-        $scope.$location = $location;
+    function HeaderController($rootScope, $location, UserService) {
+        var model = this;
 
-        $scope.isAdmin = function isAdmin () {
+        model.isAdmin = isAdmin;
+        model.logout = logout;
+
+        function init() {
+            model.$location = $location;
+        }
+        init();
+
+        function isAdmin () {
             var roles = $rootScope.user.roles;
             if (roles == null || roles.length == 0) return false;
             for(var i = 0; i < roles.length; i++) {
@@ -18,9 +26,13 @@
             return false;
         }
 
-        $scope.logout= function logout () {
-            $rootScope.user = null;
-            $location.url("/home");
+        function logout () {
+            UserService
+                .logout()
+                .then(function() {
+                    UserService.setCurrentUser(null);
+                    $location.url("/home");
+                });
         }
     }
 })();

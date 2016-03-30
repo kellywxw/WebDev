@@ -17,6 +17,7 @@
             function userLogin(user) {
                 if (user != null) {
                     console.log(user);
+                    //UserService.setCurrentUser(user);
                     $rootScope.user = user;
                     $location.url("/profile");
                 }
