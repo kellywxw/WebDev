@@ -29,7 +29,9 @@
     "guid": "0.0.12",
     "mongoose": "^4.4.10",
     "multer": "^1.0.6",
-    "q": "^1.4.1"
+    "passport": "^0.3.2",
+    "q": "^1.4.1",
+    "session": "^0.1.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],

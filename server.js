@@ -6,6 +6,7 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 
+// create a default connection string
 var connectionString = 'mongodb://localhost/FormBuilderDB';
 
 // use remote connection string
