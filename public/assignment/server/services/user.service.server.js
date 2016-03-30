@@ -5,6 +5,11 @@ module.exports = function(app, userModel) {
     app.put("/api/assignment/user/:id", updateUser);
     app.delete("/api/assignment/user/:id", deleteUser);
 
+    /* for session implementation
+    app.get("/api/assignment/user/loggedin", loggedin);
+    app.post("/api/assignment/user/logout", logout);
+    */
+
     function createUser(req, res) {
         var newUser = req.body;
         userModel
@@ -31,7 +36,7 @@ module.exports = function(app, userModel) {
                 .findUserByCredentials(credentials)
                 .then(
                     function(user) {
-                        //req.session.currentUser = user;
+                        //req.session.user = user;
                         res.json(user);
                     },
                     function(err) {
@@ -105,4 +110,15 @@ module.exports = function(app, userModel) {
                 }
             );
     }
+
+    /* for session implementation
+    function loggedin(req, res) {
+        res.json(req.session.user);
+    }
+
+    function logout(req, res) {
+        req.session.destroy();
+        res.send(200);
+    }
+    */
 }

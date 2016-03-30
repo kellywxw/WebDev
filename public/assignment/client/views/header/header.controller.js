@@ -12,6 +12,7 @@
 
         function init() {
             model.$location = $location;
+            console.log(model.$location);
         }
         init();
 
@@ -27,6 +28,14 @@
         }
 
         function logout () {
+            UserService.setCurrentUser(null);
+            console.log($rootScope.user);
+            $location.url("/home");
+        }
+
+        /* for session implementation
+
+        function logout () {
             UserService
                 .logout()
                 .then(function() {
@@ -34,5 +43,6 @@
                     $location.url("/home");
                 });
         }
+        */
     }
 })();

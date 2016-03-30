@@ -4,7 +4,7 @@
         .module("FormBuilderApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($rootScope, $location, UserService) {
+    function RegisterController($location, UserService) {
         var model = this;
         model.register = register;
 
@@ -25,7 +25,7 @@
 
             function getCreatedUser(user) {
                 console.log(user);
-                $rootScope.user = user;
+                UserService.setCurrentUser(user);
                 $location.url("/profile");
             }
         }

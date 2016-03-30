@@ -5,7 +5,7 @@
         .factory("UserService", UserService);
 
 
-    function UserService($http, $q) {
+    function UserService($http, $q, $rootScope) {
         var api = {
             createUser : createUser,
             findAllUsers : findAllUsers,
@@ -13,7 +13,13 @@
             findUserByUsername : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
             updateUser : updateUser,
-            deleteUserById : deleteUserById
+            deleteUserById : deleteUserById,
+            setCurrentUser: setCurrentUser,
+
+            /* for session implementation
+            getCurrentUser: getCurrentUser,
+            logout: logout
+            */
         };
         return api;
 
@@ -100,5 +106,37 @@
 
             return deferred.promise;
         }
+
+        function setCurrentUser(user) {
+            $rootScope.user = user;
+        }
+
+        /* for session implementation
+
+        function getCurrentUser() {
+            var deferred = $q.defer();
+
+            $http
+                .get("/api/assignment/user/loggedin")
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
+        function logout() {
+            var deferred = $q.defer();
+
+            $http
+                .post("/api/assignment/user/logout")
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
+         */
     }
 })();

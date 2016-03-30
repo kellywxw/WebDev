@@ -32,7 +32,7 @@
 
             function getUpdatedUser(user) {
                 console.log(user);
-                $rootScope.user = user;
+                UserService.setCurrentUser(user);
                 $location.url("/profile");
             }
         }
