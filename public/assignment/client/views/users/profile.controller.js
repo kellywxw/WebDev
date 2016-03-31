@@ -10,13 +10,15 @@
 
         var user = $rootScope.user;
 
+        var emails = user.emails.toString();
+
         model.updatedUser = {
             _id : user._id,
             username: user.username,
             password: user.password,
             firstName : user.firstName,
             lastName : user.lastName,
-            emails: user.emails
+            emails: emails
         }
 
         function update() {
