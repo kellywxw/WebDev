@@ -1,4 +1,3 @@
-var guid = require("guid");
 var q = require("q");
 
 module.exports = function(mongoose, db, formModel) {
@@ -20,7 +19,6 @@ module.exports = function(mongoose, db, formModel) {
 
         Form.findById(formId)
             .then(function(form) {
-                field._id = guid.create();
                 form.fields.push(field);
                 form.save(function (err, doc) {
                     if (err) {

@@ -42,14 +42,14 @@
         function addField(fieldType) {
             var field = {};
             if (fieldType == "single Line text") {
-                field = {"_id": null, "label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
+                field = {"label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
             } else if (fieldType == "multi line text") {
-                field = {"_id": null, "label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
+                field = {"label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
             } else if (fieldType == "date") {
-                field = {"_id": null, "label": "New Date Field", "type": "DATE"};
+                field = {"label": "New Date Field", "type": "DATE"};
             } else if (fieldType == "dropdown") {
                 field =
-                {"_id": null, "label": "New Dropdown", "type": "OPTIONS", "options": [
+                {"label": "New Dropdown", "type": "OPTIONS", "options": [
                     {"label": "Option 1", "value": "OPTION_1"},
                     {"label": "Option 2", "value": "OPTION_2"},
                     {"label": "Option 3", "value": "OPTION_3"}
@@ -57,7 +57,7 @@
 
             } else if (fieldType == "checkboxes") {
                 field =
-                {"_id": null, "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+                {"label": "New Checkboxes", "type": "CHECKBOXES", "options": [
                     {"label": "Option A", "value": "OPTION_A"},
                     {"label": "Option B", "value": "OPTION_B"},
                     {"label": "Option C", "value": "OPTION_C"}
@@ -65,7 +65,7 @@
 
             } else if (fieldType == "radio buttons") {
                 field =
-                {"_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
+                {"label": "New Radio Buttons", "type": "RADIOS", "options": [
                     {"label": "Option X", "value": "OPTION_X"},
                     {"label": "Option Y", "value": "OPTION_Y"},
                     {"label": "Option Z", "value": "OPTION_Z"}
@@ -83,7 +83,7 @@
         }
 
         function cloneField(field) {
-            var clonedField = {"_id": null, "label": field.label, "type": field.type,
+            var clonedField = {"label": field.label, "type": field.type,
                 "placeholder": field.placeholder, "options": field.options};
 
             FieldService

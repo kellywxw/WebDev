@@ -12,6 +12,7 @@
         model.updateForm = updateForm;
         model.deleteForm = deleteForm;
 
+
         var user = $rootScope.user;
 
         if(user != null) {

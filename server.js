@@ -24,7 +24,7 @@ var db = mongoose.connect(connectionString);
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(multer());
-//app.use(session({ secret: process.env.PASSPORT_SECRET , cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true }));
+app.use(session({ secret: process.env.PASSPORT_SECRET}))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 

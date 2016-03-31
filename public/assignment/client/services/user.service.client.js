@@ -16,10 +16,8 @@
             deleteUserById : deleteUserById,
             setCurrentUser: setCurrentUser,
 
-            /* for session implementation
             getCurrentUser: getCurrentUser,
             logout: logout
-            */
         };
         return api;
 
@@ -111,13 +109,11 @@
             $rootScope.user = user;
         }
 
-        /* for session implementation
-
         function getCurrentUser() {
             var deferred = $q.defer();
 
             $http
-                .get("/api/assignment/user/loggedin")
+                .get("/api/assignment/loggedin")
                 .success(function(response){
                     deferred.resolve(response);
                 })
@@ -129,7 +125,7 @@
             var deferred = $q.defer();
 
             $http
-                .post("/api/assignment/user/logout")
+                .post("/api/assignment/logout")
                 .success(function(response){
                     deferred.resolve(response);
                 })
@@ -137,6 +133,5 @@
             return deferred.promise;
         }
 
-         */
     }
 })();
