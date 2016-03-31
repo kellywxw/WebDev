@@ -11,6 +11,7 @@
         model.updateField = updateField;
         model.selectField = selectField;
         model.deleteField = deleteField;
+        model.sortField = sortField;
 
         var userId = $routeParams.userId;
         var formId = $routeParams.formId;
@@ -173,6 +174,20 @@
                 console.log(fields);
                 model.fields = fields;
             };
+        }
+
+        function sortField(start, end) {
+            FieldService
+                .sortField(formId, start, end)
+                .then(
+                    function (response) {
+                        console.log(response);
+                        model.fields = response;
+                    },
+                    function (err) {
+                        model.error = err;
+                    }
+                );
         }
     }
 })();

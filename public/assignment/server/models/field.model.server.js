@@ -10,7 +10,8 @@ module.exports = function(mongoose, db, formModel) {
         getFieldsForForm : getFieldsForForm,
         getFieldForForm : getFieldForForm,
         updateField : updateField,
-        deleteFieldFromForm : deleteFieldFromForm
+        deleteFieldFromForm : deleteFieldFromForm,
+        sortField: sortField
     };
     return api;
 
@@ -114,6 +115,30 @@ module.exports = function(mongoose, db, formModel) {
                     }
                 });
             });
+
+        return deferred.promise;
+    }
+
+    function sortField(formId, startIndex, endIndex) {
+        var deferred = q.defer();
+
+        Form.findById(formId)
+            .then(
+                function(form) {
+                    form.fields.splice(endIndex, 0, form.fields.splice(startIndex, 1)[0]);
+
+                    // notify mongoose 'pages' field changed
+                    form.markModified("pages");
+
+                    form.save(function (err, doc) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(doc);
+                        }
+                    });
+                }
+            );
 
         return deferred.promise;
     }

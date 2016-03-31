@@ -11,7 +11,8 @@
             getFieldsForForm : getFieldsForForm,
             getFieldForForm : getFieldForForm,
             updateField : updateField,
-            deleteFieldFromForm : deleteFieldFromForm
+            deleteFieldFromForm : deleteFieldFromForm,
+            sortField: sortField
         };
         return api;
 
@@ -68,6 +69,18 @@
 
             $http
                 .delete("/api/assignment/form/" + formId + "/field/" + fieldId)
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
+        function sortField (formId, startIndex, endIndex) {
+            var deferred = $q.defer();
+
+            $http
+                .put("/api/assignment/form/"+formId+"/field?startIndex="+startIndex+"&endIndex="+endIndex)
                 .success(function(response){
                     deferred.resolve(response);
                 })
