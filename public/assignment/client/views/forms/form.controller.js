@@ -61,8 +61,7 @@
 
             model.newForm = {
                 title : form.title,
-                userId : form.userId,
-                fields:[]
+                userId : form.userId
             }
         }
 
