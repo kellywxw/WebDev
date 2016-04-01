@@ -99,7 +99,6 @@ module.exports = function(app, fieldModel) {
                 )
                 .then(
                     function(fields) {
-                        console.log(123);
                         res.json(fields);
                     },
                     function(err) {

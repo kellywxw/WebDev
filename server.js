@@ -6,8 +6,10 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 
+/*
 // create a default connection string
 var connectionString = 'mongodb://localhost/FormBuilderDB';
+
 
 // use remote connection string
 // if running in remote server
@@ -20,6 +22,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 }
 
 var db = mongoose.connect(connectionString);
+*/
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());

@@ -5,7 +5,7 @@ module.exports = function(mongoose) {
         type: {
             type: String,
             default: "TEXT",
-            enum: ["TEXT", "TEXTAREA", "DATE", "OPTIONS", "RADIOS", "CHECKBOXES"]
+            enum: ["TEXT", "TEXTAREA", "EMAIL", "PASSWORD", "DATE", "OPTIONS", "RADIOS", "CHECKBOXES"]
         },
         placeholder: String,
         options: [{label: String, value: String}],

@@ -46,6 +46,10 @@
                 field = {"label": "New Text Field", "type": "TEXT", "placeholder": "New Field"};
             } else if (fieldType == "multi line text") {
                 field = {"label": "New Text Field", "type": "TEXTAREA", "placeholder": "New Field"};
+            } else if (fieldType == "email") {
+                field = {"label": "New Email Field", "type": "EMAIL", "placeholder": "New Field"};
+            } else if (fieldType == "password") {
+                field = {"label": "New Password Field", "type": "PASSWORD", "placeholder": "New Field"};
             } else if (fieldType == "date") {
                 field = {"label": "New Date Field", "type": "DATE"};
             } else if (fieldType == "dropdown") {

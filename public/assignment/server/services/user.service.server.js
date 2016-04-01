@@ -116,7 +116,6 @@ module.exports = function(app, userModel) {
     }
 
     function logout(req, res) {
-        console.log(123);
         req.session.destroy();
         res.send(200);
     }

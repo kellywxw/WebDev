@@ -19,6 +19,12 @@
                         <div ng-switch-when="TEXTAREA">
                             <input type="text" class="form-control" placeholder={{field.placeholder}}>
                         </div>
+                        <div ng-switch-when="EMAIL">
+                            <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                        </div>
+                        <div ng-switch-when="PASSWORD">
+                            <input type="text" class="form-control" placeholder={{field.placeholder}}>
+                        </div>
                         <div ng-switch-when="DATE">
                             <input type="date" class="form-control" placeholder={{field.placeholder}}>
                         </div>
@@ -64,6 +70,8 @@
                     <select ng-model="model.fieldType" id="addfield" class="form-control">
                         <option value="single Line text">Single Line Text</option>
                         <option value="multi line text">Multi Line Text</option>
+                        <option value="email">Email</option>
+                        <option value="password">Password</option>
                         <option value="date">Date</option>
                         <option value="dropdown">Dropdown</option>
                         <option value="checkboxes">Checkboxes</option>
@@ -97,6 +105,14 @@
                         <div ng-switch-when="TEXTAREA">
                             <label>Placeholder</label>
                             <textarea ng-model="model.newField.placeholder" type="text" class="form-control"></textarea>
+                        </div>
+                        <div ng-switch-when="EMAIL">
+                            <label>Placeholder</label>
+                            <input ng-model="model.newField.placeholder" type="text" class="form-control">
+                        </div>
+                        <div ng-switch-when="PASSWORD">
+                            <label>Placeholder</label>
+                            <input ng-model="model.newField.placeholder" type="text" class="form-control">
                         </div>
                         <div ng-switch-when="DATE">
                         </div>

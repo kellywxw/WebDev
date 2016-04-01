@@ -11,11 +11,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-show="!user", ng-class="{'active': model.$location.url() == '/register'}"><a href="#/register">Register</a></li>
-                <li ng-show="!user", ng-class="{'active': model.$location.url() == '/login'}"><a href="#/login">Login</a></li>
-                <li ng-show="user", ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a href="#/profile">{{user.username}}</a></li>
-                <li ng-show="user && user.roles.indexOf('admin') >= 0", ng-class="{'active': model.$location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
-                <li ng-show="user"><a ng-click="model.logout()">Logout</a></li>
+                <li ng-show="!user", ng-class="{'active': $location.url() == '/register'}"><a href="#/register">Register</a></li>
+                <li ng-show="!user", ng-class="{'active': $location.url() == '/login'}"><a href="#/login">Login</a></li>
+                <li ng-show="user", ng-class="{'active': $location.url().indexOf('/profile')>=0}"><a href="#/profile">{{user.username}}</a></li>
+                <li ng-show="user && user.roles.indexOf('admin') >= 0", ng-class="{'active': $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
+                <li ng-show="user"><a ng-click="logout()">Logout</a></li>
             </ul>
         </div>
     </div>
