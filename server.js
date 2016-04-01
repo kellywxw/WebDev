@@ -6,6 +6,12 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 
+
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port = process.env.OPENSHIFT_NODEJS_PORT ||process.env.PORT || 3000;
+
+app.listen(port, ipaddress);
+
 /*
 // create a default connection string
 var connectionString = 'mongodb://localhost/FormBuilderDB';
@@ -31,13 +37,12 @@ app.use(session({ secret: process.env.PASSPORT_SECRET}))
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
 
 require("./public/assignment/server/app.js")(app, mongoose, db);
 require("./public/project/server/app.js")(app, mongoose, db);
 
-app.listen(port, ipaddress);
+
 
 /*
  app.get('/hello', sayHello);
