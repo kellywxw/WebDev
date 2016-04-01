@@ -60,7 +60,6 @@
             model.selectedForm = form;
 
             model.newForm = {
-                _id : form._id,
                 title : form.title,
                 userId : form.userId,
                 fields:[]

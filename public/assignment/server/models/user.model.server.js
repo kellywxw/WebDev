@@ -96,7 +96,7 @@ module.exports = function(mongoose, db) {
     }
 
     function updateUser(userId, updatedUser) {
-        updatedUser.emails = updatedUser.emails.split(",")
+        updatedUser.emails = updatedUser.emails.split(",");
 
         var deferred = q.defer();
 

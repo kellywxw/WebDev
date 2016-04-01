@@ -104,23 +104,20 @@ module.exports = function(mongoose, db) {
 
         var deferred = q.defer();
 
-        Form.findByIdAndUpdate(
-            {_id: formId},
-            {$set: newForm},
-            function (err, doc) {
-                if (err) {
-                    deferred.reject(err);
-                } else {
-                    Form.find(function (err, doc) {
-                        if (err) {
-                            deferred.reject(err);
-                        } else {
-                            console.log(doc);
-                            deferred.resolve(doc);
-                        }
-                    });
-                }
-            });
+        Form.findByIdAndUpdate(formId, newForm, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                Form.find(function (err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        console.log(doc);
+                        deferred.resolve(doc);
+                    }
+                });
+            }
+        });
 
         return deferred.promise;
     }

@@ -13,7 +13,6 @@
         var emails = user.emails.toString();
 
         model.updatedUser = {
-            _id : user._id,
             username: user.username,
             password: user.password,
             firstName : user.firstName,
