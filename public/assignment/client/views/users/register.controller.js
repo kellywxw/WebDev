@@ -17,7 +17,6 @@
             }
 
             function userCreate (users) {
-                console.log(users);
                 UserService
                     .findUserByCredentials(model.newUser.username, model.newUser.password)
                     .then(getCreatedUser);

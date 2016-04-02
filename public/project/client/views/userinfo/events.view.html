@@ -27,9 +27,9 @@
                 <th>Action</th>
             </tr>
             </thead>
-            <tbody ui-sortable="model.events" >
+            <tbody jga-sortable jga-sortable-callback="model.sortEvents" >
             <tr ng-repeat="event in model.events">
-                <td><img height="75px" ng-src="{{event.image}}"/></td>
+                <td><img height="75px" ng-src="{{event.poster}}"/></td>
                 <td>{{event.title}}</td>
                 <td>{{event.location}}</td>
                 <td>{{event.startDate | date}}</td>
@@ -55,10 +55,10 @@
                     <input ng-model="model.newEvent.location" type="text" class="form-control" id="location" placeholder="location">
                 </td>
                 <td>
-                    <input ng-model="model.newEvent.startDate" type="date" class="form-control" id="startDate" placeholder="start date">
+                    <input ng-model="model.newEvent.startDate" type="datetime" class="form-control" id="startDate" placeholder="start date">
                 </td>
                 <td>
-                    <input ng-model="model.newEvent.endDate" type="date" class="form-control" id="endDate" placeholder="end date">
+                    <input ng-model="model.newEvent.endDate" type="datetime" class="form-control" id="endDate" placeholder="end date">
                 </td>
                 <td>
                     <a ng-click="model.addEvent()">
@@ -69,35 +69,6 @@
                     </a>
                 </td>
             </tr>
-        </table>
-    </div>
-    <div class="col-sm-10 col-lg-10" ng-show="model.likesEvents">
-        <table class="table table-hover table-responsive">
-            <thead>
-            <h4>My Interests</h4>
-            <tr>
-                <th>Poster</th>
-                <th>Title</th>
-                <th>Location</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody ui-sortable="model.likesEvents" >
-            <tr ng-repeat="event in model.likesEvents">
-                <td><img height="75px" ng-src="{{event.image}}"/></td>
-                <td>{{event.title}}</td>
-                <td>{{event.location}}</td>
-                <td>{{event.startDate | date}}</td>
-                <td>{{event.endDate | date}}</td>
-                <td>
-                    <a ng-click="model.deleteEvent($index)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
         </table>
     </div>
 </div>

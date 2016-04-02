@@ -10,7 +10,8 @@
             findAllEventsForUser : findAllEventsForUser,
             findEventById : findEventById,
             updateEventById : updateEventById,
-            deleteEventById : deleteEventById
+            deleteEventById : deleteEventById,
+            sortEvent: sortEvent
         };
         return api;
 
@@ -73,5 +74,18 @@
 
             return deferred.promise;
         }
+
+        function sortEvent (userId, startIndex, endIndex) {
+            var deferred = $q.defer();
+
+            $http
+                .put("/api/project/user/"+ userId +"/event?startIndex="+startIndex+"&endIndex="+endIndex)
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
     }
 })();

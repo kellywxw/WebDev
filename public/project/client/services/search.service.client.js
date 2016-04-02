@@ -8,7 +8,7 @@
     function SearchService($http, $q) {
         var api = {
             findEventByTitle : findEventByTitle,
-            findEventByEventfulId: findEventByEventfulId
+            findEventByEvdbId: findEventByEvdbId
         };
         return api;
 
@@ -27,7 +27,7 @@
             return deferred.promise;
         }
 
-        function findEventByEventfulId(id) {
+        function findEventByEvdbId(id) {
             var deferred = $q.defer();
 
             $.ajax({

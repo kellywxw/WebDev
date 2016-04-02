@@ -1,17 +1,25 @@
-module.exports = function(app, userModel, eventfulModel) {
+module.exports = function(app, userModel, evdbModel) {
     app.post("/api/project/user", createUser);
     app.get("/api/project/user", findUser);
-    app.get("/api/project/user/loggedin", loggedin);
-    app.post("/api/project/user/logout", logout);
     app.get("/api/project/user/:id", findUserById);
     app.put("/api/project/user/:id", updateUser);
     app.delete("/api/project/user/:id", deleteUser);
 
+    app.get("/api/project/loggedin", loggedin);
+    app.post("/api/project/logout", logout);
+
     function createUser(req, res) {
         var newUser = req.body;
-        var user = userModel.createUser(newUser);
-        //req.session.user = user;
-        res.json(user);
+        userModel
+            .createUser(newUser)
+            .then(
+                function(users) {
+                    res.json(users);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function findUser(req, res) {
@@ -22,16 +30,104 @@ module.exports = function(app, userModel, eventfulModel) {
                 username: username,
                 password: password
             }
-            var user = userModel.findUserByCredentials(credentials);
-            //req.session.user = user;
-            res.json(user);
+            userModel
+                .findUserByCredentials(credentials)
+                .then(
+                    function(user) {
+                        req.session.user = user;
+                        res.json(user);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         } else if (username != null) {
-            var user = userModel.findUserByUsername(username);
-            res.json(user);
+            userModel
+                .findUserByUsername(username)
+                .then(
+                    function(user) {
+                        res.json(user);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         } else {
-            var users = userModel.findAllUsers();
-            res.json(users);
+            userModel
+                .findAllUsers()
+                .then(
+                    function(users) {
+                        res.json(users);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         }
+    }
+
+    function findUserById(req, res) {
+        var userId = req.params.id;
+        var user = null;
+
+        userModel
+            .findUserById(userId)
+            .then(
+                function(doc) {
+                    user = doc;
+                    console.log(user.likes);
+                    return evdbModel.findEventsByEvdbIds(user.likes);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                // fetch events this user likes
+                function (events) {
+
+                    // list of events this user likes
+                    // events are not stored in database
+                    // only added for UI rendering
+                    user.likeEvents = events;
+                    console.log(user);
+                    res.json(user);
+                },
+
+                // send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+    }
+
+    function updateUser(req, res) {
+        var userId = req.params.id;
+        var user = req.body;
+        userModel
+            .updateUser(userId,user)
+            .then(function(users) {
+                    req.session.user = user;
+                    res.json(users);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function deleteUser(req, res) {
+        var userId = req.params.id;
+        userModel
+            .deleteUser(userId)
+            .then(
+                function(users) {
+                    res.json(users);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     function loggedin(req, res) {
@@ -41,29 +137,5 @@ module.exports = function(app, userModel, eventfulModel) {
     function logout(req, res) {
         req.session.destroy();
         res.send(200);
-    }
-
-    function findUserById(req, res) {
-        var userId = req.params.id;
-        var user = userModel.findUserById(userId);
-        var eventfulIds = user.likes;
-        console.log(eventfulIds);
-        var eventfulEvents = eventfulModel.findEventsByEventfulIds(eventfulIds);
-        console.log(eventfulEvents);
-        user.likesEvents = eventfulEvents;
-        res.json(user);
-    }
-
-    function updateUser(req, res) {
-        var userId = req.params.id;
-        var user = req.body;
-        var updatedUser = userModel.updateUser(userId,user);
-        res.json(updatedUser);
-    }
-
-    function deleteUser(req, res) {
-        var userId = req.params.id;
-        var users = userModel.deleteUser(userId);
-        res.json(users);
     }
 }

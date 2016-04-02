@@ -4,12 +4,13 @@
         .module("ChopChopApp")
         .controller("EventController", EventController);
 
-    function EventController($rootScope, $location, EventService, UserService) {
+    function EventController($rootScope, $location, EventService) {
         var model = this;
         model.addEvent = addEvent;
         model.updateEvent = updateEvent;
         model.selectEvent= selectEvent;
         model.deleteEvent = deleteEvent;
+        model.sortEvent = sortEvent;
 
         model.$location = $location;
 
@@ -27,20 +28,8 @@
             };
         }
 
-        function loadLikedEventsForUser() {
-            UserService
-                .findUserById(user._id)
-                .then(likedEventsLoad);
-
-            function likedEventsLoad(user) {
-                console.log(user.likesEvents);
-                model.likesEvents = user.likesEvents;
-            };
-        }
-
         if(user != null) {
             loadEventsForUser();
-            //loadLikedEventsForUser();
         }
 
         function addEvent() {
@@ -73,7 +62,6 @@
             model.selectedEvent = event;
 
             model.newEvent = {
-                _id : event._id,
                 image: event.image,
                 title : event.title,
                 location: event.location,
@@ -88,6 +76,20 @@
             EventService
                 .deleteEventById(eventId)
                 .then(loadEventsForUser);
+        }
+
+        function sortEvent(start, end) {
+            EventService
+                .sortEvent(user._id, start, end)
+                .then(
+                    function (response) {
+                        console.log(response);
+                        model.events = response;
+                    },
+                    function (err) {
+                        model.error = err;
+                    }
+                );
         }
     }
 })();

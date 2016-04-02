@@ -96,26 +96,23 @@ module.exports = function(mongoose, db) {
     }
 
     function updateUser(userId, updatedUser) {
-        updatedUser.emails = updatedUser.emails.split(",");
+        updatedUser.emails = updatedUser.emails.split(", ");
 
         var deferred = q.defer();
 
-        UserModel.update(
-            {_id: userId},
-            {$set: updatedUser},
-            function (err, user) {
-                if (err) {
-                    deferred.reject(err);
-                } else {
-                    UserModel.find(function (err, users) {
-                        if (err) {
-                            deferred.reject(err);
-                        } else {
-                            deferred.resolve(users);
-                        }
-                    });
-                }
-            });
+        UserModel.findByIdAndUpdate(userId, updatedUser, function (err, user) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                UserModel.find(function (err, users) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(users);
+                    }
+                });
+            }
+        });
 
         return deferred.promise;
     }

@@ -14,8 +14,8 @@
             findUserByCredentials : findUserByCredentials,
             updateUser : updateUser,
             deleteUserById : deleteUserById,
-            setCurrentUser: setCurrentUser,
 
+            setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             logout: logout
         };

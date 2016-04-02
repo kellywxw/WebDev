@@ -4,16 +4,11 @@
         .module("ChopChopApp")
         .controller("HeaderController", HeaderController);
 
-    function HeaderController($location) {
-        var model = this;
-        model.logout= logout;
-
-        model.$location = $location;
-
-        function logout() {
+    function HeaderController($scope, $location, UserService) {
+        $scope.logout = function logout() {
             UserService
                 .logout()
-                .then(function(){
+                .then(function() {
                     UserService.setCurrentUser(null);
                     $location.url("/home");
                 });

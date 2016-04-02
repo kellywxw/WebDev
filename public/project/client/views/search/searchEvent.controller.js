@@ -4,16 +4,16 @@
         .module("ChopChopApp")
         .controller("SearchEventController", SearchEventController);
 
-    function SearchEventController($rootScope, $location, $routeParams, SearchService, EventfulService) {
+    function SearchEventController($rootScope, $location, $routeParams, SearchService, EvdbService) {
         var model = this;
 
-        var eventfulId = $routeParams.id;
+        var evdbId = $routeParams.id;
         var user = $rootScope.user;
         model.favorite = favorite;
 
         function init() {
             SearchService
-                .findEventByEventfulId(eventfulId)
+                .findEventByEvdbId(evdbId)
                 .then(function(response){
                     model.data = response;
                     if(model.data.images) {
@@ -28,8 +28,8 @@
                     console.log(model.data);
                 });
 
-            EventfulService
-                .findUserLikes (eventfulId)
+            EvdbService
+                .findUserLikes (evdbId)
                 .then(function(response){
                     model.event = response;
                 });
@@ -38,7 +38,11 @@
 
         function favorite(event) {
             if(user) {
-                EventfulService
+                if(model.event) {
+                    model.event.likes = [];
+                    model.event.likes.push(user._id);
+                }
+                EvdbService
                     .userLikesEvent(user._id, event);
             } else {
                 $location.url("/login");

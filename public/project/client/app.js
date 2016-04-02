@@ -1,5 +1,5 @@
 (function () {
     "use strict";
     angular
-        .module("ChopChopApp", ["ngRoute","ui.sortable"]);
+        .module("ChopChopApp", ["ngRoute","jgaDirectives"]);
 })();

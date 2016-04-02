@@ -13,6 +13,7 @@
             findUserByCredentials : findUserByCredentials,
             updateUser : updateUser,
             deleteUserById : deleteUserById,
+
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
             logout: logout
@@ -112,7 +113,7 @@
             var deferred = $q.defer();
 
             $http
-                .get("/api/project/user/loggedin")
+                .get("/api/project/loggedin")
                 .success(function(response){
                     deferred.resolve(response);
                 })
@@ -124,7 +125,7 @@
             var deferred = $q.defer();
 
             $http
-                .post("/api/project/user/logout")
+                .post("/api/project/logout")
                 .success(function(response){
                     deferred.resolve(response);
                 })

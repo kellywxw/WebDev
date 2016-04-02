@@ -8,7 +8,10 @@
         $routeProvider
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
-                controller: "HomeController"
+                controller: "HomeController",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/register", {
                 templateUrl: "views/users/register.view.html",
@@ -23,33 +26,51 @@
             .when("/profile/:username?", {
                 templateUrl: "views/userinfo/profile.view.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/profileUpdate", {
                 templateUrl: "views/userinfo/profileUpdate.view.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/events", {
                 templateUrl: "views/userinfo/events.view.html",
                 controller: "EventController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
             .when("/friends", {
                 templateUrl: "views/userinfo/friends.view.html",
                 controller: "FriendController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
             })
 
             .when("/search", {
                 templateUrl: "views/search/search.view.html",
                 controller: "SearchController",
                 controllerAs: "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
             .when("/searchEvent/:id", {
                 templateUrl: "views/search/searchEvent.view.html",
                 controller: "SearchEventController",
                 controllerAs: "model",
+                resolve: {
+                    getLoggedIn: getLoggedIn
+                }
             })
 
             .otherwise({
@@ -62,9 +83,8 @@
 
         UserService
             .getCurrentUser()
-            .then(function(response){
-                var currentUser = response.data;
-                UserService.setCurrentUser(currentUser);
+            .then(function(user){
+                UserService.setCurrentUser(user);
                 deferred.resolve();
             });
 
@@ -77,10 +97,9 @@
 
         UserService
             .getCurrentUser()
-            .then(function(response) {
-                var currentUser = response.data;
-                if(currentUser) {
-                    UserService.setCurrentUser(currentUser);
+            .then(function(user) {
+                if(user) {
+                    UserService.setCurrentUser(user);
                     deferred.resolve();
                 } else {
                     deferred.reject();
