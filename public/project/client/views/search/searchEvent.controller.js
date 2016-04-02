@@ -9,7 +9,8 @@
 
         var evdbId = $routeParams.id;
         var user = $rootScope.user;
-        model.favorite = favorite;
+        model.like = like;
+        model.unlike = unlike;
 
         function init() {
             SearchService
@@ -31,12 +32,13 @@
             EvdbService
                 .findUserLikes (evdbId)
                 .then(function(response){
+                    console.log(response);
                     model.event = response;
                 });
         }
         init();
 
-        function favorite(event) {
+        function like(event) {
             if(user) {
                 if(model.event) {
                     model.event.likes = [];
@@ -44,6 +46,18 @@
                 }
                 EvdbService
                     .userLikesEvent(user._id, event);
+            } else {
+                $location.url("/login");
+            }
+        }
+
+        function unlike(evdbId) {
+            if(user) {
+                if(model.event) {
+                    model.event.likes = [];
+                }
+                EvdbService
+                    .userUnlikesEvent(user._id, evdbId);
             } else {
                 $location.url("/login");
             }

@@ -4,11 +4,12 @@ module.exports = function(mongoose) {
         title: String,
         poster: String,
         location: String,
-        startDate: {type: Date},
-        endDate: {type: Date},
-        // ids of users that like this movie
+        startDate: Date,
+        endDate: Date,
+        cost: String,
+        // ids of users that like this event
         likes: [String],
-        // list of users that like this movie
+        // list of users that like this event
         userLikes: [
             {username: String}
         ]

@@ -13,7 +13,8 @@ module.exports = function(mongoose, db) {
         findUserByCredentials : findUserByCredentials,
         updateUser : updateUser,
         deleteUser : deleteUser,
-        userLikesEvent: userLikesEvent
+        userLikesEvent: userLikesEvent,
+        userUnlikesEvent : userUnlikesEvent
     };
     return api;
 
@@ -59,11 +60,8 @@ module.exports = function(mongoose, db) {
             {_id: {$in: userIds}},
             function (err, users) {
                 if (err) {
-                    console.log("failed:user model findUsersByIds:");
                     deferred.reject(err);
                 } else {
-                    console.log("user model findUsersByIds:");
-                    console.log(users);
                     deferred.resolve(users);
                 }
         });
@@ -158,34 +156,59 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    // add event to user likes
+    // add event to user.likes
     function userLikesEvent (userId, event) {
 
         var deferred = q.defer();
 
         // find the user
         UserModel.findById(userId, function (err, doc) {
-            console.log(123);
 
             // reject promise if error
             if (err) {
-                console.log("failed: add event to user.likes ");
-                console.log(err);
                 deferred.reject(err);
             } else {
-                console.log("add event to user.likes");
-                console.log(doc);
                 // add event id to user likes
-                doc.likes.push (event.evdbId);
-
+                var index = doc.likes.indexOf(event.evdbId);
+                if(index == -1) {
+                    doc.likes.push(event.evdbId);
+                }
                 // save user
                 doc.save (function (err, doc) {
 
                     if (err) {
                         deferred.reject(err);
                     } else {
-                        console.log("user model userLikesEvent:");
-                        console.log(doc);
+                        deferred.resolve (doc);
+                    }
+                });
+            }
+        });
+
+        return deferred;
+    }
+
+    // remove event from user.likes
+    function userUnlikesEvent (userId, evdbId) {
+
+        var deferred = q.defer();
+
+        // find the user
+        UserModel.findById(userId, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+                // remove event id from user.likes
+                var index = doc.likes.indexOf(evdbId);
+                doc.likes.splice(index,1);
+                // save user
+                doc.save (function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
                         deferred.resolve (doc);
                     }
                 });

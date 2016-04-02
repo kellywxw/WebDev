@@ -1,44 +1,7 @@
 module.exports = function(app, evdbModel, userModel) {
-    app.post("/api/project/user/:userId/evdb/:evdbId", userLikesEvent);
     app.get("/api/project/evdb/:evdbId/user", findUserLikes);
-
-    /*
-    user likes event
-    - add user to event.likes
-    - add event to user.likes
-    */
-    function userLikesEvent(req, res) {
-        var evdbEvent  = req.body;
-        var userId = req.params.userId;
-        var evdbId = req.params.evdbId;
-        var event;
-
-
-        evdbModel
-            .userLikesEvent(userId, evdbEvent)
-            // add user to event likes
-            .then(
-                function (event) {
-                    console.log("evdb service: userLikesEvent-add user to event likes");
-                    console.log(event);
-                    return userModel.userLikesEvent(userId, event);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            )
-            // add event to user likes
-            .then(
-                function (user) {
-                    console.log("evdb service: userLikesEvent -add event to user likes");
-                    console.log(user);
-                    res.json(user);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
+    app.post("/api/project/user/:userId/evdb/like/:evdbId", userLikesEvent);
+    app.post("/api/project/user/:userId/evdb/unlike/:evdbId", userUnlikesEvent);
 
     /*
     find all users like this event
@@ -53,8 +16,6 @@ module.exports = function(app, evdbModel, userModel) {
                 function (doc) {
                     event = doc;
                     if (doc) {
-                        console.log("evdb service: findUserLikes - event.likes");
-                        console.log(doc.likes);
                         return userModel.findUsersByIds(event.likes);
                     } else {
                         res.json ({});
@@ -67,12 +28,66 @@ module.exports = function(app, evdbModel, userModel) {
             .then (
                 function (users) {
                     event.userLikes = users;
-                    console.log("evdb service: findUserLikes - event.userLikes");
-                    console.log(users);
                     res.json(event);
                 },
                 function (err) {
-                    console.log("failed:evdb service: findUserLikes - event.userLikes");
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    /*
+     user likes event
+     - add user to event.likes
+     - add event to user.likes
+     */
+    function userLikesEvent(req, res) {
+        var evdbEvent  = req.body;
+        var userId = req.params.userId;
+
+        evdbModel
+            .userLikesEvent(userId, evdbEvent)
+            // add user to event likes
+            .then(
+                function (event) {
+                    return userModel.userLikesEvent(userId, event);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            // add event to user likes
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function userUnlikesEvent(req, res) {
+        var userId = req.params.userId;
+        var evdbId = req.params.evdbId;
+
+        evdbModel
+            .userUnlikesEvent(userId, evdbId)
+            // remove user from event likes
+            .then(
+                function (event) {
+                    return userModel.userUnlikesEvent(userId, evdbId);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
+            // remove event from user likes
+            .then(
+                function (user) {
+                    res.json(user);
+                },
+                function (err) {
                     res.status(400).send(err);
                 }
             );

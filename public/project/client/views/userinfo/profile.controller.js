@@ -7,7 +7,7 @@
     function ProfileController($rootScope, $location, UserService, EvdbService) {
         var model = this;
         model.update = update;
-        model.deleteEvent = deleteEvent;
+        model.unlike = unlike;
 
         var user = $rootScope.user;
 
@@ -17,7 +17,6 @@
                 .then(likedEventsLoad);
 
             function likedEventsLoad(user) {
-                console.log(user.likeEvents);
                 model.likeEvents = user.likeEvents;
             };
         }
@@ -52,11 +51,14 @@
             }
         }
 
-        function deleteEvent(index) {
-            var eventId  = model.likeEvents[index]._id;
-            EvdbService
-                .deleteEventById(eventId)
-                .then(loadLikedEventsForUser());
+        function unlike(index, evdbId) {
+            if(user) {
+                model.likeEvents.splice(index,1);
+                EvdbService
+                    .userUnlikesEvent(user._id, evdbId);
+            } else {
+                $location.url("/login");
+            }
         }
     }
 })();

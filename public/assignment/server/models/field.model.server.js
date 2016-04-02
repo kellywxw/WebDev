@@ -127,8 +127,7 @@ module.exports = function(mongoose, db, formModel) {
                 function(form) {
                     form.fields.splice(endIndex, 0, form.fields.splice(startIndex, 1)[0]);
 
-                    // notify mongoose 'pages' field changed
-                    form.markModified("pages");
+                    form.markModified("fields");
 
                     form.save(function (err, doc) {
                         if (err) {

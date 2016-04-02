@@ -8,7 +8,8 @@ module.exports = function(mongoose, db) {
         createEvent : createEvent,
         findEventByEvdbId : findEventByEvdbId,
         findEventsByEvdbIds : findEventsByEvdbIds,
-        userLikesEvent: userLikesEvent
+        userLikesEvent: userLikesEvent,
+        userUnlikesEvent : userUnlikesEvent
     };
     return api;
 
@@ -18,9 +19,10 @@ module.exports = function(mongoose, db) {
             evdbId: event.id,
             poster: event.image.url,
             title: event.title,
-            location: event.venue,
+            location: event.city,
             startDate: event.start_time,
             endDate: event.stop_time,
+            const: event.cost,
             likes: []
         });
 
@@ -30,8 +32,6 @@ module.exports = function(mongoose, db) {
             if (err) {
                 deferred.reject(err)
             } else {
-                console.log("evdb model createEvent:")
-                console.log(doc);
                 deferred.resolve(doc);
             }
 
@@ -63,8 +63,6 @@ module.exports = function(mongoose, db) {
                 if (err) {
                     deferred.reject(err);
                 } else {
-                    console.log("evdb model findEventsByEvdbIds:");
-                    console.log(events);
                     deferred.resolve(events);
                 }
             })
@@ -72,6 +70,7 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
+    // add userId to event.likes
     function userLikesEvent (userId, event) {
 
         var deferred = q.defer();
@@ -86,27 +85,38 @@ module.exports = function(mongoose, db) {
                 // if there's an event
                 if (doc) {
                     // add user to likes
-                    doc.likes.push (userId);
+                    var index = doc.likes.indexOf(userId);
+                    if(index == -1) {
+                        doc.likes.push (userId);
+                    }
                     // save changes
                     doc.save(function(err, doc){
                         if (err) {
                             deferred.reject(err);
                         } else {
-                            console.log("evdb model userLikesEvent:")
-                            console.log(doc);
                             deferred.resolve(doc);
                         }
                     });
                 } else {
+                    var image = null;
+                    if(event.images) {
+                        if(event.images.image.length > 0) {
+                            image = event.images.image[0].medium.url;
+                        } else {
+                            image = event.images.image.medium.url;
+                        }
+                    }
+
                     // if there's no event
                     // create a new instance
                     event = new Evdb({
                         evdbId: event.id,
-                        poster: event.images.image[0].medium.url,
+                        poster: image,
                         title: event.title,
-                        location: event.city_name,
+                        location: event.city,
                         startDate: event.start_time,
                         endDate: event.stop_time,
+                        cost: event.price,
                         likes: []
                     });
                     // add user to likes
@@ -116,8 +126,37 @@ module.exports = function(mongoose, db) {
                         if (err) {
                             deferred.reject(err);
                         } else {
-                            console.log("evdb model userLikesEvent:")
-                            console.log(doc);
+                            deferred.resolve(doc);
+                        }
+                    });
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    // remove userId from event.likes
+    function userUnlikesEvent (userId, evdbId) {
+
+        var deferred = q.defer();
+
+        // find the event by evdbId
+        Evdb.findOne({evdbId: evdbId},
+            function (err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                }
+
+                // if there's an event
+                if (doc) {
+                    // remove user from likes
+                    var index = doc.likes.indexOf(userId);
+                    doc.likes.splice(index,1);
+                    // save changes
+                    doc.save(function(err, doc){
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
                             deferred.resolve(doc);
                         }
                     });

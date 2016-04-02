@@ -18,7 +18,7 @@
                 if (user != null) {
                     console.log(user);
                     UserService.setCurrentUser(user);
-                    $location.url("/events");
+                    $location.url("/profile");
                 }
             };
 

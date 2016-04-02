@@ -1,5 +1,5 @@
 module.exports = function(mongoose) {
-    var EventSchema = require("./event.schema.server.js")(mongoose);
+    var EvdbSchema = require("./eventful.schema.server.js")(mongoose);
 
     var UserSchema = mongoose.Schema({
         username: String,
@@ -7,10 +7,10 @@ module.exports = function(mongoose) {
         firstName: String,
         lastName: String,
         email: String,
-        // evdb ids of movies this user likes
+        // evdbIds of events this user likes
         likes: [String],
         // events this user likes
-        likeEvents: [EventSchema],
+        likeEvents: [EvdbSchema],
     }, {collection: 'ChopChopUser'});
 
     return UserSchema;
