@@ -31,6 +31,13 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
+            .when('/admin', {
+                templateUrl: 'views/admin/admin.view.html',
+                controller: 'AdminController',
+                resolve: {
+                    checkLoggedIn: checkAdmin
+                }
+            })
             .when("/admin", {
                 templateUrl: "views/admin/admin.view.html",
                 controller: "AdminController"
@@ -75,23 +82,41 @@
         return deferred.promise;
     }
 
-    function checkLoggedIn(UserService, $q, $location) {
+    function checkLoggedIn(UserService, $q, $location, $rootScope) {
 
         var deferred = $q.defer();
 
         UserService
             .getCurrentUser()
             .then(function(user) {
+                $rootScope.errorMessage = null;
                 if(user) {
                     UserService.setCurrentUser(user);
                     deferred.resolve();
                 } else {
+                    $rootScope.errorMessage = 'You need to log in.';
                     deferred.reject();
-                    $location.url("/home");
+                    $location.url("/login");
                 }
             });
 
         return deferred.promise;
     }
+
+    var checkAdmin = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        UserService
+            .getCurrentUser()
+            .then(function(user) {
+                $rootScope.errorMessage = null;
+                if (user !== '0' && user.roles.indexOf('admin') != -1) {
+                    UserService.setCurrentUser(user);
+                    deferred.resolve();
+                }
+            });
+
+        return deferred.promise;
+    };
 
 })();

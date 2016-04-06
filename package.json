@@ -31,6 +31,7 @@
     "mongoose": "^4.4.10",
     "multer": "^1.0.6",
     "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
     "q": "^1.4.1",
     "session": "^0.1.0"
   },
