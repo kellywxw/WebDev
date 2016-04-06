@@ -22,13 +22,7 @@ module.exports = function(mongoose, db) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, users) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(users);
-                    }
-                });
+                deferred.resolve(user);
             }
         });
 
@@ -96,7 +90,9 @@ module.exports = function(mongoose, db) {
     }
 
     function updateUser(userId, updatedUser) {
-        updatedUser.emails = updatedUser.emails.split(", ");
+        if(updatedUser.emails != null) {
+            updatedUser.emails = updatedUser.emails.split(",");
+        }
 
         var deferred = q.defer();
 
@@ -104,13 +100,7 @@ module.exports = function(mongoose, db) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, users) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(users);
-                    }
-                });
+                deferred.resolve(user);
             }
         });
 
@@ -124,13 +114,7 @@ module.exports = function(mongoose, db) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, users) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(users);
-                    }
-                });
+                deferred.resolve(user);
             }
         });
 

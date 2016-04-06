@@ -4,17 +4,10 @@ var LocalStrategy    = require('passport-local').Strategy;
 module.exports = function(app, userModel) {
     var auth = authorized;
 
-    app.get("/api/assignment/login", passport.authenticate('local'), login);
+    app.post("/api/assignment/login", passport.authenticate('local'), login);
     app.get("/api/assignment/loggedin", loggedin);
     app.post("/api/assignment/logout", logout);
     app.post  ('/api/assignment/register', register);
-
-    app.post("/api/assignment/user", auth, createUser);
-    app.get("/api/assignment/user", auth, findAllUsers);
-    app.get("/api/assignment/user/:id", auth, findUserById);
-    app.put("/api/assignment/user/:id", auth, updateUser);
-    app.delete("/api/assignment/user/:id", auth, deleteUser);
-
 
     app.post("/api/assignment/admin/user", auth, createUserByAdmin);
     app.get("/api/assignment/admin/user", auth, findAllUsersByAdmin);
@@ -108,121 +101,6 @@ module.exports = function(app, userModel) {
             );
     }
 
-    function createUser(req, res) {
-        var newUser = req.body;
-        if(newUser.roles && newUser.roles.length > 1) {
-            newUser.roles = newUser.roles.split(",");
-        } else {
-            newUser.roles = ["student"];
-        }
-
-        userModel
-            .findUserByUsername(newUser.username)
-            .then(
-                function(user){
-                    // if the user does not already exist
-                    if(user == null) {
-                        // create a new user, return all the users
-                        return userModel.createUser(newUser);
-                        // if the user already exists, then just fetch all the users
-                    } else {
-                        return userModel.findAllUsers();
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(users){
-                    res.json(users);
-                },
-                function(){
-                    res.status(400).send(err);
-                }
-            )
-    }
-
-    function findAllUsers(req, res) {
-        userModel
-            .findAllUsers()
-            .then(
-                function (users) {
-                    res.json(users);
-                },
-                function () {
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function findUserById(req, res) {
-        var userId = req.params.id;
-        userModel
-            .findUserById(userId)
-            .then(
-                function(user) {
-                    res.json(user);
-                },
-                function(err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function updateUser(req, res) {
-        var userId = req.params.id;
-        var newUser = req.body;
-
-        if(!isAdmin(req.user)) {
-            delete newUser.roles;
-        }
-        if(typeof newUser.roles == "string") {
-            newUser.roles = newUser.roles.split(",");
-        }
-
-        userModel
-            .updateUser(userId,newUser)
-            .then(
-                function(users) {
-                    req.session.user = user;
-                    res.json(users);
-                },
-                function(err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function deleteUser(req, res) {
-        var userId = req.params.id;
-        userModel
-            .deleteUser(userId)
-            .then(
-                function (users) {
-                    res.json(users);
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function isAdmin(user, req, res, next) {
-        if(user.roles.indexOf("admin") > 0 && loggedin(req, res)) {
-            next();
-        }
-        res.send(403);
-    }
-
-    function authorized (req, res, next) {
-        if (!req.isAuthenticated()) {
-            res.send(401);
-        } else {
-            next();
-        }
-    }
-
     function createUserByAdmin(req, res) {
         var newUser = req.body;
         if(newUser.roles && newUser.roles.length > 1) {
@@ -231,14 +109,24 @@ module.exports = function(app, userModel) {
             newUser.roles = ["student"];
         }
 
+        // first check if a user already exists with the username
         userModel
             .findUserByUsername(newUser.username)
             .then(
                 function(user){
                     // if the user does not already exist
                     if(user == null) {
-                        // create a new user, return all the users
-                        return userModel.createUser(newUser);
+                        // create a new user
+                        return userModel.createUser(newUser)
+                            .then(
+                                // fetch all the users
+                                function(){
+                                    return userModel.findAllUsers();
+                                },
+                                function(err){
+                                    res.status(400).send(err);
+                                }
+                            );
                         // if the user already exists, then just fetch all the users
                     } else {
                         return userModel.findAllUsers();
@@ -290,44 +178,75 @@ module.exports = function(app, userModel) {
     }
 
     function updateUserByAdmin(req, res) {
-        var userId = req.params.userId;
         var newUser = req.body;
-
         if(!isAdmin(req.user)) {
             delete newUser.roles;
         }
         if(typeof newUser.roles == "string") {
             newUser.roles = newUser.roles.split(",");
         }
+        if(isAdmin(req.user)) {
+            delete newUser.emails;
+        }
 
         userModel
-            .updateUser(userId,newUser)
+            .updateUser(req.params.userId, newUser)
             .then(
-                function(users) {
-                    req.session.user = user;
+                function(user){
+                    return userModel.findAllUsers();
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(users){
                     res.json(users);
                 },
-                function(err) {
+                function(err){
                     res.status(400).send(err);
                 }
             );
     }
 
     function deleteUserByAdmin(req, res) {
-        var userId = req.params.userId;
         if(isAdmin(req.user)) {
+
             userModel
-                .deleteUser(userId)
+                .deleteUser(req.params.userId)
                 .then(
-                    function (users) {
+                    function(user){
+                        return userModel.findAllUsers();
+                    },
+                    function(err){
+                        res.status(400).send(err);
+                    }
+                )
+                .then(
+                    function(users){
                         res.json(users);
                     },
-                    function (err) {
+                    function(err){
                         res.status(400).send(err);
                     }
                 );
         } else {
             res.status(403);
+        }
+    }
+
+    function isAdmin(user) {
+        if(user.roles.indexOf("admin") > 0) {
+            return true
+        }
+        return false;
+    }
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
         }
     }
 }

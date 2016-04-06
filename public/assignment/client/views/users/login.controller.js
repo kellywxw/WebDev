@@ -10,18 +10,17 @@
         model.$location = $location;
 
         function login() {
-            UserService
-                .findUserByCredentials(model.user.username, model.user.password)
-                .then(userLogin);
+            if(model.user) {
+                UserService
+                    .login(model.user)
+                    .then(userLogin);
+            }
 
             function userLogin(user) {
-                if (user != null) {
-                    console.log(user);
-                    UserService.setCurrentUser(user);
-                    $location.url("/profile");
-                }
+                console.log(user);
+                UserService.setCurrentUser(user);
+                $location.url("/profile");
             };
-
         }
     }
 })();

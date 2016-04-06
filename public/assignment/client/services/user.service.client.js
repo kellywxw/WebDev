@@ -79,7 +79,7 @@
             var deferred = $q.defer();
 
             $http
-                .post("/api/assignment/user", user)
+                .post("/api/assignment/admin/user", user)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -91,7 +91,7 @@
             var deferred = $q.defer();
 
             $http
-                .get("/api/assignment/user")
+                .get("/api/assignment/admin/user")
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -103,7 +103,7 @@
             var deferred = $q.defer();
 
             $http
-                .get("/api/assignment/user/"+ userId)
+                .get("/api/assignment/admin/user/"+ userId)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -115,7 +115,7 @@
             var deferred = $q.defer();
 
             $http
-                .put("/api/assignment/user/" + userId, user)
+                .put("/api/assignment/admin/user/" + userId, user)
                 .success(function(response) {
                     deferred.resolve(response);
                 })
@@ -127,7 +127,7 @@
             var deferred = $q.defer();
 
             $http
-                .delete("/api/assignment/user/" + userId)
+                .delete("/api/assignment/admin/user/" + userId)
                 .success(function(response){
                     deferred.resolve(response);
                 })

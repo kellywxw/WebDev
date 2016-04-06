@@ -11,7 +11,11 @@
                 .then(function() {
                     UserService.setCurrentUser(null);
                     $location.url("/home");
-                });
+                },
+                    function(err) {
+                        $scope.error = err;
+                    }
+                );
         }
     }
 })();

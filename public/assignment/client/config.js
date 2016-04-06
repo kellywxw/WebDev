@@ -38,10 +38,6 @@
                     checkLoggedIn: checkAdmin
                 }
             })
-            .when("/admin", {
-                templateUrl: "views/admin/admin.view.html",
-                controller: "AdminController"
-            })
             .when("/form", {
                 templateUrl: "views/forms/form.view.html",
                 controller: "FormController",
@@ -69,13 +65,17 @@
             });
     }
 
-    function getLoggedIn(UserService, $q) {
+    function getLoggedIn(UserService, $q, $rootScope) {
         var deferred = $q.defer();
 
         UserService
             .getCurrentUser()
-            .then(function(user){
-                UserService.setCurrentUser(user);
+            .then(function(user) {
+                $rootScope.errorMessage = null;
+                // User is Authenticated
+                if (user !== '0') {
+                    UserService.setCurrentUser(user);
+                }
                 deferred.resolve();
             });
 
@@ -103,7 +103,7 @@
         return deferred.promise;
     }
 
-    var checkAdmin = function($q, $timeout, $http, $location, $rootScope) {
+    var checkAdmin = function(UserService, $q, $timeout, $rootScope) {
         var deferred = $q.defer();
 
         UserService

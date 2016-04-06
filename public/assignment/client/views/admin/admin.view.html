@@ -6,71 +6,50 @@
             <thead>
             <tr>
                 <th><span class="caret"></span> UserName</th>
-                <th><span class="caret"></span> Password</th>
-                <th><span class="caret"></span> Role</th>
-                <th><span class="caret"></span> Action</th>
+                <th><span></span> Password</th>
+                <th><span class="caret"></span> First Name</th>
+                <th><span class="caret"></span> Last Name</th>
+                <th><span></span> Roles</th>
+                <th><span></span> Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>
-                    <input type="text" class="form-control" id="username" placeholder="username">
+                    <input ng-model="currUser.username" type="text" class="form-control" id="username" placeholder="username">
                 </td>
                 <td>
-                    <input type="password" class="form-control" id="password" placeholder="password">
+                    <input ng-model="currUser.password" type="password" class="form-control" id="password" placeholder="password">
                 </td>
                 <td>
-                    <input type="text" class="form-control" id="role" placeholder="role1, role2">
+                    <input ng-model="currUser.firstName" type="text" class="form-control" id="firstname" placeholder="first name">
                 </td>
                 <td>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </a>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </a>
+                    <input ng-model="currUser.lastName" type="text" class="form-control" id="lastname" placeholder="last name">
+                </td>
+                <td>
+                    <input ng-model="currUser.roles" type="text" class="form-control" id="roles" placeholder="role1, role2">
+                </td>
+                <td>
+                    <button ng-click="addUser(currUser)" class="btn btn-primary">Add</button>
+                </td>
+                <td>
+                    <button ng-click="updateUser(currUser)" class="btn btn-success">Update</button>
                 </td>
             </tr>
-            <tr>
-                <td>alice</td>
-                <td></td>
-                <td>student</td>
+            <tr ng-repeat="user in users">
+                <td>{{user.username}}</td>
+                <td>&nbsp;</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.roles}}</td>
                 <td>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
+                    <button ng-click="deleteUser(user)" class="btn btn-danger">Delete</button>
+                </td>
+                <td>
+                    <button ng-click="selectUser(user)" class="btn btn-success">Edit</button>
                 </td>
             </tr>
-            <tr>
-                <td>bob</td>
-                <td></td>
-                <td>faculty | admin</td>
-                <td>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>charlie</td>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                </td>
-            </tr>
-
             </tbody>
         </table>
     </div>

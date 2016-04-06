@@ -5,6 +5,5 @@
         .controller("SidebarController", SidebarController);
 
     function SidebarController() {
-
     }
 })();
