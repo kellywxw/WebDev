@@ -11,6 +11,9 @@
         $scope.deleteUser = deleteUser;
         $scope.selectUser = selectUser;
 
+        $scope.reverse = true;
+
+
         function init() {
             UserService
                 .findAllUsers()

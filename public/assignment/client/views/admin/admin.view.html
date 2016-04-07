@@ -1,14 +1,27 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-controller="AdminController">
     <h1>Admin</h1>
     <h2>Users</h2>
+
     <div class="table-responsive">
-        <table class="table sortable table-striped ">
+        <table class="table sortable table-striped">
             <thead>
             <tr>
-                <th><span class="caret"></span> UserName</th>
+                <th>
+                    <a ng-click="type = 'username'; reverse = !reverse">Username
+                        <span ng-show="reverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                        <span ng-show="!reverse" class="glyphicon glyphicon-triangle-top"></span>
+                    </a></th>
                 <th><span></span> Password</th>
-                <th><span class="caret"></span> First Name</th>
-                <th><span class="caret"></span> Last Name</th>
+                <th>
+                    <a ng-click="type = 'firstName'; reverse = !reverse">First Name
+                        <span ng-show="reverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                        <span ng-show="!reverse" class="glyphicon glyphicon-triangle-top"></span>
+                    </a></th>
+                <th>
+                    <a ng-click="type = 'lastName'; reverse = !reverse">Last Name
+                        <span ng-show="reverse" class="glyphicon glyphicon-triangle-bottom"></span>
+                        <span ng-show="!reverse" class="glyphicon glyphicon-triangle-top"></span>
+                    </a></th>
                 <th><span></span> Roles</th>
                 <th><span></span> Actions</th>
             </tr>
@@ -31,23 +44,31 @@
                     <input ng-model="currUser.roles" type="text" class="form-control" id="roles" placeholder="role1, role2">
                 </td>
                 <td>
-                    <button ng-click="addUser(currUser)" class="btn btn-primary">Add</button>
+                    <a ng-click="addUser(currUser)" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
                 </td>
                 <td>
-                    <button ng-click="updateUser(currUser)" class="btn btn-success">Update</button>
+                    <a ng-click="updateUser(currUser)" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </a>
                 </td>
             </tr>
-            <tr ng-repeat="user in users">
+            <tr ng-repeat="user in users | orderBy:type:reverse">
                 <td>{{user.username}}</td>
                 <td>&nbsp;</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.roles}}</td>
                 <td>
-                    <button ng-click="deleteUser(user)" class="btn btn-danger">Delete</button>
+                    <a ng-click="deleteUser(user)" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
                 </td>
                 <td>
-                    <button ng-click="selectUser(user)" class="btn btn-success">Edit</button>
+                    <a ng-click="selectUser(user)" class="btn btn-success">
+                        <span  class="glyphicon glyphicon-cog"></span>
+                    </a>
                 </td>
             </tr>
             </tbody>

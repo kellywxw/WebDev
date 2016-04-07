@@ -7,7 +7,7 @@
     <div class="table-responsive">
         <div class="container">
             <table class="table">
-                <tbody jga-sortable jga-sortable-callback="model.sortField">
+                <tbody jga-sortable jga-sortable-callback="model.sortField(start, end)">
                 <tr ng-repeat="field in model.fields">
                     <td>
                         <label>{{field.label}}:</label>
