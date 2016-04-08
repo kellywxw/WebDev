@@ -28,8 +28,11 @@
         }
 
         function updateUser(user) {
+            var userId = user._id;
+            delete user._id;
+
             UserService
-                .updateUserByAdmin(user._id, user)
+                .updateUserByAdmin(userId, user)
                 .then(handleSuccess, handleError);
         }
 
@@ -41,7 +44,6 @@
 
         function selectUser(user) {
             $scope.currUser = angular.copy(user);
-            delete $scope.currUser._id;
         }
 
         function handleSuccess(response) {
