@@ -45,16 +45,16 @@
                         </div>
                     </td>
                     <td>
-                        <a ng-click="model.selectField(field)" data-toggle="modal" data-target="#updateField">
+                        <a ng-click="model.selectField(field)" class="btn btn-success" data-toggle="modal" data-target="#updateField">
                             <span class="glyphicon glyphicon-pencil"></span>
                         </a>
-                        <a ng-click="model.cloneField(field)">
+                        <a ng-click="model.cloneField(field)" class="btn btn-primary">
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
-                        <a ng-click="model.deleteField(field)">
+                        <a ng-click="model.deleteField(field)" class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove"></span>
                         </a>
-                        <a>
+                        <a class="btn btn-primary">
                             <span class="glyphicon glyphicon-list"></span>
                         </a>
                     </td>
@@ -79,7 +79,7 @@
                     </select>
                 </div>
                 <div class="col-xs-5">
-                    <a ng-click="model.addField(model.fieldType)">
+                    <a ng-click="model.addField(model.fieldType)" class="btn btn-primary">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </div>

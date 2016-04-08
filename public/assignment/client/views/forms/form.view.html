@@ -9,8 +9,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><span class="caret"></span> Form Name</th>
-                <th><span class="caret"></span> Action</th>
+                <th> Form Name</th>
+                <th> Action</th>
             </tr>
             </thead>
             <tbody>
@@ -19,10 +19,10 @@
                     <input ng-model="model.newForm.title" type="text" class="form-control" id="name" placeholder="name">
                 </td>
                 <td>
-                    <a ng-click="model.addForm()">
+                    <a ng-click="model.addForm()" class="btn btn-primary">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
-                    <a ng-click="model.updateForm()">
+                    <a ng-click="model.updateForm()" class="btn btn-success">
                         <span class="glyphicon glyphicon-ok"></span>
                     </a>
                 </td>
@@ -32,10 +32,10 @@
                     <a href="#/user/{{user._id}}/form/{{form._id}}/fields">{{form.title}}</a>
                 </td>
                 <td>
-                    <a ng-click="model.deleteForm($index)">
+                    <a ng-click="model.deleteForm($index)" class="btn btn-danger">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
-                    <a ng-click="model.selectForm($index)">
+                    <a ng-click="model.selectForm($index)" class="btn btn-success">
                         <span  class="glyphicon glyphicon-pencil"></span>
                     </a>
                 </td>

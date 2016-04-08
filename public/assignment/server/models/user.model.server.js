@@ -1,4 +1,5 @@
 var q = require("q");
+var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(mongoose, db) {
     var UserSchema = require("./user.schema.server.js")(mongoose);
@@ -11,6 +12,7 @@ module.exports = function(mongoose, db) {
         findUserByUsername : findUserByUsername,
         findUserByCredentials : findUserByCredentials,
         updateUser : updateUser,
+        updateUserByAdmin : updateUserByAdmin,
         deleteUser : deleteUser
     };
     return api;
@@ -90,10 +92,22 @@ module.exports = function(mongoose, db) {
     }
 
     function updateUser(userId, updatedUser) {
-        if(updatedUser.emails != null) {
-            updatedUser.emails = updatedUser.emails.split(",");
-        }
+        updatedUser.emails = updatedUser.emails.split(",");
 
+        var deferred = q.defer();
+
+        UserModel.findByIdAndUpdate(userId, updatedUser, function (err, user) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(user);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function updateUserByAdmin(userId, updatedUser) {
         var deferred = q.defer();
 
         UserModel.findByIdAndUpdate(userId, updatedUser, function (err, user) {

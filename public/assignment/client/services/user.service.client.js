@@ -12,11 +12,12 @@
             getCurrentUser: getCurrentUser,
             logout: logout,
             register : register,
+            updateUser : updateUser,
 
             createUser : createUser,
-            findAllUsers : findAllUsers,
             findUserById : findUserById,
-            updateUser : updateUser,
+            findAllUsers : findAllUsers,
+            updateUserByAdmin : updateUserByAdmin,
             deleteUserById : deleteUserById
 
 
@@ -28,18 +29,6 @@
 
             $http
                 .post("/api/assignment/login", user)
-                .success(function(response) {
-                    deferred.resolve(response);
-                });
-
-            return deferred.promise;
-        }
-
-        function register(user) {
-            var deferred = $q.defer();
-
-            $http
-                .post("/api/assignment/register", user)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -75,11 +64,11 @@
             return deferred.promise;
         }
 
-        function createUser(user) {
+        function register(user) {
             var deferred = $q.defer();
 
             $http
-                .post("/api/assignment/admin/user", user)
+                .post("/api/assignment/register", user)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -87,11 +76,23 @@
             return deferred.promise;
         }
 
-        function findAllUsers() {
+        function updateUser(userId, user) {
             var deferred = $q.defer();
 
             $http
-                .get("/api/assignment/admin/user")
+                .put("/api/assignment/user/" + userId, user)
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
+        function createUser(user) {
+            var deferred = $q.defer();
+
+            $http
+                .post("/api/assignment/admin/user", user)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -111,7 +112,19 @@
             return deferred.promise;
         }
 
-        function updateUser(userId, user) {
+        function findAllUsers() {
+            var deferred = $q.defer();
+
+            $http
+                .get("/api/assignment/admin/user")
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+        }
+
+        function updateUserByAdmin(userId, user) {
             var deferred = $q.defer();
 
             $http

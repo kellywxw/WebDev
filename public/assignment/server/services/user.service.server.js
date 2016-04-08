@@ -1,19 +1,21 @@
-var passport         = require('passport');
-var LocalStrategy    = require('passport-local').Strategy;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(app, userModel) {
-    var auth = authorized;
+    var auth = authenticated;
 
     app.post("/api/assignment/login", passport.authenticate('local'), login);
     app.get("/api/assignment/loggedin", loggedin);
     app.post("/api/assignment/logout", logout);
     app.post  ('/api/assignment/register', register);
+    app.put("/api/assignment/user/:userId", auth, updateUser);
 
     app.post("/api/assignment/admin/user", auth, createUserByAdmin);
-    app.get("/api/assignment/admin/user", auth, findAllUsersByAdmin);
     app.get("/api/assignment/admin/user/:userId", auth, findUserByIdByAdmin);
-    app.put("/api/assignment/admin/user/:userId", auth, updateUserByAdmin);
-    app.delete("/api/assignment/admin/user/:userId", auth, deleteUserByAdmin);
+    app.get("/api/assignment/admin/user", isAdmin, findAllUsersByAdmin);
+    app.put("/api/assignment/admin/user/:userId", isAdmin, updateUserByAdmin);
+    app.delete("/api/assignment/admin/user/:userId", isAdmin, deleteUserByAdmin);
 
 
     passport.use(new LocalStrategy(localStrategy));
@@ -21,12 +23,17 @@ module.exports = function(app, userModel) {
     passport.deserializeUser(deserializeUser);
 
     function localStrategy(username, password, done) {
+        // lookup user by username only. cant compare password since it's encrypted
         userModel
-            .findUserByCredentials({username: username, password: password})
+            .findUserByUsername(username)
             .then(
                 function(user) {
-                    if (!user) { return done(null, false); }
-                    return done(null, user);
+                    // if the user exists, compare passwords with bcrypt.compareSync
+                    if(user && bcrypt.compareSync(password, user.password)) {
+                        return done(null, user);
+                    } else {
+                        return done(null, false);
+                    }
                 },
                 function(err) {
                     if (err) { return done(err); }
@@ -35,6 +42,7 @@ module.exports = function(app, userModel) {
     }
 
     function serializeUser(user, done) {
+        delete user.password;
         done(null, user);
     }
 
@@ -43,6 +51,7 @@ module.exports = function(app, userModel) {
             .findUserById(user._id)
             .then(
                 function(user){
+                    delete user.password;
                     done(null, user);
                 },
                 function(err){
@@ -52,8 +61,7 @@ module.exports = function(app, userModel) {
     }
 
     function login(req, res) {
-        var user = req.user;
-        res.json(user);
+        res.json(req.user);
     }
 
     function loggedin(req, res) {
@@ -76,6 +84,7 @@ module.exports = function(app, userModel) {
                     if(user) {
                         res.json(null);
                     } else {
+                        newUser.password = bcrypt.hashSync(newUser.password);
                         return userModel.createUser(newUser);
                     }
                 },
@@ -101,6 +110,31 @@ module.exports = function(app, userModel) {
             );
     }
 
+    function updateUser(req, res) {
+        var newUser = req.body;
+        delete newUser.roles;
+        newUser.password = bcrypt.hashSync(newUser.password);
+
+        userModel
+            .updateUser(req.params.userId, newUser)
+            .then(
+                function(user){
+                    return userModel.findAllUsers();
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(users){
+                    res.json(users);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+
     function createUserByAdmin(req, res) {
         var newUser = req.body;
         if(newUser.roles && newUser.roles.length > 1) {
@@ -108,6 +142,7 @@ module.exports = function(app, userModel) {
         } else {
             newUser.roles = ["student"];
         }
+        newUser.password = bcrypt.hashSync(newUser.password);
 
         // first check if a user already exists with the username
         userModel
@@ -146,23 +181,6 @@ module.exports = function(app, userModel) {
             )
     }
 
-    function findAllUsersByAdmin(req, res) {
-        if(isAdmin(req.user)) {
-            userModel
-                .findAllUsers()
-                .then(
-                    function (users) {
-                        res.json(users);
-                    },
-                    function () {
-                        res.status(400).send(err);
-                    }
-                );
-        } else {
-            res.status(403);
-        }
-    }
-
     function findUserByIdByAdmin(req, res) {
         var userId = req.params.userId;
         userModel
@@ -177,20 +195,30 @@ module.exports = function(app, userModel) {
             );
     }
 
+    function findAllUsersByAdmin(req, res) {
+        userModel
+            .findAllUsers()
+            .then(
+                function (users) {
+                    res.json(users);
+                },
+                function () {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
     function updateUserByAdmin(req, res) {
         var newUser = req.body;
-        if(!isAdmin(req.user)) {
-            delete newUser.roles;
-        }
+        delete newUser.emails;
+        newUser.password = bcrypt.hashSync(newUser.password);
+
         if(typeof newUser.roles == "string") {
             newUser.roles = newUser.roles.split(",");
         }
-        if(isAdmin(req.user)) {
-            delete newUser.emails;
-        }
 
         userModel
-            .updateUser(req.params.userId, newUser)
+            .updateUserByAdmin(req.params.userId, newUser)
             .then(
                 function(user){
                     return userModel.findAllUsers();
@@ -210,43 +238,48 @@ module.exports = function(app, userModel) {
     }
 
     function deleteUserByAdmin(req, res) {
-        if(isAdmin(req.user)) {
+        userModel
+            .deleteUser(req.params.userId)
+            .then(
+                function(user){
+                    return userModel.findAllUsers();
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(users){
+                    res.json(users);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
 
+    function isAdmin(req, res, next) {
+        if (req.isAuthenticated()) {
             userModel
-                .deleteUser(req.params.userId)
-                .then(
-                    function(user){
-                        return userModel.findAllUsers();
-                    },
-                    function(err){
-                        res.status(400).send(err);
+                .findUserById(req.user._id)
+                .then(function(user){
+                    delete user.password;
+                    if(user.roles.indexOf("admin") > -1) {
+                        return next();
+                    } else {
+                        res.send(403);
+                        res.redirect('/#login');
                     }
-                )
-                .then(
-                    function(users){
-                        res.json(users);
-                    },
-                    function(err){
-                        res.status(400).send(err);
-                    }
-                );
+                })
+        }
+    }
+
+    function authenticated(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
         } else {
-            res.status(403);
-        }
-    }
-
-    function isAdmin(user) {
-        if(user.roles.indexOf("admin") > 0) {
-            return true
-        }
-        return false;
-    }
-
-    function authorized (req, res, next) {
-        if (!req.isAuthenticated()) {
             res.send(401);
-        } else {
-            next();
+            res.redirect('/#login');
         }
     }
 }

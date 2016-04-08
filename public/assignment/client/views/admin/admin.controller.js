@@ -29,7 +29,7 @@
 
         function updateUser(user) {
             UserService
-                .updateUser(user._id, user)
+                .updateUserByAdmin(user._id, user)
                 .then(handleSuccess, handleError);
         }
 
@@ -45,6 +45,7 @@
 
         function handleSuccess(response) {
             $scope.users = response;
+            $scope.currUser = null;
             console.log($scope.users);
         }
 
