@@ -41,6 +41,7 @@
 
         function selectUser(user) {
             $scope.currUser = angular.copy(user);
+            delete $scope.currUser._id;
         }
 
         function handleSuccess(response) {
