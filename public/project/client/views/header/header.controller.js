@@ -9,9 +9,13 @@
             UserService
                 .logout()
                 .then(function() {
-                    UserService.setCurrentUser(null);
-                    $location.url("/home");
-                });
+                        UserService.setCurrentUser(null);
+                        $location.url("/home");
+                    },
+                    function(err) {
+                        $scope.error = err;
+                    }
+                );
         }
     }
 })();

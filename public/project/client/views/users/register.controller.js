@@ -4,21 +4,15 @@
         .module("ChopChopApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($rootScope, $location, UserService) {
+    function RegisterController($location, UserService) {
         var model = this;
         model.register = register;
 
         function register() {
-            if(model.newUser.username != null &&
-               model.newUser.password == model.password2) {
+            if(!model.newUser.username != null &&
+                model.newUser.password == model.password2) {
                 UserService
-                    .createUser(model.newUser)
-                    .then(userCreate);
-            }
-
-            function userCreate (users) {
-                UserService
-                    .findUserByCredentials(model.newUser.username, model.newUser.password)
+                    .register(model.newUser)
                     .then(getCreatedUser);
             }
 
@@ -29,4 +23,5 @@
             }
         }
     }
+
 })();

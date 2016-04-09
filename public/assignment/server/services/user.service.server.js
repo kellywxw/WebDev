@@ -8,7 +8,7 @@ module.exports = function(app, userModel) {
     app.post("/api/assignment/login", passport.authenticate('local'), login);
     app.get("/api/assignment/loggedin", loggedin);
     app.post("/api/assignment/logout", logout);
-    app.post  ('/api/assignment/register', register);
+    app.post("/api/assignment/register", register);
     app.put("/api/assignment/user/:userId", auth, updateUser);
 
     app.post("/api/assignment/admin/user", auth, createUserByAdmin);
@@ -278,8 +278,8 @@ module.exports = function(app, userModel) {
         if (req.isAuthenticated()) {
             return next();
         } else {
-            res.send(401);
             res.redirect('/#login');
+            res.send(401);
         }
     }
 }

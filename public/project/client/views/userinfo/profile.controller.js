@@ -13,7 +13,7 @@
 
         function loadLikedEventsForUser() {
             UserService
-                .findUserById(user._id)
+                .getProfile(user._id)
                 .then(likedEventsLoad);
 
             function likedEventsLoad(user) {
@@ -36,16 +36,10 @@
         function update() {
             UserService
                 .updateUser(user._id, model.updatedUser)
-                .then(userUpdate);
+                .then(getUpdatedUser);
 
-            function userUpdate (users) {
-                UserService
-                    .findUserByCredentials(model.updatedUser.username, model.updatedUser.password)
-                    .then(getUpdatedUser);
-            }
-
-            function getUpdatedUser(user) {
-                console.log(user);
+            function getUpdatedUser(users) {
+                console.log(users);
                 UserService.setCurrentUser(user);
                 $location.url("/profile");
             }
