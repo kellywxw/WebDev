@@ -112,11 +112,30 @@ module.exports = function(app, userModel) {
 
     function updateUser(req, res) {
         var newUser = req.body;
+        var userId = req.params.userId
         delete newUser.roles;
-        newUser.password = bcrypt.hashSync(newUser.password);
+
+        if(typeof newUser.roles == "string") {
+            newUser.roles = newUser.roles.split(",");
+        }
 
         userModel
-            .updateUser(req.params.userId, newUser)
+            .findUserById(userId)
+            .then(
+                function(user) {
+                    if (newUser.password != user.password) {
+                        newUser.password = bcrypt.hashSync(newUser.password);
+                    }
+                    return newUser;
+                }
+            )
+            .then(function(newUser){
+                    return userModel.updateUserByAdmin(userId, newUser);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
             .then(
                 function(user){
                     return userModel.findAllUsers();
@@ -210,15 +229,30 @@ module.exports = function(app, userModel) {
 
     function updateUserByAdmin(req, res) {
         var newUser = req.body;
+        var userId = req.params.userId
         delete newUser.emails;
-        newUser.password = bcrypt.hashSync(newUser.password);
 
         if(typeof newUser.roles == "string") {
             newUser.roles = newUser.roles.split(",");
         }
 
         userModel
-            .updateUserByAdmin(req.params.userId, newUser)
+            .findUserById(userId)
+            .then(
+                function(user) {
+                    if (newUser.password != user.password) {
+                        newUser.password = bcrypt.hashSync(newUser.password);
+                    }
+                    return newUser;
+                }
+            )
+            .then(function(newUser){
+                    return userModel.updateUserByAdmin(userId, newUser);
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
             .then(
                 function(user){
                     return userModel.findAllUsers();

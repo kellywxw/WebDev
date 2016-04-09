@@ -72,44 +72,38 @@
                     getLoggedIn: getLoggedIn
                 }
             })
+
             .otherwise({
                 redirectTo: "/home"
             });
     }
 
-    function getLoggedIn(UserService, $q, $rootScope) {
+    function getLoggedIn(UserService, $q) {
         var deferred = $q.defer();
 
         UserService
             .getCurrentUser()
-            .then(function(user) {
-                $rootScope.errorMessage = null;
-                console.log(user);
-                // User is Authenticated
-                if (user !== '0') {
-                    UserService.setCurrentUser(user);
-                }
+            .then(function(user){
+                UserService.setCurrentUser(user);
                 deferred.resolve();
             });
 
         return deferred.promise;
     }
 
-    function checkLoggedIn(UserService, $q, $location, $rootScope) {
+    function checkLoggedIn(UserService, $q, $location) {
+
         var deferred = $q.defer();
 
         UserService
             .getCurrentUser()
             .then(function(user) {
-                console.log(user);
-                $rootScope.errorMessage = null;
                 if(user) {
                     UserService.setCurrentUser(user);
                     deferred.resolve();
                 } else {
-                    $rootScope.errorMessage = 'You need to log in.';
                     deferred.reject();
-                    $location.url("/login");
+                    $location.url("/home");
                 }
             });
 

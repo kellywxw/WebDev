@@ -6,22 +6,25 @@
 
     function UserService($http, $q, $rootScope) {
         var api = {
-            login : login,
+            createUser : createUser,
+            findAllUsers : findAllUsers,
+            findUserById : findUserById,
+            findUserByUsername : findUserByUsername,
+            findUserByCredentials : findUserByCredentials,
+            updateUser : updateUser,
+            deleteUserById : deleteUserById,
+
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
-            logout: logout,
-            register : register,
-            updateUser : updateUser,
-            getProfile : getProfile,
-            deleteUser : deleteUser
+            logout: logout
         };
         return api;
 
-        function login(user) {
+        function createUser(user) {
             var deferred = $q.defer();
 
             $http
-                .post("/api/project/login", user)
+                .post("/api/project/user", user)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -29,40 +32,47 @@
             return deferred.promise;
         }
 
-        function setCurrentUser(user) {
-            $rootScope.user = user;
-        }
-
-        function getCurrentUser() {
+        function findAllUsers() {
             var deferred = $q.defer();
 
             $http
-                .get("/api/project/loggedin")
-                .success(function(response){
-                    console.log(response);
+                .get("/api/project/user")
+                .success(function(response) {
                     deferred.resolve(response);
-                })
+                });
 
             return deferred.promise;
         }
 
-        function logout() {
+        function findUserById(userId) {
             var deferred = $q.defer();
 
             $http
-                .post("/api/project/logout")
-                .success(function(response){
+                .get("/api/project/user/"+ userId)
+                .success(function(response) {
                     deferred.resolve(response);
-                })
+                });
 
             return deferred.promise;
         }
 
-        function register(user) {
+        function findUserByUsername(username) {
             var deferred = $q.defer();
 
             $http
-                .post("/api/project/register", user)
+                .get("/api/project/user?username="+ username)
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+        }
+
+        function findUserByCredentials(username, password) {
+            var deferred = $q.defer();
+
+            $http
+                .get("/api/project/user?username="+ username + "&password=" + password)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
@@ -82,19 +92,7 @@
             return deferred.promise;
         }
 
-        function getProfile(userId) {
-            var deferred = $q.defer();
-
-            $http
-                .get("/api/project/user/"+ userId)
-                .success(function(response) {
-                    deferred.resolve(response);
-                });
-
-            return deferred.promise;
-        }
-
-        function deleteUser(userId) {
+        function deleteUserById(userId) {
             var deferred = $q.defer();
 
             $http
@@ -105,5 +103,35 @@
 
             return deferred.promise;
         }
+
+
+        function setCurrentUser(user) {
+            $rootScope.user = user;
+        }
+
+        function getCurrentUser() {
+            var deferred = $q.defer();
+
+            $http
+                .get("/api/project/loggedin")
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
+        function logout() {
+            var deferred = $q.defer();
+
+            $http
+                .post("/api/project/logout")
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        };
+
     }
 })();

@@ -1,136 +1,73 @@
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require("bcrypt-nodejs");
-
 module.exports = function(app, userModel, evdbModel) {
-    var auth = authenticated;
+    app.post("/api/project/user", createUser);
+    app.get("/api/project/user", findUser);
+    app.get("/api/project/user/:id", findUserById);
+    app.put("/api/project/user/:id", updateUser);
+    app.delete("/api/project/user/:id", deleteUser);
 
-    app.post("/api/project/login", passport.authenticate('local'), login);
     app.get("/api/project/loggedin", loggedin);
     app.post("/api/project/logout", logout);
-    app.post("/api/project/register", register);
-    app.put("/api/project/user/:userId", auth, updateUser);
 
-    app.get("/api/project/user/:userId", auth, findUserById);
-    app.delete("/api/project/user/:userId", auth, deleteUser);
-
-    passport.use(new LocalStrategy(localStrategy));
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
-
-    function localStrategy(username, password, done) {
-        // lookup user by username only. cant compare password since it's encrypted
-        userModel
-            .findUserByUsername(username)
-            .then(
-                function(user) {
-                    // if the user exists, compare passwords with bcrypt.compareSync
-                    if(user && bcrypt.compareSync(password, user.password)) {
-                        return done(null, user);
-                    } else {
-                        return done(null, false);
-                    }
-                },
-                function(err) {
-                    if (err) { return done(err); }
-                }
-            );
-    }
-
-    function serializeUser(user, done) {
-        delete user.password;
-        done(null, user);
-    }
-
-    function deserializeUser(user, done) {
-        userModel
-            .findUserById(user._id)
-            .then(
-                function(user){
-                    delete user.password;
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
-    }
-
-    function login(req, res) {
-        res.json(req.user);
-    }
-
-    function loggedin(req, res) {
-        res.send(req.isAuthenticated() ? req.user : '0');
-    }
-
-    function logout(req, res) {
-        req.logOut();
-        res.send(200);
-    }
-
-    function register(req, res) {
+    function createUser(req, res) {
         var newUser = req.body;
-
         userModel
-            .findUserByUsername(newUser.username)
+            .createUser(newUser)
             .then(
-                function(user){
-                    if(user) {
-                        res.json(null);
-                    } else {
-                        newUser.password = bcrypt.hashSync(newUser.password);
-                        return userModel.createUser(newUser);
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(user){
-                    if(user){
-                        req.login(user, function(err) {
-                            if(err) {
-                                res.status(400).send(err);
-                            } else {
-                                res.json(user);
-                            }
-                        });
-                    }
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function updateUser(req, res) {
-        var newUser = req.body;
-        newUser.password = bcrypt.hashSync(newUser.password);
-
-        userModel
-            .updateUser(req.params.userId, newUser)
-            .then(
-                function(user){
-                    return userModel.findAllUsers();
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(users){
+                function(users) {
                     res.json(users);
                 },
-                function(err){
+                function(err) {
                     res.status(400).send(err);
                 }
             );
+    }
+
+    function findUser(req, res) {
+        var username = req.query.username;
+        var password = req.query.password;
+        if(username != null && password != null) {
+            var credentials = {
+                username: username,
+                password: password
+            }
+            userModel
+                .findUserByCredentials(credentials)
+                .then(
+                    function(user) {
+                        req.session.user = user;
+                        res.json(user);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
+        } else if (username != null) {
+            userModel
+                .findUserByUsername(username)
+                .then(
+                    function(user) {
+                        res.json(user);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
+        } else {
+            userModel
+                .findAllUsers()
+                .then(
+                    function(users) {
+                        res.json(users);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
+        }
     }
 
     function findUserById(req, res) {
-        var userId = req.params.userId;
+        var userId = req.params.id;
         var user = null;
 
         userModel
@@ -164,34 +101,41 @@ module.exports = function(app, userModel, evdbModel) {
             )
     }
 
-    function deleteUser(req, res) {
+    function updateUser(req, res) {
+        var userId = req.params.id;
+        var user = req.body;
         userModel
-            .deleteUser(req.params.userId)
-            .then(
-                function(user){
-                    return userModel.findAllUsers();
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(users){
+            .updateUser(userId,user)
+            .then(function(users) {
+                    req.session.user = user;
                     res.json(users);
                 },
-                function(err){
+                function(err) {
                     res.status(400).send(err);
                 }
             );
     }
 
-    function authenticated(req, res, next) {
-        if (req.isAuthenticated()) {
-            console.log(111);
-            return next();
-        } else {
-            res.redirect('/#login');
-            res.send(401);
-        }
+    function deleteUser(req, res) {
+        var userId = req.params.id;
+        userModel
+            .deleteUser(userId)
+            .then(
+                function(users) {
+                    res.json(users);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function loggedin(req, res) {
+        res.json(req.session.user);
+    }
+
+    function logout(req, res) {
+        req.session.destroy();
+        res.send(200);
     }
 }

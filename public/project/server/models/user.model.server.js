@@ -1,5 +1,4 @@
 var q = require("q");
-var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(mongoose, db) {
     var UserSchema = require("./user.schema.server.js")(mongoose);
@@ -26,7 +25,13 @@ module.exports = function(mongoose, db) {
             if (err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(user);
+                UserModel.find(function (err, users) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(users);
+                    }
+                });
             }
         });
 
@@ -111,13 +116,20 @@ module.exports = function(mongoose, db) {
     }
 
     function updateUser(userId, updatedUser) {
+
         var deferred = q.defer();
 
         UserModel.findByIdAndUpdate(userId, updatedUser, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(user);
+                UserModel.find(function (err, users) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(users);
+                    }
+                });
             }
         });
 
@@ -131,7 +143,13 @@ module.exports = function(mongoose, db) {
             if (err) {
                 deferred.reject(err);
             } else {
-                deferred.resolve(user);
+                UserModel.find(function (err, users) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(users);
+                    }
+                });
             }
         });
 
