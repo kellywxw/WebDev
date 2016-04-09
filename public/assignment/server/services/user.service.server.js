@@ -130,7 +130,7 @@ module.exports = function(app, userModel) {
                 }
             )
             .then(function(newUser){
-                    return userModel.updateUserByAdmin(userId, newUser);
+                    return userModel.updateUser(userId, newUser);
                 },
                 function(err){
                     res.status(400).send(err);
