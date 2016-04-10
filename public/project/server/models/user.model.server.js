@@ -1,44 +1,38 @@
 var q = require("q");
 
 module.exports = function(mongoose, db) {
-    var UserSchema = require("./user.schema.server.js")(mongoose);
-    var UserModel = mongoose.model('ChopChopUser', UserSchema);
+    var ChopChopUserSchema = require("./user.schema.server.js")(mongoose);
+    var UserModel = mongoose.model('ChopChopUser', ChopChopUserSchema);
 
     var api = {
-        createUser : createUser,
-        findAllUsers : findAllUsers,
-        findUsersByIds: findUsersByIds,
-        findUserById : findUserById,
-        findUserByUsername : findUserByUsername,
-        findUserByCredentials : findUserByCredentials,
-        updateUser : updateUser,
-        deleteUser : deleteUser,
+        createChopChopUser : createChopChopUser,
+        findAllChopChopUsers : findAllChopChopUsers,
+        findChopChopUsersByIds: findChopChopUsersByIds,
+        findChopChopUserById : findChopChopUserById,
+        findChopChopUserByUsername : findChopChopUserByUsername,
+        findChopChopUserByCredentials : findChopChopUserByCredentials,
+        updateChopChopUser : updateChopChopUser,
+        deleteChopChopUser : deleteChopChopUser,
         userLikesEvent: userLikesEvent,
         userUnlikesEvent : userUnlikesEvent
     };
     return api;
 
-    function createUser(user) {
+    function createChopChopUser(user) {
         var deferred = q.defer();
 
         UserModel.create(user, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, users) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(users);
-                    }
-                });
+                deferred.resolve(user);
             }
         });
 
         return deferred.promise;
     }
 
-    function findAllUsers() {
+    function findAllChopChopUsers() {
         var deferred = q.defer();
 
         UserModel.find(function (err, users) {
@@ -52,7 +46,7 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    function findUsersByIds(userIds) {
+    function findChopChopUsersByIds(userIds) {
         var deferred = q.defer();
 
         // find all users in array of user IDs
@@ -69,7 +63,7 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    function findUserById(userId) {
+    function findChopChopUserById(userId) {
         var deferred = q.defer();
 
         UserModel.findById(userId, function (err, user) {
@@ -83,7 +77,7 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    function findUserByUsername(username) {
+    function findChopChopUserByUsername(username) {
         var deferred = q.defer();
 
         UserModel.findOne({username: username}, function(err, user) {
@@ -97,7 +91,7 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    function findUserByCredentials(credentials) {
+    function findChopChopUserByCredentials(credentials) {
         var deferred = q.defer();
 
         UserModel.findOne(
@@ -115,41 +109,28 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    function updateUser(userId, updatedUser) {
-
+    function updateChopChopUser(userId, updatedUser) {
         var deferred = q.defer();
 
         UserModel.findByIdAndUpdate(userId, updatedUser, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, users) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(users);
-                    }
-                });
+                deferred.resolve(user);
             }
         });
 
         return deferred.promise;
     }
 
-    function deleteUser(userId) {
+    function deleteChopChopUser(userId) {
         var deferred = q.defer();
 
         UserModel.findByIdAndRemove(userId, function (err, user) {
             if (err) {
                 deferred.reject(err);
             } else {
-                UserModel.find(function (err, users) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(users);
-                    }
-                });
+                deferred.resolve(user);
             }
         });
 

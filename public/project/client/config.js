@@ -23,7 +23,15 @@
                 controller: "LoginController",
                 controllerAs: "model"
             })
-            .when("/profile/:username?", {
+            .when("/profiles/:id", {
+                templateUrl: "views/userinfo/profiles.view.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+            })
+            .when("/profile", {
                 templateUrl: "views/userinfo/profile.view.html",
                 controller: "ProfileController",
                 controllerAs: "model",
@@ -91,7 +99,7 @@
         return deferred.promise;
     }
 
-    function checkLoggedIn(UserService, $q, $location) {
+    function checkLoggedIn(UserService, $rootScope, $q, $location) {
 
         var deferred = $q.defer();
 

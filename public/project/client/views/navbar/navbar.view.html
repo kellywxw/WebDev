@@ -1,22 +1,22 @@
 <nav ng-controller="NavbarController">
     <ul class="nav nav-tabs">
-        <li ng-class="{'active': model.$location.url() == '/search'}">
+        <li ng-class="{'active': $location.url() == '/search'}">
             <a href="#/search"><i class="glyphicon glyphicon-calendar"></i> Events</a>
         </li>
-        <li  ng-show="user == null", ng-class="{'active': model.$location.url() == '/register'}">
+        <li  ng-show="!user", ng-class="{'active': $location.url() == '/register'}">
             <a href="#/register"><i class="glyphicon glyphicon-user"></i> Sign Up</a>
         </li>
-        <li  ng-show="user == null", ng-class="{'active': model.$location.url() == '/login'}">
+        <li  ng-show="!user", ng-class="{'active': $location.url() == '/login'}">
             <a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Log In</a>
         </li>
-        <li ng-show="user", ng-class="{'active': model.$location.url() == '/event'}">
+        <li ng-show="user", ng-class="{'active': $location.url() == '/event'}">
             <a href="#/events"><i class="glyphicon glyphicon-calendar"></i>My Events</a>
         </li>
-        <li  ng-show="user", ng-class="{'active': model.$location.url().indexOf('/profile')>=0}">
-            <a href="#/profile"><i class="glyphicon glyphicon-user"></i>My Profile</a>
+        <li  ng-show="user", ng-class="{'active': $location.url().indexOf('/profile')>=0}">
+            <a href="#/profile"><i class="glyphicon glyphicon-user"></i>ChopChop Profile</a>
         </li>
-        <li   ng-show="user", ng-class="{'active': model.$location.url() == '/friend'}">
-            <a href="#/friends"><i class="glyphicon glyphicon-globe"></i>My Friends</a>
+        <li   ng-show="user", ng-class="{'active': $location.url() == '/friend'}">
+            <a href="#/friends"><i class="glyphicon glyphicon-globe"></i>ChopChop Friends</a>
         </li>
     </ul>
 </nav>

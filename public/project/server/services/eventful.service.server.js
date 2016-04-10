@@ -16,7 +16,7 @@ module.exports = function(app, evdbModel, userModel) {
                 function (doc) {
                     event = doc;
                     if (doc) {
-                        return userModel.findUsersByIds(event.likes);
+                        return userModel.findChopChopUsersByIds(event.likes);
                     } else {
                         res.json ({});
                     }

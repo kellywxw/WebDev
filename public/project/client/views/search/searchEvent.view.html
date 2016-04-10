@@ -26,7 +26,7 @@
                 <h4>Other Users that Interested In This Event</h4>
                 <ul>
                     <li ng-repeat="user in model.event.userLikes">
-                        <a href="#/profile/{{user.username}}">
+                        <a href="#/profiles/{{user._id}}">
                             {{user.username}}
                         </a>
                     </li>

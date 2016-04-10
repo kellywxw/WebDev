@@ -5,8 +5,5 @@
         .controller("NavbarController", NavbarController);
 
     function NavbarController($location) {
-        var model = this;
-
-        model.$location = $location;
     }
 })();

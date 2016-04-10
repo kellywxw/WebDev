@@ -4,7 +4,7 @@
         .module("ChopChopApp")
         .controller("SearchEventController", SearchEventController);
 
-    function SearchEventController($rootScope, $location, $routeParams, SearchService, EvdbService) {
+    function SearchEventController($rootScope, $location, $routeParams, SearchService, EvdbService, UserService) {
         var model = this;
 
         var evdbId = $routeParams.id;
@@ -62,7 +62,6 @@
                 $location.url("/login");
             }
         }
-
     }
 })();
 

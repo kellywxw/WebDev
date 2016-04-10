@@ -5,10 +5,10 @@
                 <ul class="nav nav-pills nav-stacked main-menu">
                     <li class="nav-header"></li>
                     <div align="center">
-                        <a href="#/profile"><img alt="profile pic" src="css/profile-default.jpg" width="80" height="80" /></a>
+                        <a><img alt="profile pic" src="css/profile-default.jpg" width="80" height="80" /></a>
                     </div>
                     <div class="col-sm-.5" align="center">
-                        <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a href="#/profile/{{user.username}}">{{user.username}}</a></li>
+                        <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a>{{model.user.username}}</a></li>
                     </div>
                 </ul>
             </div>
@@ -19,7 +19,7 @@
             <h3>ChopChop User Info</h3>
             <div class="form-group">
                 <label class="col-xs-3">Username</label>
-                <label class="col-xs-5">{{user.username}}</label>
+                <label class="col-xs-5">{{model.user.username}}</label>
                 <div class="col-xs-2">
                     <a href="#/profileUpdate">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -37,7 +37,7 @@
             </div>
             <div class="form-group">
                 <label class="col-xs-3">Name</label>
-                <label class="col-xs-5">{{user.firstName}} {{user.lastName}}</label>
+                <label class="col-xs-5">{{model.user.firstName}} {{model.user.lastName}}</label>
                 <div class="col-xs-2">
                     <a href="#/profileUpdate">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -46,7 +46,7 @@
             </div>
             <div class="form-group">
                 <label class="col-xs-3">Email</label>
-                <label class="col-xs-5">{{user.email}}</label>
+                <label class="col-xs-5">{{model.user.email}}</label>
                 <div class="col-xs-2">
                     <a href="#/profileUpdate">
                         <span class="glyphicon glyphicon-pencil"></span>

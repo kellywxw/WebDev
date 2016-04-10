@@ -4,26 +4,35 @@
         .module("ChopChopApp")
         .controller("ProfileController", ProfileController)
 
-    function ProfileController($rootScope, $location, UserService, EvdbService) {
+    function ProfileController($rootScope, $location, UserService, EvdbService, $routeParams) {
         var model = this;
         model.update = update;
         model.unlike = unlike;
 
+        //var userId = $routeParams.id;
         var user = $rootScope.user;
 
-        function loadLikedEventsForUser() {
+        function loadLikedEventsForUser(userId) {
             UserService
-                .findUserById(user._id)
+                .getProfile(userId)
                 .then(likedEventsLoad);
 
             function likedEventsLoad(user) {
+                model.user = user;
                 model.likeEvents = user.likeEvents;
             };
         }
 
-        if(user != null) {
-            loadLikedEventsForUser();
+        function init() {
+            if($routeParams.id != null) {
+                console.log($routeParams.id);
+                loadLikedEventsForUser($routeParams.id);
+            } else {
+                loadLikedEventsForUser(user._id);
+            }
         }
+
+        init();
 
         model.updatedUser = {
             username: user.username,
@@ -36,16 +45,9 @@
         function update() {
             UserService
                 .updateUser(user._id, model.updatedUser)
-                .then(userUpdate);
-
-            function userUpdate (users) {
-                UserService
-                    .findUserByCredentials(model.updatedUser.username, model.updatedUser.password)
-                    .then(getUpdatedUser);
-            }
+                .then(getUpdatedUser);
 
             function getUpdatedUser(user) {
-                console.log(user);
                 UserService.setCurrentUser(user);
                 $location.url("/profile");
             }

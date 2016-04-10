@@ -1,7 +1,7 @@
 module.exports = function(mongoose) {
     var EvdbSchema = require("./eventful.schema.server.js")(mongoose);
 
-    var UserSchema = mongoose.Schema({
+    var ChopChopUserSchema = mongoose.Schema({
         username: String,
         password: String,
         firstName: String,
@@ -13,5 +13,5 @@ module.exports = function(mongoose) {
         likeEvents: [EvdbSchema],
     }, {collection: 'ChopChopUser'});
 
-    return UserSchema;
+    return ChopChopUserSchema;
 };
