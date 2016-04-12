@@ -4,7 +4,7 @@
         .module("ChopChopApp")
         .controller("SearchEventController", SearchEventController);
 
-    function SearchEventController($rootScope, $location, $routeParams, SearchService, EvdbService, UserService) {
+    function SearchEventController($rootScope, $location, $routeParams, SearchService, EvdbService) {
         var model = this;
 
         var evdbId = $routeParams.id;
@@ -34,6 +34,15 @@
                 .then(function(response){
                     console.log(response);
                     model.event = response;
+
+                    // only display other users
+                    for (var i = 0; i < response.userLikes.length; i++) {
+                        if(response.userLikes[i]._id == user._id) {
+                            response.userLikes.splice(i,1);
+                            break;
+                        }
+                    }
+                    model.userLikes = response.userLikes;
                 });
         }
         init();

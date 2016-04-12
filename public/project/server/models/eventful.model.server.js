@@ -22,7 +22,7 @@ module.exports = function(mongoose, db) {
             location: event.city,
             startDate: event.start_time,
             endDate: event.stop_time,
-            const: event.cost,
+            cost: event.cost,
             likes: []
         });
 

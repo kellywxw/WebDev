@@ -10,9 +10,9 @@
 
         model.$location = $location;
 
-        function search(title, location) {
+        function search(title) {
             SearchService
-                .findEventByTitle(title, location)
+                .findEventByTitle(title, 1)
                 .then(function(response){
                     model.events = response.events.event;
                     console.log(model.events);

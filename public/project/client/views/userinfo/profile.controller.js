@@ -4,31 +4,67 @@
         .module("ChopChopApp")
         .controller("ProfileController", ProfileController)
 
-    function ProfileController($rootScope, $location, UserService, EvdbService, $routeParams) {
+    function ProfileController($rootScope, $location, UserService, EvdbService, EventService, $routeParams) {
         var model = this;
+
+        // profile
         model.update = update;
         model.unlike = unlike;
+        model.addToEvents = addToEvents;
+        model.deleteFromEvents = deleteFromEvents;
 
-        //var userId = $routeParams.id;
+        // profileFriend
+        model.follow = follow;
+        model.unfollow = unfollow;
+
+        model.added = [];
+
         var user = $rootScope.user;
 
         function loadLikedEventsForUser(userId) {
             UserService
                 .getProfile(userId)
-                .then(likedEventsLoad);
+                .then(likedEventsLoad)
+                .then (function () {
+                    return EventService.findAllEventsForUser(user._id)
+                })
+                .then(eventsCompare);
+
 
             function likedEventsLoad(user) {
                 model.user = user;
                 model.likeEvents = user.likeEvents;
+            }
+
+            function eventsCompare (events) {
+                for (var j = 0; j < model.likeEvents.length; j++) {
+                    for (var i = 0; i < events.length; i++) {
+                        if (events[i].title == model.likeEvents[j].title) {
+                            model.added.push(j);
+                        }
+                    }
+                }
             };
+        }
+
+        function loadFollowForUser (userId) {
+            UserService
+                .getFollow(userId)
+                .then(function(response){
+                    model.user = response;
+                    model.userFollows = response.userFollows;
+                    model.userFollowsMe = response.userFollowsMe;
+                    model.user.followsMe = response.followsMe;
+                });
         }
 
         function init() {
             if($routeParams.id != null) {
-                console.log($routeParams.id);
                 loadLikedEventsForUser($routeParams.id);
+                loadFollowForUser ($routeParams.id);
             } else {
                 loadLikedEventsForUser(user._id);
+                loadFollowForUser (user._id);
             }
         }
 
@@ -43,13 +79,15 @@
         }
 
         function update() {
-            UserService
-                .updateUser(user._id, model.updatedUser)
-                .then(getUpdatedUser);
-
-            function getUpdatedUser(user) {
-                UserService.setCurrentUser(user);
-                $location.url("/profile");
+            if(user) {
+                UserService
+                    .updateUser(user._id, model.updatedUser)
+                    .then(function (user) {
+                        UserService.setCurrentUser(user);
+                        $location.url("/profile");
+                    });
+            } else {
+                $location.url("/login");
             }
         }
 
@@ -62,5 +100,56 @@
                 $location.url("/login");
             }
         }
+
+
+        function follow(user2) {
+            if(user) {
+                if(model.user) {
+                    model.user.followsMe = [];
+                    model.user.followsMe.push(user._id);
+                }
+                UserService
+                    .meFollowsUser(user._id, user2);
+            } else {
+                $location.url("/login");
+            }
+        }
+
+        function unfollow(userId2) {
+            if(user) {
+                if(model.user) {
+                    model.user.followsMe = [];
+                }
+                UserService
+                    .meUnfollowsUser(user._id, userId2);
+            } else {
+                $location.url("/login");
+            }
+        }
+
+        function addToEvents(index, event) {
+            EventService
+                .createEventForUser(user._id, event)
+                .then(eventAdd);
+
+            function eventAdd (events) {
+                model.added.push(index);
+                console.log(events);
+            };
+        }
+
+        function deleteFromEvents(index) {
+            var eventId  = model.events[index]._id;
+            EventService
+                .deleteEventById(eventId)
+                .then(eventRemove);
+
+            function eventRemove (events) {
+                var i = model.added.indexOf(index);
+                model.added.splice(i,1);
+                console.log(events);
+            };
+        }
+
     }
 })();

@@ -23,8 +23,8 @@
                 controller: "LoginController",
                 controllerAs: "model"
             })
-            .when("/profiles/:id", {
-                templateUrl: "views/userinfo/profiles.view.html",
+            .when("/profileFriend/:id", {
+                templateUrl: "views/userinfo/profileFriend.view.html",
                 controller: "ProfileController",
                 controllerAs: "model",
                 resolve: {
@@ -47,16 +47,16 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
-            .when("/events", {
-                templateUrl: "views/userinfo/events.view.html",
+            .when("/event", {
+                templateUrl: "views/userinfo/event.view.html",
                 controller: "EventController",
                 controllerAs: "model",
                 resolve: {
                     checkLoggedIn: checkLoggedIn
                 }
             })
-            .when("/friends", {
-                templateUrl: "views/userinfo/friends.view.html",
+            .when("/friend", {
+                templateUrl: "views/userinfo/friend.view.html",
                 controller: "FriendController",
                 controllerAs: "model",
                 resolve: {

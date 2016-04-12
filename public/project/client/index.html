@@ -8,12 +8,12 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel ="stylesheet">
     <link href="css/bootstrap-united.min.css" rel="stylesheet">
     <link href="css/stylesheet.css" rel="stylesheet">
+    <link href='css/fullcalendar.css' rel='stylesheet'>
 
     <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" ></script>
 
 
     <!-- AngularJS -->
@@ -24,6 +24,10 @@
     <!-- AngularJS Routing -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 
+    <!-- jQuery calender plugin -->
+    <script src="js/moment.min.js"></script>
+    <script src="js/fullcalendar.min.js"></script>
+
     <script src="app.js"></script>
     <script src="config.js"></script>
     <script src="directives/jga-directives.js"></script>
@@ -33,16 +37,17 @@
     <script src="views/home/home.controller.js"></script>
     <script src="views/header/header.controller.js"></script>
     <script src="views/navbar/navbar.controller.js"></script>
+    <script src="views/sidebar/sidebar.controller.js"></script>
     <script src="views/search/search.controller.js"></script>
     <script src="views/search/searchEvent.controller.js"></script>
     <script src="views/users/login.controller.js"></script>
     <script src="views/users/register.controller.js"></script>
     <script src="views/userinfo/profile.controller.js"></script>
-    <script src="views/userinfo/events.controller.js"></script>
-    <script src="views/userinfo/friends.controller.js"></script>
+    <script src="views/userinfo/event.controller.js"></script>
+    <script src="views/userinfo/friend.controller.js"></script>
 
     <!-- Services -->
-    <script src="services/events.service.client.js"></script>
+    <script src="services/event.service.client.js"></script>
     <script src="services/eventful.service.client.js"></script>
     <script src="services/search.service.client.js"></script>
     <script src="services/user.service.client.js"></script>

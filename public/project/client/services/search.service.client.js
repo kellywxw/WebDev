@@ -5,18 +5,18 @@
         .factory("SearchService", SearchService);
 
 
-    function SearchService($http, $q) {
+    function SearchService($q) {
         var api = {
             findEventByTitle : findEventByTitle,
             findEventByEvdbId: findEventByEvdbId
         };
         return api;
 
-        function findEventByTitle(title) {
+        function findEventByTitle(title, page_number) {
             var deferred = $q.defer();
 
             $.ajax({
-                url: "http://api.eventful.com/jsonp/events/search?app_key=qpTwFsBDbVd95mkr&keywords="+ title +"&jsonCallback=JSON_CALLBACK",
+                url: "http://api.eventful.com/jsonp/events/search?app_key=qpTwFsBDbVd95mkr&keywords="+ title + "&page_number="+ page_number + "&jsonCallback=JSON_CALLBACK",
                 dataType: 'JSONP',
                 jsonpCallback: 'callback',
                 type: 'GET',

@@ -21,12 +21,12 @@
                 </ul>
             </div>
         </ul>
-        <div ng-if="model.event.userLikes">
+        <div ng-show="model.event.userLikes.length>0">
             <ul>
                 <h4>Other Users that Interested In This Event</h4>
                 <ul>
                     <li ng-repeat="user in model.event.userLikes">
-                        <a href="#/profiles/{{user._id}}">
+                        <a href="#/profileFriend/{{user._id}}">
                             {{user.username}}
                         </a>
                     </li>

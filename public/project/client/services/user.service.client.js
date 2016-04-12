@@ -12,8 +12,12 @@
             logout: logout,
             register : register,
             getProfile : getProfile,
+            getFollow : getFollow,
             updateUser : updateUser,
-            deleteUserById : deleteUserById
+            deleteUserById : deleteUserById,
+
+            meFollowsUser : meFollowsUser,
+            meUnfollowsUser : meUnfollowsUser
         };
         return api;
 
@@ -73,13 +77,26 @@
             var deferred = $q.defer();
 
             $http
-                .get("/api/project/user/"+ userId)
+                .get("/api/project/profile/user/"+ userId)
                 .success(function(response) {
                     deferred.resolve(response);
                 });
 
             return deferred.promise;
         }
+
+        function getFollow(userId) {
+            var deferred = $q.defer();
+
+            $http
+                .get("/api/project/follow/user/"+ userId)
+                .success(function(response) {
+                    deferred.resolve(response);
+                });
+
+            return deferred.promise;
+        }
+
 
         function updateUser(userId, user) {
             var deferred = $q.defer();
@@ -98,6 +115,30 @@
 
             $http
                 .delete("/api/project/user/" + userId)
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
+        function meFollowsUser(userId1, user2) {
+            var deferred = $q.defer();
+
+            $http
+                .post("/api/project/follow/"+userId1+"/follow/"+user2._id, user2)
+                .success(function(response){
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
+        function meUnfollowsUser(userId1, userId2) {
+            var deferred = $q.defer();
+
+            $http
+                .post("/api/project/follow/"+userId1+"/unfollow/"+userId2)
                 .success(function(response){
                     deferred.resolve(response);
                 })

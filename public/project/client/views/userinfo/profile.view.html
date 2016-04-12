@@ -5,7 +5,7 @@
                 <ul class="nav nav-pills nav-stacked main-menu">
                     <li class="nav-header"></li>
                     <div align="center">
-                        <a><img alt="profile pic" src="css/profile-default.jpg" width="80" height="80" /></a>
+                        <a><img alt="profile pic" src="css/imgs/profile-default.jpg" width="80" height="80" /></a>
                     </div>
                     <div class="col-sm-.5" align="center">
                         <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a>{{model.user.username}}</a></li>
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </form>
-        <hr>
+
 
         <div class="col-sm-10 col-lg-10" ng-show="model.likeEvents.length>0">
             <h3>Events I Like</h3>
@@ -68,6 +68,7 @@
                     <th>End Date</th>
                     <th>Cost</th>
                     <th>Unlike</th>
+                    <th>Add To Event List</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,13 +80,43 @@
                     <td>{{event.endDate | date}}</td>
                     <td>{{event.cost}}</td>
                     <td>
-                        <a class="col-xs-12" ng-click="model.unlike($index, event.evdbId)">
+                        <a ng-click="model.unlike($index, event.evdbId)">
                             <span class="glyphicon glyphicon-heart"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a ng-show="model.added.indexOf($index) == -1" class="btn btn-warning" ng-click="model.addToEvents($index, event)">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+                        <a ng-show="model.added.indexOf($index) > -1" class="btn btn-danger" ng-click="model.deleteFromEvents($index)">
+                            <span class="glyphicon glyphicon-remove"></span>
                         </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="col-sm-10 col-lg-10" ng-show="model.userFollows.length>0">
+            <h3>Users I Follow</h3>
+            <ul>
+                <li ng-repeat="user in model.userFollows">
+                    <a href="#/profileFriend/{{user._id}}">
+                        {{user.username}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-sm-10 col-lg-10" ng-show="model.userFollowsMe.length>0">
+            <h3>Users Following Me</h3>
+            <ul>
+                <li ng-repeat="user in model.userFollowsMe">
+                    <a href="#/profileFriend/{{user._id}}">
+                        {{user.username}}
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

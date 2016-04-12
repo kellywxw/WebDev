@@ -4,7 +4,7 @@ module.exports = function(app, eventModel) {
     app.get("/api/project/user/:userId/event", findAllEventsForUser);
     app.get("/api/project/event/:eventId", findEventById);
     app.put("/api/project/event/:eventId", updateEventById);
-    app.put("/api/project/user/:userId/event", updateEvents);
+    app.put("/api/project/user/:userId/event", sortEvents);
     app.delete("/api/project/event/:eventId", deleteEventById);
 
     function createEventForUser(req, res) {
@@ -66,9 +66,6 @@ module.exports = function(app, eventModel) {
     function updateEventById(req, res) {
         var eventId = req.params.eventId;
         var event = req.body;
-        console.log("update");
-        console.log(eventId);
-        console.log(event);
         eventModel
             .updateEventById(eventId, event)
             .then(
@@ -95,7 +92,7 @@ module.exports = function(app, eventModel) {
             );
     }
 
-    function updateEvents (req, res) {
+    function sortEvents (req, res) {
         var userId = req.params.userId;
         var startIndex = req.query.startIndex;
         var endIndex = req.query.endIndex;
