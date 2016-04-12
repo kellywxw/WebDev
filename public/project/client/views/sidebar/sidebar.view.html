@@ -1,0 +1,15 @@
+<div class="col-sm-2 col-lg-2" ng-controller="SidebarController">
+    <div class="sidebar-nav">
+        <div class="nav-canvas">
+            <ul class="nav nav-pills nav-stacked main-menu">
+                <li class="nav-header"></li>
+                <div align="center">
+                    <a><img alt="profile pic" src="css/imgs/profile-default.jpg" width="80" height="80" /></a>
+                </div>
+                <div class="col-sm-.5" align="center">
+                    <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a>{{model.username}}</a></li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>

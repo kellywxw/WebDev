@@ -1,0 +1,31 @@
+<div ng-controller="FriendController">
+    <div class="col-sm-12 col-lg-12">
+        <div ng-show="model.userFollows.length>0" >
+            <h3>Users I Follow</h3>
+            <ul>
+                <div ng-repeat="user in model.userFollows">
+                    <a href="#/profileFriend/{{user._id}}">
+                        <img height="75px" ng-src="{{user.poster}}">
+                    </a>
+                    <a href="#/profileFriend/{{user._id}}">
+                        {{user.username}}
+                    </a>
+                </div>
+            </ul>
+        </div>
+
+        <div ng-show="model.userFollowsMe.length>0" >
+            <h3>Users Following Me</h3>
+            <ul>
+                <div ng-repeat="user in model.userFollowsMe">
+                    <a href="#/profileFriend/{{user._id}}">
+                        <img height="75px" ng-src="{{user.poster}}">
+                    </a>
+                    <a href="#/profileFriend/{{user._id}}">
+                        {{user.username}}
+                    </a>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>

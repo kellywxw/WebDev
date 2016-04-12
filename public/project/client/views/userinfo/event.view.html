@@ -1,0 +1,102 @@
+<div ng-controller="EventController">
+    <div class="row" >
+        <div class="col-sm-2 col-lg-2">
+            <div class="sidebar-nav">
+                <div class="nav-canvas">
+                    <ul class="nav nav-pills nav-stacked main-menu">
+                        <li class="nav-header"></li>
+                        <div align="center">
+                            <a href="#/profile"><img alt="profile pic" src="css/imgs/profile-default.jpg" width="80" height="80" /></a>
+                        </div>
+                        <div class="col-sm-.5" align="center">
+                            <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a href="#/profile/{{user.username}}">{{user.username}}</a></li>
+                        </div>
+                        <div type="button" id="create" align="center">
+                            <a class="btn btn-default">Create Event</a>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-10 col-lg-10">
+            <div class="box-inner">
+                <div class="box-content">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2 col-lg-2" ng-controller="EventController">
+        <div class="sidebar-nav">
+            <div class="nav-canvas">
+                <ul class="nav nav-pills nav-stacked main-menu">
+                    <li class="nav-header"></li>
+                    <div align="center">
+                        <a href="#/profile"><img alt="profile pic" src="css/imgs/profile-default.jpg" width="80" height="80" /></a>
+                    </div>
+                    <div class="col-sm-.5" align="center">
+                        <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a href="#/profile/{{user.username}}">{{user.username}}</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-10 col-lg-10" ng-show="model.events">
+        <table class="table table-hover table-responsive">
+            <thead>
+            <h3>My Event List</h3>
+            <tr>
+                <th class="col-sm-2 col-lg-2">Poster</th>
+                <th class="col-sm-2 col-lg-2">Title</th>
+                <th class="col-sm-2 col-lg-2">Location</th>
+                <th class="col-sm-1 col-lg-1">Start Date</th>
+                <th class="col-sm-1 col-lg-1">End Date</th>
+                <th class="col-sm-2 col-lg-2">Action</th>
+            </tr>
+            </thead>
+            <tbody jga-sortable jga-sortable-callback="model.sortEvents" >
+            <tr ng-repeat="event in model.events">
+                <td><img height="75px" ng-src="{{event.poster}}"/></td>
+                <td><a href="#/eventDetail/{{event._Id}}">{{event.title}}</a></td>
+                <td>{{event.location}}</td>
+                <td>{{event.startDate | date}}</td>
+                <td>{{event.endDate | date}}</td>
+                <td>
+                    <a ng-click="model.deleteEvent($index)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a ng-click="model.selectEvent($index)">
+                        <span  class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+            <tr>
+                <td>
+                    <input ng-model="model.newEvent.image" type="text" class="form-control" id="image" placeholder="image">
+                </td>
+                <td>
+                    <input ng-model="model.newEvent.title" type="text" class="form-control" id="title" placeholder="title">
+                </td>
+                <td>
+                    <input ng-model="model.newEvent.location" type="text" class="form-control" id="location" placeholder="location">
+                </td>
+                <td>
+                    <input ng-model="model.newEvent.startDate" type="timestamp" class="form-control" id="startDate" placeholder="start date">
+                </td>
+                <td>
+                    <input ng-model="model.newEvent.endDate" type="timestamp" class="form-control" id="endDate" placeholder="end date">
+                </td>
+                <td>
+                    <a type="button" id="addEvent" ng-click="model.addEvent()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                    <a ng-click="model.updateEvent()">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
