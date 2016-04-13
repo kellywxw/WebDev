@@ -11,9 +11,6 @@
                         <div class="col-sm-.5" align="center">
                             <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a href="#/profile/{{user.username}}">{{user.username}}</a></li>
                         </div>
-                        <div type="button" id="create" align="center">
-                            <a class="btn btn-default">Create Event</a>
-                        </div>
                     </ul>
                 </div>
             </div>
@@ -21,82 +18,130 @@
         <div class="col-sm-10 col-lg-10">
             <div class="box-inner">
                 <div class="box-content">
+                    <h3>My Calendar</h3>
                     <div id="calendar"></div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-sm-2 col-lg-2" ng-controller="EventController">
-        <div class="sidebar-nav">
-            <div class="nav-canvas">
-                <ul class="nav nav-pills nav-stacked main-menu">
-                    <li class="nav-header"></li>
-                    <div align="center">
-                        <a href="#/profile"><img alt="profile pic" src="css/imgs/profile-default.jpg" width="80" height="80" /></a>
-                    </div>
-                    <div class="col-sm-.5" align="center">
-                        <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a href="#/profile/{{user.username}}">{{user.username}}</a></li>
-                    </div>
-                </ul>
+
+            <div class="col-sm-10 col-lg-10" ng-show="model.events">
+                <table class="table table-hover table-responsive">
+                    <h3>My Event List</h3>
+                    <thead>
+                    <tr>
+                        <th class="col-sm-2 col-lg-2">Poster</th>
+                        <th class="col-sm-2 col-lg-2">Title</th>
+                        <th class="col-sm-2 col-lg-2">Location</th>
+                        <th class="col-sm-1 col-lg-1">Start Date</th>
+                        <th class="col-sm-1 col-lg-1">End Date</th>
+                        <th class="col-sm-2 col-lg-2">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody jga-sortable jga-sortable-callback="model.sortEvents" >
+                    <tr ng-repeat="event in model.events">
+                        <td><img height="75px" ng-src="{{event.poster}}"/></td>
+                        <td><a href="#/eventDetail/{{event._Id}}">{{event.title}}</a></td>
+                        <td>{{event.location}}</td>
+                        <td>{{event.start | date}}</td>
+                        <td>{{event.end | date}}</td>
+                        <td>
+                            <a class="btn btn-danger" ng-click="model.deleteEvent($index)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                            <a class="btn btn-warning" ng-click="model.selectEvent($index)">
+                                <span  class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tr>
+                        <td>
+                            <input ng-model="model.newEvent.poster" type="text" class="form-control" id="image" placeholder="image">
+                        </td>
+                        <td>
+                            <input ng-model="model.newEvent.title" type="text" class="form-control" id="title" placeholder="title">
+                        </td>
+                        <td>
+                            <input ng-model="model.newEvent.location" type="text" class="form-control" id="location" placeholder="location">
+                        </td>
+                        <td>
+                            <input ng-model="model.newEvent.start" type="text" class="form-control" id="startDate" placeholder="start date">
+                        </td>
+                        <td>
+                            <input ng-model="model.newEvent.end" type="text" class="form-control" id="endDate" placeholder="end date">
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" id="addEvent" ng-click="model.addEvent()">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                            <a class="btn btn-warning" ng-click="model.updateEvent()">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
 
-    <div class="col-sm-10 col-lg-10" ng-show="model.events">
-        <table class="table table-hover table-responsive">
-            <thead>
-            <h3>My Event List</h3>
-            <tr>
-                <th class="col-sm-2 col-lg-2">Poster</th>
-                <th class="col-sm-2 col-lg-2">Title</th>
-                <th class="col-sm-2 col-lg-2">Location</th>
-                <th class="col-sm-1 col-lg-1">Start Date</th>
-                <th class="col-sm-1 col-lg-1">End Date</th>
-                <th class="col-sm-2 col-lg-2">Action</th>
-            </tr>
-            </thead>
-            <tbody jga-sortable jga-sortable-callback="model.sortEvents" >
-            <tr ng-repeat="event in model.events">
-                <td><img height="75px" ng-src="{{event.poster}}"/></td>
-                <td><a href="#/eventDetail/{{event._Id}}">{{event.title}}</a></td>
-                <td>{{event.location}}</td>
-                <td>{{event.startDate | date}}</td>
-                <td>{{event.endDate | date}}</td>
-                <td>
-                    <a ng-click="model.deleteEvent($index)">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                    <a ng-click="model.selectEvent($index)">
-                        <span  class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-            <tr>
-                <td>
-                    <input ng-model="model.newEvent.image" type="text" class="form-control" id="image" placeholder="image">
-                </td>
-                <td>
-                    <input ng-model="model.newEvent.title" type="text" class="form-control" id="title" placeholder="title">
-                </td>
-                <td>
-                    <input ng-model="model.newEvent.location" type="text" class="form-control" id="location" placeholder="location">
-                </td>
-                <td>
-                    <input ng-model="model.newEvent.startDate" type="timestamp" class="form-control" id="startDate" placeholder="start date">
-                </td>
-                <td>
-                    <input ng-model="model.newEvent.endDate" type="timestamp" class="form-control" id="endDate" placeholder="end date">
-                </td>
-                <td>
-                    <a type="button" id="addEvent" ng-click="model.addEvent()">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </a>
-                    <a ng-click="model.updateEvent()">
-                        <span class="glyphicon glyphicon-ok"></span>
-                    </a>
-                </td>
-            </tr>
-        </table>
+
+
+
+    <div id="selectEvent" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 id="eventTitle" class="modal-title"></h4>
+                </div>
+                <div id="eventPoster" class="modal-body"></div>
+                <label class="control-label" for="eventLocation">Event Location</label>
+                <div id="eventLocation" class="modal-body"></div>
+                <label class="control-label" for="eventStart">Start Date</label>
+                <div id="eventStart" class="modal-body"></div>
+                <label class="control-label" for="eventEnd">End Date</label>
+                <div id="eventEnd" class="modal-body"></div>
+                <div class="modal-footer">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="createEvent" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>Create Event</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="createAppointmentForm" class="form-horizontal">
+                        <div class="control-group">
+                            <div class="control-group">
+                                <label class="control-label" for="eventTime">Event Date</label>
+                                <div class="controls controls-row" id="eventTime">
+                                </div>
+                            </div>
+
+                            <div class="controls">
+                                <label class="control-label" for="createTitle">Title</label>
+                                <input class="form-control" placeholder="Title" type="text" id="createTitle">
+                                <label class="control-label" for="createLocation">Location</label>
+                                <input class="form-control" placeholder="Location" type="text" id="createLocation">
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="submit">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

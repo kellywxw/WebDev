@@ -36,13 +36,15 @@
                     model.event = response;
 
                     // only display other users
-                    for (var i = 0; i < response.userLikes.length; i++) {
-                        if(response.userLikes[i]._id == user._id) {
-                            response.userLikes.splice(i,1);
-                            break;
+                    if(response.userLikes) {
+                        for (var i = 0; i < response.userLikes.length; i++) {
+                            if(response.userLikes[i]._id == user._id) {
+                                response.userLikes.splice(i,1);
+                                break;
+                            }
                         }
+                        model.userLikes = response.userLikes;
                     }
-                    model.userLikes = response.userLikes;
                 });
         }
         init();

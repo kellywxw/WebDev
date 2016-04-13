@@ -10,92 +10,177 @@
         model.updateEvent = updateEvent;
         model.selectEvent= selectEvent;
         model.deleteEvent = deleteEvent;
-
+        model.sortEvent = sortEvent;
 
         model.$location = $location;
 
         var user = $rootScope.user;
 
-        function loadCalender() {
-            var calendar = $('#calendar').fullCalendar({
+        init();
+
+        function init() {
+            if(user != null) {
+                EventService
+                    .findAllEventsForUser(user._id)
+                    .then(eventsLoad)
+                    .then(function() {
+                        loadEventsToCalendar();
+                    });
+            }
+
+            function eventsLoad (events) {
+                model.events = events;
+                formatEvents(events);
+            };
+        }
+
+        function loadEventsToCalendar() {
+            $('#calendar').fullCalendar({
+                timezone:'local',
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
+
                 defaultView: 'month',
                 selectable: true,
-                events: model.events,
+                editable: true,
+                events: model.renderEvents,
 
-                select: function(start, end) {
-
-                    var title = prompt('Event Title:');
-                    if (title) {
-                        calendar.fullCalendar('renderEvent',
-                            {
-                                title: title,
-                                start: start,
-                                end: end
-                            },
-                            true // make the event "stick"
-                        );
-                    }
-                    calendar.fullCalendar('unselect');
-                }
+                eventClick: displayEventInCalendar,
+                //select: addEventToCalendar
             });
         }
+
+
+        function formatEvents(events) {
+            model.renderEvents = [];
+            for(var i in events) {
+                var event = {
+                    _id: events[i]._id,
+                    poster: events[i].poster,
+                    title : events[i].title,
+                    location: events[i].location,
+                    start: events[i].start,
+                    end: events[i].end
+                }
+                model.renderEvents.push(event);
+            }
+        }
+
+        function displayEventInCalendar(event) {
+            if(event.start) {
+                var startTime = moment(event.start).format('YYYY-MM-DD hh:mm A');
+            }
+            if(event.end) {
+                var endTime = moment(event.end).format('YYYY-MM-DD hh:mm A');
+            }
+
+            $('#eventTitle').html(event.title);
+            $('#eventPoster').attr('src', event.poster);
+            $('#eventLocation').html(event.location);
+            $('#eventStart').html(startTime);
+            $('#eventEnd').html(endTime);
+            $('#selectEvent').modal();
+        }
+
+        function addEventToCalendar(start, end, allDay) {
+            model.createStart = start;
+            model.createEnd = end;
+            var startTime = moment(start).format('YYYY-MM-DD hh:mm a');
+            var endTime = moment(end).format('YYYY-MM-DD hh:mm a');
+            var eventTime = startTime + ' -- ' + endTime;
+            $('#createEvent #createStart').val(start);
+            $('#createEvent #createEnd').val(end);
+            $('#createEvent #createAllDay').val(allDay);
+            $('#createEvent #eventTime').text(eventTime);
+            $('#createEvent').modal('show');
+
+            $('#submit').on('click', function(e){
+                e.preventDefault();
+                submit();
+            });
+        }
+
+        function submit(){
+            $("#createEvent").modal('hide');
+
+            var event = {
+                title: $('#createTitle').val(),
+                poster: $('#createPoster').val(),
+                location: $('#createLocation').val(),
+                start: new Date(model.createStart),
+                end: new Date(model.createEnd)
+            }
+
+            console.log(event);
+
+            $('#calendar').fullCalendar('renderEvent', event, 'stick');
+
+            $('#calendar').fullCalendar('unselect');
+
+            EventService
+                .createEventForUser(user._id, event)
+                .then(eventAdd);
+
+            function eventAdd () {
+                loadEventsForUser();
+            };
+        }
+
+
+
+// ------------------------------  Event List   ------------------------------
+
 
         function loadEventsForUser() {
             EventService
                 .findAllEventsForUser(user._id)
-                .then(eventsLoad)
-                .then(function() {
-                    loadCalender();
-                });
+                .then(eventsLoad);
 
             function eventsLoad (events) {
-                console.log(events);
                 model.events = events;
-
+                formatEvents(events);
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('addEventSource', model.renderEvents);
             };
         }
 
-
-
-        if(user != null) {
-            loadEventsForUser();
-        }
-
         function addEvent() {
-            $('#addEvent').click(function () {
-                var event = {
-                    title: model.newEvent.title,
-                    start: model.newEvent.startDate,
-                    end: model.newEvent.endDate,
-                }
-                $('#calendar').fullCalendar('renderEvent', event, 'stick');
-            });
-
             EventService
                 .createEventForUser(user._id, model.newEvent)
-                .then(eventAdd);
+                .then(eventAdd)
+                .then($('#calendar').fullCalendar('renderEvent', model.newEvent, 'stick'));
 
             function eventAdd (events) {
                 loadEventsForUser();
                 model.newEvent = null;
-            };
+            }
         }
 
         function updateEvent() {
-            var event = model.selectedEvent;
+            var eventId = model.selectedEvent._id;
+
+            var event = {
+                _id: eventId,
+                poster: model.newEvent.poster,
+                title : model.newEvent.title,
+                location: model.newEvent.location,
+                start: model.newEvent.start,
+                end: model.newEvent.end
+            }
+
             EventService
-                .updateEventById(event._id, model.newEvent)
+                .updateEventById(eventId, model.newEvent)
                 .then(eventUpdate);
 
             function eventUpdate () {
                 loadEventsForUser();
                 model.selectedEvent = null;
                 model.newEvent = null;
+                $('#calendar').fullCalendar('removeEvents', eventId);
+                $('#calendar').fullCalendar('renderEvent', event, 'stick');
             };
         }
 
@@ -105,20 +190,36 @@
             model.selectedEvent = event;
 
             model.newEvent = {
-                image: event.image,
+                poster: event.poster,
                 title : event.title,
                 location: event.location,
-                startDate: event.startDate,
-                endDate: event.endDate,
+                start: event.start,
+                end: event.end,
                 userId : event.userId
             }
         }
 
         function deleteEvent(index) {
             var eventId  = model.events[index]._id;
+
             EventService
                 .deleteEventById(eventId)
-                .then(loadEventsForUser);
+                .then(loadEventsForUser)
+                .then($('#calendar').fullCalendar('removeEvents', eventId));
+        }
+
+        function sortEvent(start, end) {
+            EventService
+                .sortEvent(user._id, start, end)
+                .then(
+                    function (response) {
+                        console.log(response);
+                        model.events = response;
+                    },
+                    function (err) {
+                        model.error = err;
+                    }
+                );
         }
     }
 })();

@@ -139,7 +139,7 @@
         }
 
         function deleteFromEvents(index) {
-            var eventId  = model.events[index]._id;
+            var eventId  = model.likeEvents[index]._id;
             EventService
                 .deleteEventById(eventId)
                 .then(eventRemove);

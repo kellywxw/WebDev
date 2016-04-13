@@ -21,8 +21,8 @@ module.exports = function(mongoose, db) {
             poster: event.poster,
             title: event.title,
             location: event.location,
-            startDate: event.startDate,
-            endDate: event.endDate,
+            start: event.start,
+            end: event.end,
             userId: userId
         });
 

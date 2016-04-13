@@ -4,8 +4,8 @@ module.exports = function(mongoose) {
         title: String,
         poster: String,
         location: String,
-        startDate: Date,
-        endDate: Date,
+        start: Date,
+        end: Date,
         cost: String,
         // ids of users that like this event
         likes: [String],

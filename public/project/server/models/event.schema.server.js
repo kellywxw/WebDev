@@ -4,8 +4,8 @@ module.exports = function(mongoose) {
         title: String,
         poster: String,
         location: String,
-        startDate: {type: Date},
-        endDate: {type: Date},
+        start: {type: Date},
+        end: {type: Date},
         created: {type: Date, default: Date.now},
         updated: {type: Date, default: Date.now},
     }, {collection: 'event'});
