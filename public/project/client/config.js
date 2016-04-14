@@ -55,6 +55,14 @@
                     checkLoggedIn: checkLoggedIn
                 }
             })
+            .when("/calendar", {
+                templateUrl: "views/userinfo/calendar.view.html",
+                controller: "EventController",
+                controllerAs: "model",
+                resolve: {
+                    checkLoggedIn: checkLoggedIn
+                }
+            })
             .when("/friend", {
                 templateUrl: "views/userinfo/friend.view.html",
                 controller: "FriendController",
@@ -80,38 +88,43 @@
                     getLoggedIn: getLoggedIn
                 }
             })
-
             .otherwise({
                 redirectTo: "/home"
             });
     }
 
-    function getLoggedIn(UserService, $q) {
+    function getLoggedIn(UserService, $q, $rootScope) {
         var deferred = $q.defer();
 
         UserService
             .getCurrentUser()
-            .then(function(user){
-                UserService.setCurrentUser(user);
+            .then(function(user) {
+                $rootScope.errorMessage = null;
+                // User is Authenticated
+                if (user !== '0') {
+                    UserService.setCurrentUser(user);
+                }
                 deferred.resolve();
             });
 
         return deferred.promise;
     }
 
-    function checkLoggedIn(UserService, $rootScope, $q, $location) {
+    function checkLoggedIn(UserService, $q, $location, $rootScope) {
 
         var deferred = $q.defer();
 
         UserService
             .getCurrentUser()
             .then(function(user) {
+                $rootScope.errorMessage = null;
                 if(user) {
                     UserService.setCurrentUser(user);
                     deferred.resolve();
                 } else {
+                    $rootScope.errorMessage = 'You need to log in.';
                     deferred.reject();
-                    $location.url("/home");
+                    $location.url("/login");
                 }
             });
 

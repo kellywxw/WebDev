@@ -9,14 +9,17 @@
         <li  ng-show="!user", ng-class="{'active': $location.url() == '/login'}">
             <a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Log In</a>
         </li>
-        <li ng-show="user", ng-class="{'active': $location.url() == '/event'}">
-            <a href="#/event"><i class="glyphicon glyphicon-calendar"></i> My Event List</a>
-        </li>
         <li  ng-show="user", ng-class="{'active': $location.url().indexOf('/profile')>=0}">
-            <a href="#/profile"><i class="glyphicon glyphicon-user"></i> My Profile</a>
+            <a href="#/profile"><i class="glyphicon glyphicon-user"></i> Profile</a>
+        </li>
+        <li ng-show="user", ng-class="{'active': $location.url() == '/event'}">
+            <a href="#/event"><i class="glyphicon glyphicon-calendar"></i> Event List</a>
+        </li>
+        <li ng-show="user", ng-class="{'active': $location.url() == '/calendar'}">
+            <a href="#/calendar"><i class="glyphicon glyphicon-calendar"></i> Calendar</a>
         </li>
         <li   ng-show="user", ng-class="{'active': $location.url() == '/friend'}">
-            <a href="#/friend"><i class="glyphicon glyphicon-globe"></i> My Friends</a>
+            <a href="#/friend"><i class="glyphicon glyphicon-globe"></i> Friends</a>
         </li>
     </ul>
 </nav>

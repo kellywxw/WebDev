@@ -1,8 +1,0 @@
-[
-  {"_id":1,  "poster": null, "title":"Party1", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "eventfulId":111},
-  {"_id":2, "poster": null, "title":"Party2", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "eventfulId":222},
-  {"_id":3, "poster": null, "title":"Party3", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "eventfulId":333},
-  {"_id":4, "poster": null, "title":"Party4", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "eventfulId":444},
-  {"_id":5, "poster": null, "title":"Party5", "location":"seattle", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "eventfulId":555},
-  {"_id":6, "poster": null, "title":"Party6", "location":"San Fran", "startDate":"Mar 22, 2016", "endDate": "Mar 22, 2016", "eventfulId":666}
-]

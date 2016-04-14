@@ -47,17 +47,33 @@ module.exports = function(app, userModel) {
     }
 
     function deserializeUser(user, done) {
-        userModel
-            .findUserById(user._id)
-            .then(
-                function(user){
-                    delete user.password;
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
+        if(user.email) {
+            userModel
+                .findUserById(user._id)
+                .then(
+                    function(user){
+                        console.log("ass");
+                        console.log(user);
+                        delete user.password;
+                        done(null, user);
+                    },
+                    function(err){
+                        done(err, null);
+                    }
+                );
+        } else {
+            userModel
+                .findUserById(user._id)
+                .then(
+                    function(user){
+                        delete user.password;
+                        done(null, user);
+                    },
+                    function(err){
+                        done(err, null);
+                    }
+                );
+        }
     }
 
     function login(req, res) {

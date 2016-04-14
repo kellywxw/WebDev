@@ -18,6 +18,7 @@
         model.unfollow = unfollow;
 
         model.added = [];
+        model.addedId = [];
 
         var user = $rootScope.user;
 
@@ -41,6 +42,7 @@
                     for (var i = 0; i < events.length; i++) {
                         if (events[i].title == model.likeEvents[j].title) {
                             model.added.push(j);
+                            model.addedId.push(events[i]._id);
                         }
                     }
                 }
@@ -139,14 +141,16 @@
         }
 
         function deleteFromEvents(index) {
-            var eventId  = model.likeEvents[index]._id;
+            var i = model.added.indexOf(index);
+            var eventId  = model.addedId[i];
             EventService
                 .deleteEventById(eventId)
                 .then(eventRemove);
 
             function eventRemove (events) {
-                var i = model.added.indexOf(index);
+
                 model.added.splice(i,1);
+                model.addedId.splice(i,1);
                 console.log(events);
             };
         }

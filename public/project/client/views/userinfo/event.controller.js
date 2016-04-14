@@ -34,6 +34,8 @@
             };
         }
 
+// ------------------------------  Calendar   ------------------------------
+
         function loadEventsToCalendar() {
             $('#calendar').fullCalendar({
                 timezone:'local',

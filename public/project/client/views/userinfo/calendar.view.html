@@ -1,0 +1,70 @@
+<div ng-controller="EventController">
+    <div class="row" >
+        <div class="col-sm-12 col-lg-12">
+            <div class="box-inner">
+                <div class="box-content">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="selectEvent" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 id="eventTitle" class="modal-title"></h4>
+                </div>
+                <div id="eventPoster" class="modal-body"></div>
+                <label class="control-label" for="eventLocation">Event Location</label>
+                <div id="eventLocation" class="modal-body"></div>
+                <label class="control-label" for="eventStart">Start Date</label>
+                <div id="eventStart" class="modal-body"></div>
+                <label class="control-label" for="eventEnd">End Date</label>
+                <div id="eventEnd" class="modal-body"></div>
+                <div class="modal-footer">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button class="btn btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="createEvent" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>Create Event</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="createAppointmentForm" class="form-horizontal">
+                        <div class="control-group">
+                            <div class="control-group">
+                                <label class="control-label" for="eventTime">Event Date</label>
+                                <div class="controls controls-row" id="eventTime">
+                                </div>
+                            </div>
+
+                            <div class="controls">
+                                <label class="control-label" for="createTitle">Title</label>
+                                <input class="form-control" placeholder="Title" type="text" id="createTitle">
+                                <label class="control-label" for="createLocation">Location</label>
+                                <input class="form-control" placeholder="Location" type="text" id="createLocation">
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="submit">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

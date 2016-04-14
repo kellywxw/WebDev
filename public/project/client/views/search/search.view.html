@@ -3,9 +3,17 @@
         <br>
         <input ng-model="model.title" type="text" class="form-control" placeholder="search" value="seattle concert">
         <br>
-        <a ng-click="model.search(model.title)" class="btn btn-primary btn-block"></i>ChopChop <i class="glyphicon glyphicon-search"></i></a>
-
+        <a ng-click="model.search(model.title, model.page)" class="btn btn-primary btn-block"></i>ChopChop <i class="glyphicon glyphicon-search"></i></a>
+        <br>
+        <div ng-if="model.error" class="alert alert-warning">
+            <a class="close" data-dismiss="alert">&times;</a>
+            <strong>{{model.error}}</strong>
+        </div>
         <section ng-if="model.events">
+            <div class="alert alert-warning">
+                <Strong>Show results for "{{model.searchTitle}}": Page {{model.page}} of {{model.limit}}</Strong>
+            </div>
+            <br>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -30,6 +38,12 @@
                     </tr>
                 </tbody>
             </table>
+            <nav>
+                <ul class="pager">
+                    <li><a ng-hide="model.page == 1" ng-click="model.prev()">Previous</a></li>
+                    <li><a ng-hide="model.page == model.limit" ng-click="model.next()">Next</a></li>
+                </ul>
+            </nav>
         </section>
     </div>
 </div>

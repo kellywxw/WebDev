@@ -19,20 +19,16 @@
                     model.data = response;
                     if(model.data.images) {
                         if(model.data.images.image.length > 0) {
-                            console.log(model.data.images.image);
                             model.image = model.data.images.image[0].medium.url;
                         } else {
-                            console.log(model.data.images.image);
                             model.image = model.data.images.image.medium.url;
                         }
                     }
-                    console.log(model.data);
                 });
 
             EvdbService
                 .findUserLikes (evdbId)
                 .then(function(response){
-                    console.log(response);
                     model.event = response;
 
                     // only display other users

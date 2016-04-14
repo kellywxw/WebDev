@@ -16,9 +16,8 @@
             var deferred = $q.defer();
 
             $.ajax({
-                url: "http://api.eventful.com/jsonp/events/search?app_key=qpTwFsBDbVd95mkr&keywords="+ title + "&page_number="+ page_number + "&jsonCallback=JSON_CALLBACK",
+                url: "http://api.eventful.com/jsonp/events/search?app_key=qpTwFsBDbVd95mkr&keywords="+ title + "&page_number="+ page_number ,
                 dataType: 'JSONP',
-                jsonpCallback: 'callback',
                 type: 'GET',
                 success: function (response) {
                     deferred.resolve(response);
@@ -31,9 +30,8 @@
             var deferred = $q.defer();
 
             $.ajax({
-                url: "http://api.eventful.com/jsonp/events/get?app_key=qpTwFsBDbVd95mkr&id=" + id +"&jsonCallback=JSON_CALLBACK",
+                url: "http://api.eventful.com/jsonp/events/get?app_key=qpTwFsBDbVd95mkr&id=" + id,
                 dataType: 'JSONP',
-                jsonpCallback: 'callback',
                 type: 'GET',
                 success: function (response) {
                     deferred.resolve(response);
