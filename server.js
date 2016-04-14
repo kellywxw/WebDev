@@ -38,8 +38,9 @@ app.use(passport.session());
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
-require("./public/assignment/server/app.js")(app, mongoose, db);
-require("./public/project/server/app.js")(app, mongoose, db);
+var chopchopUserModel = require("./public/project/server/models/user.model.server.js")(db, mongoose);
+require("./public/assignment/server/app.js")(app, mongoose, db, chopchopUserModel);
+require("./public/project/server/app.js")(app, mongoose, db, chopchopUserModel);
 
 app.listen(port, ipaddress);
 

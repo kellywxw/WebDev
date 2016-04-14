@@ -1,4 +1,3 @@
-/*
 var passport = require('passport');
 var LocalStrategy_Project = require('passport-local').Strategy;
 var bcrypt = require("bcrypt-nodejs");
@@ -6,25 +5,26 @@ var bcrypt = require("bcrypt-nodejs");
 module.exports = function(app, userModel, evdbModel) {
     var auth = authenticated;
 
-    app.post("/api/project/login", passport.authenticate('local'), login);
+    app.post("/api/project/login", passport.authenticate('projectLocal'), login);
     app.get("/api/project/loggedin", loggedin);
     app.post("/api/project/logout", logout);
     app.post("/api/project/register", register);
-    app.get("/api/project/user/:userId", auth, getProfile);
+    app.get("/api/project/profile/user/:userId", auth, getProfile);
+    app.get("/api/project/follow/user/:userId", auth, getFollow);
     app.put("/api/project/user/:userId", auth, updateUser);
     app.delete("/api/project/user/:userId", auth, deleteUser);
 
-    passport.use(new LocalStrategy_Project(localStrategy_project));
-    passport.serializeUser(serializeUser_project);
-    passport.deserializeUser(deserializeUser_project);
+    app.post("/api/project/follow/:userId1/follow/:userId2", auth, meFollowsUser);
+    app.post("/api/project/follow/:userId1/unfollow/:userId2", auth, meUnfollowsUser);
 
-    function localStrategy_project(username, password, done) {
+    passport.use('projectLocal', new LocalStrategy_Project(localStrategy));
+
+    function localStrategy(username, password, done) {
         // lookup user by username only. cant compare password since it's encrypted
         userModel
             .findChopChopUserByUsername(username)
             .then(
                 function(user) {
-                    console.log("project"+user);
                     // if the user exists, compare passwords with bcrypt.compareSync
                     if(user && bcrypt.compareSync(password, user.password)) {
                         return done(null, user);
@@ -38,31 +38,23 @@ module.exports = function(app, userModel, evdbModel) {
             );
     }
 
-    function serializeUser_project(user, done) {
-        delete user.password;
-        done(null, user);
-    }
-
-    function deserializeUser_project(user, done) {
-        userModel
-            .findChopChopUserById(user._id)
-            .then(
-                function(user){
-                    delete user.password;
-                    done(null, user);
-                },
-                function(err){
-                    done(err, null);
-                }
-            );
+    function authenticated(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        } else {
+            res.redirect('/#login');
+            res.send(401);
+        }
     }
 
     function login(req, res) {
-        res.json(req.user);
+        var user = req.user;
+        if(user.likes) {
+            res.json(user);
+        }
     }
 
     function loggedin(req, res) {
-        console.log(req.isAuthenticated());
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
@@ -99,174 +91,6 @@ module.exports = function(app, userModel, evdbModel) {
                             }
                         });
                     }
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-
-    function getProfile(req, res) {
-        var userId = req.params.userId;
-        var user = null;
-
-        userModel
-            .findChopChopUserById(userId)
-            .then(
-                function(doc) {
-                    user = doc;
-                    console.log(user.likes);
-                    return evdbModel.findEventsByEvdbIds(user.likes);
-                },
-                function(err) {
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                // fetch events this user likes
-                function (events) {
-
-                    // list of events this user likes
-                    // events are not stored in database
-                    // only added for UI rendering
-                    user.likeEvents = events;
-                    console.log(user);
-                    res.json(user);
-                },
-
-                // send error if promise rejected
-                function (err) {
-                    res.status(400).send(err);
-                }
-            )
-    }
-
-    function updateUser(req, res) {
-        var newUser = req.body;
-        var userId = req.params.userId;
-
-        userModel
-            .findChopChopUserById(userId)
-            .then(
-                function(user) {
-                    if (newUser.password != user.password) {
-                        newUser.password = bcrypt.hashSync(newUser.password);
-                    }
-                    return newUser;
-                }
-            )
-            .then(function(newUser){
-                    return userModel.updateChopChopUser(userId, newUser);
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(user){
-                    return userModel.findAllChopChopUsers();
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(users){
-                    res.json(users);
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function deleteUser(req, res) {
-        userModel
-            .deleteUser(req.params.userId)
-            .then(
-                function(user){
-                    return userModel.findAllChopChopUsers();
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function(users){
-                    res.json(users);
-                },
-                function(err){
-                    res.status(400).send(err);
-                }
-            );
-    }
-
-    function authenticated(req, res, next) {
-        if (req.isAuthenticated()) {
-            return next();
-        } else {
-            res.redirect('/#login');
-            res.send(401);
-        }
-    }
-}
-
- */
-
-module.exports = function(app, userModel, evdbModel) {
-    app.post("/api/project/login", login);
-    app.get("/api/project/loggedin", loggedin);
-    app.post("/api/project/logout", logout);
-    app.post("/api/project/register", register);
-    app.get("/api/project/profile/user/:userId", getProfile);
-    app.get("/api/project/follow/user/:userId", getFollow);
-    app.put("/api/project/user/:userId", updateUser);
-    app.delete("/api/project/user/:userId", deleteUser);
-
-    app.post("/api/project/follow/:userId1/follow/:userId2", meFollowsUser);
-    app.post("/api/project/follow/:userId1/unfollow/:userId2", meUnfollowsUser);
-
-
-    function login(req, res) {
-        var user = req.body;
-        var username = user.username;
-        var password = user.password;
-        var credentials = {
-            username: username,
-            password: password
-        }
-        userModel
-            .findChopChopUserByCredentials(credentials)
-            .then(
-                function(user) {
-                    req.session.user = user;
-                    res.json(user);
-                },
-                function(err) {
-                    res.status(400).send(err);
-                }
-            )
-    }
-
-    function loggedin(req, res) {
-        res.json(req.session.user);
-    }
-
-    function logout(req, res) {
-        req.session.destroy();
-        res.send(200);
-    }
-
-    function register(req, res) {
-        var newUser = req.body;
-
-        userModel
-            .createChopChopUser(newUser)
-            .then(
-                function(user){
-                    req.session.user = user;
-                    res.json(user);
                 },
                 function(err){
                     res.status(400).send(err);
@@ -362,8 +186,7 @@ module.exports = function(app, userModel, evdbModel) {
             .then(
                 function(user) {
                     if (newUser.password != user.password) {
-                        //newUser.password = bcrypt.hashSync(newUser.password);
-                        newUser.password = newUser.password;
+                        newUser.password = bcrypt.hashSync(newUser.password);
                     }
                     return newUser;
                 }

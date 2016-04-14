@@ -1,5 +1,4 @@
-module.exports = function(app, mongoose, db) {
-    var chopchopUserModel = require("./models/user.model.server.js")(mongoose, db);
+module.exports = function(app, mongoose, db, chopchopUserModel) {
     var eventModel = require("./models/event.model.server.js")(mongoose, db);
     var evdbModel = require("./models/eventful.model.server.js")(mongoose, db);
 

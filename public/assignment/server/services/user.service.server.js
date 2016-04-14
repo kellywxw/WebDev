@@ -2,7 +2,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 
-module.exports = function(app, userModel) {
+module.exports = function(app, userModel, chopchopUserModel) {
     var auth = authenticated;
 
     app.post("/api/assignment/login", passport.authenticate('local'), login);
@@ -16,7 +16,6 @@ module.exports = function(app, userModel) {
     app.get("/api/assignment/admin/user", isAdmin, findAllUsersByAdmin);
     app.put("/api/assignment/admin/user/:userId", isAdmin, updateUserByAdmin);
     app.delete("/api/assignment/admin/user/:userId", isAdmin, deleteUserByAdmin);
-
 
     passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
@@ -47,13 +46,12 @@ module.exports = function(app, userModel) {
     }
 
     function deserializeUser(user, done) {
+        // project
         if(user.email) {
-            userModel
-                .findUserById(user._id)
+            chopchopUserModel
+                .findChopChopUserById(user._id)
                 .then(
                     function(user){
-                        console.log("ass");
-                        console.log(user);
                         delete user.password;
                         done(null, user);
                     },
@@ -61,6 +59,7 @@ module.exports = function(app, userModel) {
                         done(err, null);
                     }
                 );
+        // assignment
         } else {
             userModel
                 .findUserById(user._id)
@@ -77,7 +76,9 @@ module.exports = function(app, userModel) {
     }
 
     function login(req, res) {
-        res.json(req.user);
+        if(!req.user.likes) {
+            res.json(req.user);
+        }
     }
 
     function loggedin(req, res) {

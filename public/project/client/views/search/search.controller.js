@@ -18,7 +18,8 @@
                 .findEventByTitle(title, pageNumber)
                 .then(function(response){
                     if (!response.events) {
-                        model.error = "Sorry. Event does not exist. Please try again."
+                        model.events = null;
+                        model.error = "Sorry. " + title + " does not exist. Please try again."
                         console.log(model.error);
                     } else {
                         model.error = null;
