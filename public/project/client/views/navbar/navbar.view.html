@@ -1,7 +1,7 @@
 <nav ng-controller="NavbarController">
     <ul class="nav nav-tabs">
         <li ng-class="{'active': $location.url() == '/search'}">
-            <a href="#/search"><i class="glyphicon glyphicon-calendar"></i> Search Events</a>
+            <a href="#/search"><i class="glyphicon glyphicon-search"></i> Search Events</a>
         </li>
         <li  ng-show="!user", ng-class="{'active': $location.url() == '/register'}">
             <a href="#/register"><i class="glyphicon glyphicon-user"></i> Sign Up</a>
@@ -10,10 +10,10 @@
             <a href="#/login"><i class="glyphicon glyphicon-log-in"></i> Log In</a>
         </li>
         <li  ng-show="user", ng-class="{'active': $location.url().indexOf('/profile')>=0}">
-            <a href="#/profile"><i class="glyphicon glyphicon-user"></i> ChopChop Profile</a>
+            <a href="#/profile"><i class="glyphicon glyphicon-user"></i> {{user.username}}'s LOVE</i></a>
         </li>
         <li ng-show="user", ng-class="{'active': $location.url() == '/event'}">
-            <a href="#/event"><i class="glyphicon glyphicon-calendar"></i> Event List</a>
+            <a href="#/event"><i class="glyphicon glyphicon-menu-hamburger"></i> Event List</a>
         </li>
         <li ng-show="user", ng-class="{'active': $location.url() == '/calendar'}">
             <a href="#/calendar"><i class="glyphicon glyphicon-calendar"></i> Calendar</a>

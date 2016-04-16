@@ -1,5 +1,5 @@
 (function () {
     "use strict";
     angular
-        .module("ChopChopApp", ["ngRoute","jgaDirectives"]);
+        .module("ChopChopApp", ["ngRoute"]);
 })();

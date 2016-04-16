@@ -16,7 +16,7 @@
     </div>
     <div class="box-content col-sm-10 col-lg-10">
         <form class="form-horizontal">
-            <h3 class="col-xs-10">ChopChop User Info</h3>
+            <h3 class="col-xs-10">About {{model.user.username}}</h3>
             <a ng-show="model.user.followsMe.indexOf(user._id) > -1" class="col-xs-2" ng-click="model.unfollow(model.user._id)">
                 <span class="glyphicon glyphicon-heart"></span>
             </a>
@@ -38,7 +38,7 @@
         </form>
 
         <div ng-show="model.likeEvents.length>0">
-            <h3>Events I Like</h3>
+            <h3>Events {{model.user.username}} Likes</h3>
             <table class="table table-hover table-responsive">
                 <thead>
                 <tr>
@@ -64,7 +64,7 @@
         </div>
 
         <div class="col-sm-10 col-lg-10" ng-show="model.userFollows.length>0">
-            <h3>Users I Follow</h3>
+            <h3>Users {{model.user.username}} Follows</h3>
             <ul>
                 <li ng-repeat="user in model.userFollows">
                     <a href="#/profileFriend/{{user._id}}">
@@ -75,7 +75,7 @@
         </div>
 
         <div class="col-sm-10 col-lg-10" ng-show="model.userFollowsMe.length>0">
-            <h3>Users Following Me</h3>
+            <h3>Users Following {{model.user.username}}</h3>
             <ul>
                 <li ng-repeat="user in model.userFollowsMe">
                     <a href="#/profileFriend/{{user._id}}">

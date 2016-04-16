@@ -7,12 +7,11 @@
             <h3>Users I Follow</h3>
             <ul>
                 <div ng-repeat="user in model.userFollows">
-                    <a href="#/profileFriend/{{user._id}}">
-                        <img height="75px" ng-src="{{user.poster}}">
-                    </a>
-                    <a href="#/profileFriend/{{user._id}}">
-                        {{user.username}}
-                    </a>
+                    <li>
+                        <a href="#/profileFriend/{{user._id}}">
+                            {{user.username}}
+                        </a>
+                    </li>
                 </div>
             </ul>
         </div>
@@ -21,12 +20,12 @@
             <h3>Users Following Me</h3>
             <ul>
                 <div ng-repeat="user in model.userFollowsMe">
-                    <a href="#/profileFriend/{{user._id}}">
-                        <img height="75px" ng-src="{{user.poster}}">
-                    </a>
-                    <a href="#/profileFriend/{{user._id}}">
-                        {{user.username}}
-                    </a>
+                    <li>
+                        <a href="#/profileFriend/{{user._id}}">
+                            {{user.username}}
+                         </a>
+                    </li>
+
                 </div>
             </ul>
         </div>
