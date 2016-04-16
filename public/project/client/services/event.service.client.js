@@ -9,9 +9,9 @@
             createEventForUser : createEventForUser,
             findAllEventsForUser : findAllEventsForUser,
             findEventById : findEventById,
+            findEventByTitle : findEventByTitle,
             updateEventById : updateEventById,
             deleteEventById : deleteEventById,
-            sortEvent: sortEvent
         };
         return api;
 
@@ -51,6 +51,18 @@
             return deferred.promise;
         }
 
+        function findEventByTitle(userId, eventTitle) {
+            var deferred = $q.defer();
+
+            $http
+                .get("/api/project/user/"+ userId +"/event/" + eventTitle )
+                .success(function(response) {
+                    deferred.resolve(response);
+                })
+
+            return deferred.promise;
+        }
+
         function updateEventById(eventId, newEvent) {
             var deferred = $q.defer();
 
@@ -74,18 +86,5 @@
 
             return deferred.promise;
         }
-
-        function sortEvent (userId, startIndex, endIndex) {
-            var deferred = $q.defer();
-
-            $http
-                .put("/api/project/user/"+ userId +"/event?startIndex="+startIndex+"&endIndex="+endIndex)
-                .success(function(response){
-                    deferred.resolve(response);
-                })
-
-            return deferred.promise;
-        }
-
     }
 })();

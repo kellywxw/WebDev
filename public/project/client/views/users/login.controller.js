@@ -16,10 +16,14 @@
                     .then(userLogin);
             }
 
+            model.message = "Sorry, you username or password do not match our record."
+
             function userLogin(user) {
-                console.log(user);
-                UserService.setCurrentUser(user);
-                $location.url("/profile");
+                if(user) {
+                    console.log(user);
+                    UserService.setCurrentUser(user);
+                    $location.url("/profile");
+                }
             };
         }
     }

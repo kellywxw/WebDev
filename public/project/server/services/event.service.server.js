@@ -3,8 +3,8 @@ module.exports = function(app, eventModel) {
     app.get("/api/project/event", findAllEvents);
     app.get("/api/project/user/:userId/event", findAllEventsForUser);
     app.get("/api/project/event/:eventId", findEventById);
+    app.get("/api/project/user/:userId/event/:eventTitle", findEventByTitle);
     app.put("/api/project/event/:eventId", updateEventById);
-    app.put("/api/project/user/:userId/event", sortEvents);
     app.delete("/api/project/event/:eventId", deleteEventById);
 
     function createEventForUser(req, res) {
@@ -63,6 +63,21 @@ module.exports = function(app, eventModel) {
             );
     }
 
+    function findEventByTitle(req, res) {
+        var userId = req.params.userId;
+        var eventTitle = req.params.eventTitle;
+        eventModel
+            .findEventByTitle(userId, eventTitle)
+            .then(
+                function(event) {
+                    res.json(event);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
     function updateEventById(req, res) {
         var eventId = req.params.eventId;
         var event = req.body;
@@ -90,24 +105,5 @@ module.exports = function(app, eventModel) {
                     res.status(400).send(err);
                 }
             );
-    }
-
-    function sortEvents (req, res) {
-        var userId = req.params.userId;
-        var startIndex = req.query.startIndex;
-        var endIndex = req.query.endIndex;
-
-        if(startIndex && endIndex) {
-            eventModel
-                .sortEvent(userId, startIndex, endIndex)
-                .then(
-                    function(events) {
-                        res.json(events);
-                    },
-                    function(err) {
-                        res.status(400).send(err);
-                    }
-                );
-        }
     }
 }

@@ -10,7 +10,6 @@
         model.updateEvent = updateEvent;
         model.selectEvent= selectEvent;
         model.deleteEvent = deleteEvent;
-        model.sortEvent = sortEvent;
 
         model.$location = $location;
 
@@ -208,20 +207,6 @@
                 .deleteEventById(eventId)
                 .then(loadEventsForUser)
                 .then($('#calendar').fullCalendar('removeEvents', eventId));
-        }
-
-        function sortEvent(start, end) {
-            EventService
-                .sortEvent(user._id, start, end)
-                .then(
-                    function (response) {
-                        console.log(response);
-                        model.events = response;
-                    },
-                    function (err) {
-                        model.error = err;
-                    }
-                );
         }
     }
 })();

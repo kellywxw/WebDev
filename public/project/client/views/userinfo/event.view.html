@@ -1,7 +1,7 @@
 <div ng-controller="EventController">
     <div class="row" >
         <div class="col-sm-12 col-lg-12">
-            <div class="col-sm-10 col-lg-10" ng-show="model.events">
+            <div ng-show="model.events">
                 <table class="table table-hover table-responsive">
                     <h3>My Event List</h3>
                     <thead>
@@ -9,15 +9,15 @@
                         <th class="col-sm-2 col-lg-2">Poster</th>
                         <th class="col-sm-2 col-lg-2">Title</th>
                         <th class="col-sm-2 col-lg-2">Location</th>
-                        <th class="col-sm-1 col-lg-1">Start Date</th>
-                        <th class="col-sm-1 col-lg-1">End Date</th>
+                        <th class="col-sm-2 col-lg-2">Start Date</th>
+                        <th class="col-sm-2 col-lg-2">End Date</th>
                         <th class="col-sm-2 col-lg-2">Action</th>
                     </tr>
                     </thead>
-                    <tbody jga-sortable jga-sortable-callback="model.sortEvents" >
+                    <tbody>
                     <tr ng-repeat="event in model.events">
                         <td><img height="75px" ng-src="{{event.poster}}"/></td>
-                        <td><a href="#/eventDetail/{{event._Id}}">{{event.title}}</a></td>
+                        <td>{{event.title}}</td>
                         <td>{{event.location}}</td>
                         <td>{{event.start | date}}</td>
                         <td>{{event.end | date}}</td>
@@ -33,7 +33,11 @@
                     </tbody>
                     <tr>
                         <td>
-                            <input ng-model="model.newEvent.poster" type="text" class="form-control" id="image" placeholder="image">
+                            <span class="btn btn-warning btn-file">
+                                <i class="glyphicon glyphicon-open"></i>
+                                <span>Upload Profile</span>
+                                <input id="fileupload" type="file" name="files[]" multiple>
+                            </span>
                         </td>
                         <td>
                             <input ng-model="model.newEvent.title" type="text" class="form-control" id="title" placeholder="title">

@@ -11,8 +11,7 @@ module.exports = function(mongoose, db) {
         findEventById : findEventById,
         findEventByTitle : findEventByTitle,
         updateEventById : updateEventById,
-        deleteEventById : deleteEventById,
-        sortEvent: sortEvent
+        deleteEventById : deleteEventById
     };
     return api;
 
@@ -87,10 +86,10 @@ module.exports = function(mongoose, db) {
         return deferred.promise;
     }
 
-    function findEventByTitle(eventTitle) {
+    function findEventByTitle(userId, eventTitle) {
         var deferred = q.defer();
 
-        Event.find({title: eventTitle}, function(err, doc) {
+        Event.find({title: eventTitle, userId: userId}, function(err, doc) {
             if (err) {
                 deferred.reject(err);
             } else {
@@ -137,21 +136,6 @@ module.exports = function(mongoose, db) {
                         deferred.resolve(doc);
                     }
                 });
-            }
-        });
-
-        return deferred.promise;
-    }
-
-    function sortEvent(userId, startIndex, endIndex) {
-        var deferred = q.defer();
-
-        Event.find({userId: userId}, function (err, events) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                events.splice(endIndex, 0, events.splice(startIndex, 1)[0]);
-                deferred.resolve(events);
             }
         });
 

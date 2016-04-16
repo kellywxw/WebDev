@@ -5,12 +5,21 @@
         <br>
         <a ng-click="model.search(model.title, model.page)" class="btn btn-primary btn-block"></i>ChopChop <i class="glyphicon glyphicon-search"></i></a>
         <br>
+        <form ng-show="user">
+            <input  id="isSearchEvents" class="checkbox-inline" type="checkbox"> Search Other Events</input>
+            <input id="isSearchMyEvents" class="checkbox-inline" type="checkbox"> Search My Event List</input>
+        </form>
+        <br>
+        <div ng-if="model.myerror" class="alert alert-warning">
+            <a class="close" data-dismiss="alert">&times;</a>
+            <strong>{{model.myerror}}</strong>
+        </div>
         <div ng-if="model.error" class="alert alert-warning">
             <a class="close" data-dismiss="alert">&times;</a>
             <strong>{{model.error}}</strong>
         </div>
-        <section ng-if="model.events">
-            <div class="alert alert-warning">
+        <section ng-if="model.events || model.myEvents">
+            <div ng-if="model.events" class="alert alert-warning">
                 <Strong>Show results for "{{model.searchTitle}}": Page {{model.page}} of {{model.limit}}</Strong>
             </div>
             <br>
@@ -25,7 +34,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="event in model.events">
+                    <tr ng-if="model.myEvents && model.page == 1" ng-repeat="event in model.myEvents">
+                        <td><img height="75px" ng-src="{{event.poster}}"/></td>
+                        <td>{{event.title}} <a href="#/event" class="btn btn-warning" ><i class="glyphicon glyphicon-user"></i> {{user.username}}'s Event</a></td>
+                        <td>{{event.location}}</td>
+                        <td>{{event.start | date}}</td>
+                        <td>{{event.end | date}}</td>
+                    </tr>
+                    <tr ng-if="model.events" ng-repeat="event in model.events">
                         <td><img height="75px" ng-src="{{event.image.url}}"/></td>
                         <td>
                             <a href="#/searchEvent/{{event.id}}">
@@ -33,15 +49,15 @@
                             </a>
                         </td>
                         <td>{{event.city_name}}</td>
-                        <td>{{event.start_time | date}}</td>
+                        <td>{{event.start_time}}</td>
                         <td>{{event.stop_time | date}}</td>
                     </tr>
                 </tbody>
             </table>
             <nav>
                 <ul class="pager">
-                    <li><a ng-hide="model.page == 1" ng-click="model.prev()">Previous</a></li>
-                    <li><a ng-hide="model.page == model.limit" ng-click="model.next()">Next</a></li>
+                    <li><a ng-show="model.page != 1 && model.events" ng-click="model.prev()">Previous</a></li>
+                    <li><a ng-show="model.page < model.limit && model.events" ng-click="model.next()">Next</a></li>
                 </ul>
             </nav>
         </section>

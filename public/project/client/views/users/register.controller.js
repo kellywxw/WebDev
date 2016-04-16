@@ -9,6 +9,7 @@
         model.register = register;
 
         function register() {
+            model.message = null;
             if(model.newUser.username != null &&
                model.newUser.password == model.password2) {
                 UserService
@@ -17,9 +18,17 @@
             }
 
             function getCreatedUser(user) {
-                console.log(user);
-                UserService.setCurrentUser(user);
-                $location.url("/profile");
+                if (user) {
+                    console.log(user);
+                    UserService.setCurrentUser(user);
+                    $location.url("/profile");
+                } else {
+                    model.fail = true;
+                    model.newUser = null;
+                    model.password2 = null;
+                    model.message = "Sorry, user already exist. Please try again."
+                }
+
             }
         }
     }

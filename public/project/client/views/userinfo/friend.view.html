@@ -1,5 +1,8 @@
 <div ng-controller="FriendController">
     <div class="col-sm-12 col-lg-12">
+        <div ng-show="model.userFollows.length == 0 && model.userFollowsMe.length == 0" class="alert alert-warning">
+            <strong>{{model.message}}</strong>
+        </div>
         <div ng-show="model.userFollows.length>0" >
             <h3>Users I Follow</h3>
             <ul>

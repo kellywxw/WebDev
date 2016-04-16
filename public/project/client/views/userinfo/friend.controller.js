@@ -7,6 +7,8 @@
     function FriendController($rootScope, UserService) {
         var model = this;
 
+        model.message = "No friends yet. Start exploring friends~"
+
         var user = $rootScope.user;
 
         function loadFollowForUser (userId) {
