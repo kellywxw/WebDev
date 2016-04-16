@@ -1,17 +1,24 @@
 <div ng-controller="ProfileController">
-    <div class="col-sm-2 col-lg-2">
+    <div class="col-sm-2 col-lg-2 ">
         <div class="sidebar-nav">
             <div class="nav-canvas">
-                <ul class="nav nav-pills nav-stacked main-menu">
+                <ul class="nav nav-pills nav-stacked main-menu show">
                     <li class="nav-header"></li>
-                    <div align="center">
-                        <a><img alt="profile pic" src="css/imgs/profile-default.jpg" width="80" height="80" /></a>
+                    <div align="center" >
+                        <a href="#/profile"><img alt="profile pic" src="css/imgs/profile-default.jpg" width="80" height="80" /></a>
                     </div>
-                    <div class="col-sm-.5" align="center">
-                        <li ng-class="{'active': model.$location.url().indexOf('/profile')>=0}"><a>{{model.user.username}}</a></li>
+                    <div align="center" >
+                        <a href="#/profile">{{model.user.username}}</a>
                     </div>
+                    <span class="btn btn-warning btn-file showme">
+                        <i class="glyphicon glyphicon-open"></i>
+                        <span>Upload </span><i class="glyphicon glyphicon-picture"></i>
+                        <input id="fileupload" type="file" name="files[]" multiple>
+                    </span>
                 </ul>
+
             </div>
+
         </div>
     </div>
     <div class="box-content col-sm-10 col-lg-10">
@@ -20,7 +27,6 @@
             <div class="form-group show">
                 <label class="col-xs-3">Username</label>
                 <label class="col-xs-5">{{model.user.username}}</label>
-                <div class="col-xs-2 hideme"></div>
                 <div class="col-xs-2 showme">
                     <a href="#/profileUpdate">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -30,7 +36,6 @@
             <div class="form-group show">
                 <label class="col-xs-3">Name</label>
                 <label class="col-xs-5">{{model.user.firstName}} {{model.user.lastName}}</label>
-                <div class="col-xs-2 hideme"></div>
                 <div class="col-xs-2 showme">
                     <a href="#/profileUpdate">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -40,7 +45,6 @@
             <div class="form-group show">
                 <label class="col-xs-3">Email</label>
                 <label class="col-xs-5">{{model.user.email}}</label>
-                <div class="col-xs-2 hideme"></div>
                 <div class="col-xs-2 showme">
                     <a href="#/profileUpdate">
                         <span class="glyphicon glyphicon-pencil"></span>

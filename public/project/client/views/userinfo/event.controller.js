@@ -86,52 +86,6 @@
             $('#selectEvent').modal();
         }
 
-        function addEventToCalendar(start, end, allDay) {
-            model.createStart = start;
-            model.createEnd = end;
-            var startTime = moment(start).format('YYYY-MM-DD hh:mm a');
-            var endTime = moment(end).format('YYYY-MM-DD hh:mm a');
-            var eventTime = startTime + ' -- ' + endTime;
-            $('#createEvent #createStart').val(start);
-            $('#createEvent #createEnd').val(end);
-            $('#createEvent #createAllDay').val(allDay);
-            $('#createEvent #eventTime').text(eventTime);
-            $('#createEvent').modal('show');
-
-            $('#submit').on('click', function(e){
-                e.preventDefault();
-                submit();
-            });
-        }
-
-        function submit(){
-            $("#createEvent").modal('hide');
-
-            var event = {
-                title: $('#createTitle').val(),
-                poster: $('#createPoster').val(),
-                location: $('#createLocation').val(),
-                start: new Date(model.createStart),
-                end: new Date(model.createEnd)
-            }
-
-            console.log(event);
-
-            $('#calendar').fullCalendar('renderEvent', event, 'stick');
-
-            $('#calendar').fullCalendar('unselect');
-
-            EventService
-                .createEventForUser(user._id, event)
-                .then(eventAdd);
-
-            function eventAdd () {
-                loadEventsForUser();
-            };
-        }
-
-
-
 // ------------------------------  Event List   ------------------------------
 
 
