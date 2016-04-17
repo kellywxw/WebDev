@@ -5,7 +5,10 @@ var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var express = require('express');
+var Moment = require('moment-timezone');
 var app = express();
+
+Moment().tz('America/Los_Angeles').format();
 
 // create a default connection string
 var connectionString = 'mongodb://localhost/FormBuilderDB';
@@ -43,8 +46,6 @@ require("./public/assignment/server/app.js")(app, mongoose, db, chopchopUserMode
 require("./public/project/server/app.js")(app, mongoose, db, chopchopUserModel);
 
 app.listen(port, ipaddress);
-
-process.env.TZ = "America/Los_Angeles"
 
 /*
  app.get('/hello', sayHello);
