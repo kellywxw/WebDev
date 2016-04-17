@@ -30,7 +30,6 @@
             function eventsLoad (events) {
                 model.events = events;
                 formatEvents(events);
-                console.log(model.renderEvents)
             };
         }
 
