@@ -44,6 +44,8 @@ require("./public/project/server/app.js")(app, mongoose, db, chopchopUserModel);
 
 app.listen(port, ipaddress);
 
+process.env.TZ = "America/Los_Angeles"
+
 /*
  app.get('/hello', sayHello);
 
