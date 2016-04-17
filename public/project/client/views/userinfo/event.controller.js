@@ -37,7 +37,6 @@
 
         function loadEventsToCalendar() {
             $('#calendar').fullCalendar({
-                timezone:'local',
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -53,7 +52,6 @@
             });
         }
 
-
         function formatEvents(events) {
             model.renderEvents = [];
             for(var i in events) {
@@ -62,8 +60,8 @@
                     poster: events[i].poster,
                     title : events[i].title,
                     location: events[i].location,
-                    start: events[i].start,
-                    end: events[i].end
+                    start: new Date(events[i].start),
+                    end: new Date(events[i].end)
                 }
                 model.renderEvents.push(event);
             }

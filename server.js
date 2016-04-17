@@ -5,10 +5,7 @@ var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var express = require('express');
-var Moment = require('moment-timezone');
 var app = express();
-
-Moment().tz('America/Los_Angeles').format();
 
 // create a default connection string
 var connectionString = 'mongodb://localhost/FormBuilderDB';
@@ -38,6 +35,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
+process.env.TZ = 'America/Los_Angeles';
+
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
@@ -46,20 +45,3 @@ require("./public/assignment/server/app.js")(app, mongoose, db, chopchopUserMode
 require("./public/project/server/app.js")(app, mongoose, db, chopchopUserModel);
 
 app.listen(port, ipaddress);
-
-/*
- app.get('/hello', sayHello);
-
- app.get('/user', getAllUsers);
-
- function sayHello(req, res) {
- res.send('hello world');
- }
-
- function getAllUsers(req, res) {
- var users = [
- {username: "alice", firstName: "Alice", lastName: "Wonderland"}
- ];
-
- res.json(users);
- }*/
