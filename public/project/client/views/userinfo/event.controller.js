@@ -30,7 +30,7 @@
             function eventsLoad (events) {
                 model.events = events;
                 formatEvents(events);
-                console.log(model.renderEvents);
+                console.log(model.renderEvents)
             };
         }
 
@@ -38,6 +38,7 @@
 
         function loadEventsToCalendar() {
             $('#calendar').fullCalendar({
+                timezone:'local',
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -55,15 +56,21 @@
 
         function formatEvents(events) {
             model.renderEvents = [];
+
             for(var i in events) {
+                if(events[i].end){
+                    var endDate = new Date(events[i].end)
+                }
+
                 var event = {
                     _id: events[i]._id,
                     poster: events[i].poster,
                     title : events[i].title,
                     location: events[i].location,
                     start: new Date(events[i].start),
-                    end: new Date(events[i].end)
+                    end: endDate
                 }
+
                 model.renderEvents.push(event);
             }
         }
