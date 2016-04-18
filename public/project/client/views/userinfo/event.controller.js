@@ -63,7 +63,8 @@
                     title : events[i].title,
                     location: events[i].location,
                     start: events[i].start,
-                    end: events[i].end
+                    end: events[i].end,
+                    timezone: 'America/Los_Angeles'
                 }
 
                 model.renderEvents.push(event);
