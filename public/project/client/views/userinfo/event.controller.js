@@ -57,18 +57,21 @@
             model.renderEvents = [];
 
             for(var i in events) {
-                if(events[i].end) {
-                    var end = moment(events[i].end);
+                /*
+                if(events[i].start) {
+                    var start = moment.(events[i].start);
                 }
-
+                if(events[i].end) {
+                    var end = moment.(events[i].end);
+                }
+                */
                 var event = {
                     _id: events[i]._id,
                     poster: events[i].poster,
                     title : events[i].title,
                     location: events[i].location,
-                    //start: events[i].start,
-                    start: moment(events[i].start),
-                    end: end
+                    start: new Date(events[i].start),
+                    end: new Date(events[i].end)
                 }
 
                 model.renderEvents.push(event);
