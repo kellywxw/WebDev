@@ -67,9 +67,11 @@
                     title : events[i].title,
                     location: events[i].location,
                     //start: events[i].start,
-                    start: moment(events[i].start),
-                    end: end
+                    start: events[i].start,
+                    end: events[i].start
                 }
+
+                console.log(events[i].start)
 
                 model.renderEvents.push(event);
             }
