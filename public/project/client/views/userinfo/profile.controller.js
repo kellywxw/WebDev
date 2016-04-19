@@ -142,14 +142,15 @@
                 var end = null;
             }
 
-
+/*
             var event = {
                 poster: event.poster,
                 title : event.title,
                 location: event.location,
-                start: start,
-                end: end
+                start: event.start,
+                end: event.end
             }
+            */
 
             console.log(event);
 
