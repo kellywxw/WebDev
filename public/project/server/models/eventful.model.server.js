@@ -20,8 +20,8 @@ module.exports = function(mongoose, db) {
             poster: event.image.url,
             title: event.title,
             location: event.city,
-            start: event.start_time,
-            end: event.stop_time,
+            start: new Date(event.start_time),
+            end: new Date(event.stop_time),
             cost: event.cost,
             likes: []
         });
@@ -114,11 +114,12 @@ module.exports = function(mongoose, db) {
                         poster: image,
                         title: event.title,
                         location: event.city,
-                        start: event.start_time,
-                        end: event.stop_time,
+                        start: new Date(event.start_time),
+                        end: new Date(event.stop_time),
                         cost: event.price,
                         likes: []
                     });
+
                     // add user to likes
                     event.likes.push (userId);
                     // save new instance

@@ -37,6 +37,7 @@
 
         function loadEventsToCalendar() {
             $('#calendar').fullCalendar({
+                timezone: 'local',
                 header: {
                     left: 'prev,next today',
                     center: 'title',

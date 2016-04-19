@@ -20,8 +20,8 @@ module.exports = function(mongoose, db) {
             poster: event.poster,
             title: event.title,
             location: event.location,
-            start: event.start,
-            end: event.end,
+            start: new Date(event.start),
+            end: new Date(event.end),
             userId: userId
         });
 
