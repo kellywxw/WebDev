@@ -130,8 +130,6 @@
                 userId : model.newEvent.userId
             }
 
-            console.log(event);
-
             EventService
                 .createEventForUser(user._id, event)
                 .then(eventAdd)
