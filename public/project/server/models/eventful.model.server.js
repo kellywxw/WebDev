@@ -14,25 +14,13 @@ module.exports = function(mongoose, db) {
     return api;
 
     function createEvent(event) {
-        if(event.start_time) {
-            var start = new Date(event.start_time);
-        } else {
-            var start = null;
-        }
-
-        if(event.end_time) {
-            var end = new Date(event.end_time);
-        } else {
-            var end = null;
-        }
-
         var event = new Evdb({
             evdbId: event.id,
             poster: event.image.url,
             title: event.title,
             location: event.city,
-            start: start,
-            end: end,
+            start: event.start_time,
+            end: event.end_time,
             cost: event.cost,
             likes: []
         });
@@ -120,25 +108,13 @@ module.exports = function(mongoose, db) {
 
                     // if there's no event
                     // create a new instance
-                    if(event.start_time) {
-                        var start = new Date(event.start_time);
-                    } else {
-                        var start = null;
-                    }
-
-                    if(event.end_time) {
-                        var end = new Date(event.end_time);
-                    } else {
-                        var end = null;
-                    }
-
                     event = new Evdb({
                         evdbId: event.id,
                         poster: image,
                         title: event.title,
                         location: event.city,
-                        start: start,
-                        end: end,
+                        start: event.start_time,
+                        end: event.end_time,
                         cost: event.price,
                         likes: []
                     });
