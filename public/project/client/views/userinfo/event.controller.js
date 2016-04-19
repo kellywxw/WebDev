@@ -30,7 +30,6 @@
             function eventsLoad (events) {
                 model.events = events;
                 formatEvents(events);
-                console.log(model.renderEvents)
             };
         }
 
@@ -60,13 +59,15 @@
             for(var i in events) {
 
                 if(events[i].start) {
-                    var start = moment(events[i].start).add(3,'hours')
+                    //var start = moment(events[i].start).add(3,'hours');
+                    var start = moment(events[i].start).format('YYYY-MM-DD hh:mm A');
                 } else {
                     var start = events[i].start;
                 }
 
                 if(events[i].end) {
-                    var end = moment(events[i].end).add(3,'hours')
+                    //var end = moment(events[i].end).add(3,'hours');
+                    var end = moment(events[i].end).format('YYYY-MM-DD hh:mm A');
                 } else {
                     var end = events[i].end;
                 }

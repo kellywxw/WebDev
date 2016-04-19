@@ -69,12 +69,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="event in model.likeEvents">
+                <tr ng-repeat="event in model.renderEvents">
                     <td><a href="#/searchEvent/{{event.evdbId}}"><img height="75px" ng-src="{{event.poster}}"></a></td>
                     <td><a href="#/searchEvent/{{event.evdbId}}">{{event.title}}</a></td>
                     <td>{{event.location}}</td>
-                    <td>{{event.start | date}}</td>
-                    <td>{{event.end | date}}</td>
+                    <td>{{event.start}}</td>
+                    <td>{{event.end}}</td>
                     <td>{{event.cost}}</td>
                     <td>
                         <a ng-click="model.unlike($index, event.evdbId)">

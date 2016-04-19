@@ -15,12 +15,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="event in model.events">
+                    <tr ng-repeat="event in model.renderEvents">
                         <td><img height="75px" ng-src="{{event.poster}}"/></td>
                         <td>{{event.title}}</td>
                         <td>{{event.location}}</td>
-                        <td>{{event.start | date}}</td>
-                        <td>{{event.end | date}}</td>
+                        <td>{{event.start}}</td>
+                        <td>{{event.end}}</td>
                         <td>
                             <a class="btn btn-danger" ng-click="model.deleteEvent($index)">
                                 <span class="glyphicon glyphicon-remove"></span>

@@ -35,6 +35,7 @@
             function likedEventsLoad(user) {
                 model.user = user;
                 model.likeEvents = user.likeEvents;
+                formatEvents(user.likeEvents)
             }
 
             function eventsCompare (events) {
@@ -47,6 +48,38 @@
                     }
                 }
             };
+        }
+
+        function formatEvents(events) {
+            model.renderEvents = [];
+
+            for(var i in events) {
+
+                if(events[i].start) {
+                    var start = moment(events[i].start).format('YYYY-MM-DD hh:mm A');
+                } else {
+                    var start = events[i].start;
+                }
+
+                if(events[i].end) {
+                    var end = moment(events[i].end).format('YYYY-MM-DD hh:mm A');
+                } else {
+                    var end = events[i].end;
+                }
+
+                var event = {
+                    _id: events[i]._id,
+                    poster: events[i].poster,
+                    title : events[i].title,
+                    location: events[i].location,
+                    cost: events[i].cost,
+                    evdbId: events[i].evdbId,
+                    start: start,
+                    end: end
+                }
+
+                model.renderEvents.push(event);
+            }
         }
 
         function loadFollowForUser (userId) {
