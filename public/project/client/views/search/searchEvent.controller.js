@@ -60,15 +60,27 @@
                         image = event.images.image.medium.url;
                     }
                 }
-                console.log(event)
+
+                if(event.start_time) {
+                    var start = moment(event.start_time);
+
+                } else {
+                    var start = event.start_time;
+                }
+
+                if(event.end_time) {
+                    var end = moment(event.end_time);
+                } else {
+                    var end = event.end_time;
+                }
 
                 event = {
                     id: event.id,
                     image: image,
                     title: event.title,
                     city: event.city,
-                    start_time: event.start_time,
-                    end_time: event.end_time,
+                    start_time: start,
+                    end_time: end,
                     price: event.price,
                 };
 
