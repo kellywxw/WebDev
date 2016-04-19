@@ -4,7 +4,7 @@
         .module("ChopChopApp")
         .controller("LoginController", LoginController);
 
-    function LoginController($rootScope, $location, UserService) {
+    function LoginController($location, UserService) {
         var model = this;
         model.login = login;
 
@@ -23,11 +23,12 @@
             checkLoggedin();
 
             function userLogin(user) {
+                model.message = null;
                 if (user) {
                     console.log(user);
+                    model.clicked = false;
                     UserService.setCurrentUser(user);
                     $location.url("/profile");
-                    model.clicked = false;
                 }
             }
         }
@@ -40,7 +41,7 @@
                         if (user == 0) {
                             model.message = "Sorry, your username or password do not match our record."
                         }
-                    })
+                    });
             }
         }
 
