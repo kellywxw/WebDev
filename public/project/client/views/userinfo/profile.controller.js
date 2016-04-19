@@ -62,13 +62,12 @@
                 }
 
                 if(events[i].end) {
-                    var end = moment(events[i].end).format('YYYY-MM-DD hh:mm A');
+                    var end = moment(events[i].end).format('YYYY-MM-DD hh:mm A')
                 } else {
                     var end = events[i].end;
                 }
 
                 var event = {
-                    _id: events[i]._id,
                     poster: events[i].poster,
                     title : events[i].title,
                     location: events[i].location,
@@ -77,6 +76,9 @@
                     start: start,
                     end: end
                 }
+
+                console.log(events[i])
+                console.log(event);
 
                 model.renderEvents.push(event);
             }
@@ -163,6 +165,14 @@
         }
 
         function addToEvents(index, event) {
+            var event = {
+                poster: event.poster,
+                title : event.title,
+                location: event.location,
+                start: event.start,
+                end: event.end
+            }
+
             EventService
                 .createEventForUser(user._id, event)
                 .then(eventAdd);

@@ -77,13 +77,15 @@
                 }
 
                 var event = {
-                    _id: events[i]._id,
                     poster: events[i].poster,
                     title : events[i].title,
                     location: events[i].location,
                     start: start,
                     end: end
                 }
+
+                console.log(events[i])
+                console.log(event);
 
                 model.renderEvents.push(event);
             }
