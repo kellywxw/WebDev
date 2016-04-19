@@ -60,14 +60,18 @@
 
                 if(events[i].start) {
                     //var start = moment(events[i].start).add(3,'hours');
-                    var start = moment(events[i].start).format('YYYY-MM-DD hh:mm A');
+                    //var start = moment(events[i].start).format('YYYY-MM-DD hh:mm A');
+                    var start = moment.utc(events[i].start).local().format('YYYY-MM-DD hh:mm A');
+                    //var start = new Date(events[i].start);
                 } else {
                     var start = events[i].start;
                 }
 
                 if(events[i].end) {
                     //var end = moment(events[i].end).add(3,'hours');
-                    var end = moment(events[i].end).format('YYYY-MM-DD hh:mm A');
+                    //var end = moment(events[i].end).format('YYYY-MM-DD hh:mm A');
+                    // end = new Date(events[i].end);
+                    var end = moment.utc(events[i].end).local().format('YYYY-MM-DD hh:mm A');
                 } else {
                     var end = events[i].end;
                 }
