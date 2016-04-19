@@ -129,12 +129,23 @@
         }
 
         function addEvent() {
+            if(model.newEvent.start) {
+                var startTime = moment(model.newEvent.start);
+            } else {
+                var startTime = null;
+            }
+            if(model.newEvent.end) {
+                var endTime = moment(model.newEvent.end);
+            } else {
+                var endTime = null;
+            }
+
             var event = {
                 poster: model.newEvent.poster,
                 title : model.newEvent.title,
                 location: model.newEvent.location,
-                start: moment(model.newEvent.start),
-                end: moment(model.newEvent.end),
+                start: startTime,
+                end: endTime,
                 userId : model.newEvent.userId
             }
 
@@ -152,13 +163,24 @@
         function updateEvent() {
             var eventId = model.selectedEvent._id;
 
+            if(model.newEvent.start) {
+                var startTime = moment(model.newEvent.start);
+            } else {
+                var startTime = null;
+            }
+            if(model.newEvent.end) {
+                var endTime = moment(model.newEvent.end);
+            } else {
+                var endTime = null;
+            }
+
             var event = {
                 _id: eventId,
                 poster: model.newEvent.poster,
                 title : model.newEvent.title,
                 location: model.newEvent.location,
-                start: model.newEvent.start,
-                end: model.newEvent.end
+                start: startTime,
+                end: endTime
             }
 
             EventService
