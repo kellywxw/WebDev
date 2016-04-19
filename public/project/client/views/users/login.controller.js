@@ -27,7 +27,7 @@
                     console.log(user);
                     UserService.setCurrentUser(user);
                     $location.url("/profile");
-                    checkLoggedin();
+                    model.clicked = false;
                 }
             }
         }

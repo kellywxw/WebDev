@@ -163,24 +163,13 @@
         function updateEvent() {
             var eventId = model.selectedEvent._id;
 
-            if(model.newEvent.start) {
-                var startTime = moment(model.newEvent.start);
-            } else {
-                var startTime = null;
-            }
-            if(model.newEvent.end) {
-                var endTime = moment(model.newEvent.end);
-            } else {
-                var endTime = null;
-            }
-
             var event = {
                 _id: eventId,
                 poster: model.newEvent.poster,
                 title : model.newEvent.title,
                 location: model.newEvent.location,
-                start: startTime,
-                end: endTime
+                start: model.newEvent.start,
+                end: model.newEvent.end
             }
 
             EventService
@@ -201,12 +190,24 @@
 
             model.selectedEvent = event;
 
+
+            if(event.start) {
+                var startTime = moment(event.start);
+            } else {
+                var startTime = null;
+            }
+            if(event.end) {
+                var endTime = moment(event.end);
+            } else {
+                var endTime = null;
+            }
+
             model.newEvent = {
                 poster: event.poster,
                 title : event.title,
                 location: event.location,
-                start: event.start,
-                end: event.end,
+                start: startTime,
+                end: endTime,
                 userId : event.userId
             }
         }
