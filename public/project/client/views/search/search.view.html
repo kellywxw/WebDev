@@ -38,19 +38,19 @@
                         <td><img height="75px" ng-src="{{event.poster}}"/></td>
                         <td>{{event.title}} <a href="#/event" class="btn btn-warning" ><i class="glyphicon glyphicon-user"></i> {{user.username}}'s Event</a></td>
                         <td>{{event.location}}</td>
-                        <td>{{event.start | date}}</td>
-                        <td>{{event.end | date}}</td>
+                        <td>{{event.start | date:'yyyy-MM-dd hh:mm a'}}</td>
+                        <td>{{event.end | date:'yyyy-MM-dd hh:mm a'}}</td>
                     </tr>
-                    <tr ng-if="model.events" ng-repeat="event in model.events">
-                        <td><img height="75px" ng-src="{{event.image.url}}"/></td>
+                    <tr ng-if="model.events" ng-repeat="event in model.renderEvents">
+                        <td><img height="75px" ng-src="{{event.poster}}"/></td>
                         <td>
                             <a href="#/searchEvent/{{event.id}}">
                                 {{event.title}}
                             </a>
                         </td>
-                        <td>{{event.city_name}}</td>
-                        <td>{{event.start_time}}</td>
-                        <td>{{event.stop_time | date}}</td>
+                        <td>{{event.location}}</td>
+                        <td>{{event.start | date:'yyyy-MM-dd hh:mm a'}}</td>
+                        <td>{{event.end | date:'yyyy-MM-dd hh:mm a'}}</td>
                     </tr>
                 </tbody>
             </table>

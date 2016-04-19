@@ -45,6 +45,7 @@
                     } else {
                         model.searchTitle = title;
                         model.events = response.events.event;
+                        formatEvents(model.events);
                         model.limit = Math.ceil(response.total_items / 10);
                     }
                 });
@@ -60,6 +61,41 @@
                         model.myEvents = response;
                     }
                 });
+        }
+
+        function formatEvents(events) {
+            model.renderEvents = [];
+
+            for(var i in events) {
+                if(events[i].start_time) {
+                    var start = moment(events[i].start_time).format('YYYY-MM-DD hh:mm A');
+                } else {
+                    var start = null;
+                }
+
+                if(events[i].stop_time) {
+                    var end = moment(events[i].stop_time).format('YYYY-MM-DD hh:mm A');
+                } else {
+                    var end = null;
+                }
+
+                if(events[i].image) {
+                    var img = events[i].image.url;
+                } else {
+                    var img = null;
+                }
+
+                var event = {
+                    id: events[i].id,
+                    poster: img,
+                    title : events[i].title,
+                    location: events[i].city_name,
+                    start: start,
+                    end: end
+                }
+
+                model.renderEvents.push(event);
+            }
         }
 
 

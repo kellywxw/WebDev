@@ -63,7 +63,6 @@
 
                 if(event.start_time) {
                     var start = moment(event.start_time);
-
                 } else {
                     var start = event.start_time;
                 }
@@ -81,7 +80,7 @@
                     city: event.city,
                     start_time: start,
                     end_time: end,
-                    price: event.price,
+                    price: event.price
                 };
 
                 EvdbService

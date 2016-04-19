@@ -15,7 +15,8 @@
         <ul>
             <div ng-show="model.data.city">Event Location: {{model.data.city}}, {{model.data.region_abbr}}, {{model.data.country}}</div>
             <div ng-show="model.data.venue_name">Venue: {{model.data.venue_name}}</div>
-            <div ng-show="model.data.start_time">Event Date: {{model.data.start_time}}</div>
+            <div ng-show="model.data.start_time">Event Date: {{model.data.start_time | date:'yyyy-MM-dd hh:mm a'}}</div>
+            <div ng-show="model.data.end_time">Event Date: {{model.data.end_time | date:'yyyy-MM-dd hh:mm a'}}</div>
             <div ng-show="model.data.performers.performer.name">Performer: {{model.data.performers.performer.name}}</div>
             <div ng-show="model.data.performers.performer.length > 1">Performer:
                 <ul>

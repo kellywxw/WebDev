@@ -97,30 +97,8 @@ module.exports = function(mongoose, db) {
                         }
                     });
                 } else {
-                    /*
-                    var image = null;
-                    if(event.images) {
-                        if(event.images.image.length > 0) {
-                            image = event.images.image[0].medium.url;
-                        } else {
-                            image = event.images.image.medium.url;
-                        }
-                    }
-
                     // if there's no event
                     // create a new instance
-                    event = new Evdb({
-                        evdbId: event.id,
-                        poster: image,
-                        title: event.title,
-                        location: event.city,
-                        start: event.start_time,
-                        end: event.end_time,
-                        cost: event.price,
-                        likes: []
-                    });
-
-*/
                     event = new Evdb({
                         evdbId: event.id,
                         poster: event.image,
