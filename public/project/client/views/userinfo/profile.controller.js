@@ -35,7 +35,6 @@
             function likedEventsLoad(user) {
                 model.user = user;
                 model.likeEvents = user.likeEvents;
-                formatEvents(user.likeEvents)
             }
 
             function eventsCompare (events) {
@@ -48,40 +47,6 @@
                     }
                 }
             };
-        }
-
-        function formatEvents(events) {
-            model.renderEvents = [];
-
-            for(var i in events) {
-
-                if(events[i].start) {
-                    var start = moment(events[i].start).format('YYYY-MM-DD hh:mm A');
-                } else {
-                    var start = events[i].start;
-                }
-
-                if(events[i].end) {
-                    var end = moment(events[i].end).format('YYYY-MM-DD hh:mm A')
-                } else {
-                    var end = events[i].end;
-                }
-
-                var event = {
-                    poster: events[i].poster,
-                    title : events[i].title,
-                    location: events[i].location,
-                    cost: events[i].cost,
-                    evdbId: events[i].evdbId,
-                    start: start,
-                    end: end
-                }
-
-                console.log(events[i])
-                console.log(event);
-
-                model.renderEvents.push(event);
-            }
         }
 
         function loadFollowForUser (userId) {
@@ -165,14 +130,6 @@
         }
 
         function addToEvents(index, event) {
-            var event = {
-                poster: event.poster,
-                title : event.title,
-                location: event.location,
-                start: event.start,
-                end: event.end
-            }
-
             EventService
                 .createEventForUser(user._id, event)
                 .then(eventAdd);
@@ -191,7 +148,6 @@
                 .then(eventRemove);
 
             function eventRemove (events) {
-
                 model.added.splice(i,1);
                 model.addedId.splice(i,1);
                 console.log(events);
