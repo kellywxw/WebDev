@@ -97,6 +97,7 @@ module.exports = function(mongoose, db) {
                         }
                     });
                 } else {
+                    /*
                     var image = null;
                     if(event.images) {
                         if(event.images.image.length > 0) {
@@ -118,6 +119,19 @@ module.exports = function(mongoose, db) {
                         cost: event.price,
                         likes: []
                     });
+
+*/
+                    event = new Evdb({
+                        evdbId: event.id,
+                        poster: event.image,
+                        title: event.title,
+                        location: event.city,
+                        start: event.start_time,
+                        end: event.end_time,
+                        cost: event.price,
+                        likes: []
+                    });
+
 
                     // add user to likes
                     event.likes.push (userId);

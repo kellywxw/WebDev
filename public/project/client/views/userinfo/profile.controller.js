@@ -130,30 +130,6 @@
         }
 
         function addToEvents(index, event) {
-            if(event.start) {
-                var start = moment(event.start);
-            } else {
-                var start = null;
-            }
-
-            if(event.end) {
-                var end = moment(event.end);
-            } else {
-                var end = null;
-            }
-
-/*
-            var event = {
-                poster: event.poster,
-                title : event.title,
-                location: event.location,
-                start: event.start,
-                end: event.end
-            }
-            */
-
-            console.log(event);
-
             EventService
                 .createEventForUser(user._id, event)
                 .then(eventAdd);

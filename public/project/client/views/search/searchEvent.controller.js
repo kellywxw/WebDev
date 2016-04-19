@@ -51,6 +51,27 @@
                     model.event.likes = [];
                     model.event.likes.push(user._id);
                 }
+
+                var image = null;
+                if(event.images) {
+                    if(event.images.image.length > 0) {
+                        image = event.images.image[0].medium.url;
+                    } else {
+                        image = event.images.image.medium.url;
+                    }
+                }
+                console.log(event)
+
+                event = {
+                    id: event.id,
+                    image: image,
+                    title: event.title,
+                    city: event.city,
+                    start_time: event.start_time,
+                    end_time: event.end_time,
+                    price: event.price,
+                };
+
                 EvdbService
                     .userLikesEvent(user._id, event);
             } else {
