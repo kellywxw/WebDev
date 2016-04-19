@@ -85,9 +85,13 @@
         function displayEventInCalendar(event) {
             if(event.start) {
                 var startTime = moment(event.start).format('YYYY-MM-DD hh:mm A');
+            } else {
+                var startTime = null;
             }
             if(event.end) {
                 var endTime = moment(event.end).format('YYYY-MM-DD hh:mm A');
+            } else {
+                var endTime = null;
             }
 
             $('#eventTitle').html(event.title);
@@ -95,6 +99,16 @@
             $('#eventLocation').html(event.location);
             $('#eventStart').html(startTime);
             $('#eventEnd').html(endTime);
+            if (startTime) {
+                $('#eventStartLabel').show();
+            } else {
+                $('#eventStartLabel').hide();
+            }
+            if (endTime) {
+                $('#eventEndLabel').show();
+            } else {
+                $('#eventEndLabel').hide();
+            }
             $('#selectEvent').modal();
         }
 

@@ -24,6 +24,18 @@
                             model.image = model.data.images.image.medium.url;
                         }
                     }
+
+                    if(model.data.start_time) {
+                        model.start = moment(model.data.start_time).format('YYYY-MM-DD hh:mm A');
+                    } else {
+                        var start = null;
+                    }
+
+                    if(model.data.end_time) {
+                        model.end = moment(model.data.end_time).format('YYYY-MM-DD hh:mm A');
+                    } else {
+                        model.end = null;
+                    }
                 });
 
             EvdbService
