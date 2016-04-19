@@ -84,9 +84,6 @@
                     end: end
                 }
 
-                console.log(events[i])
-                console.log(event);
-
                 model.renderEvents.push(event);
             }
         }
@@ -124,8 +121,19 @@
         }
 
         function addEvent() {
+            var event = {
+                poster: model.newEvent.poster,
+                title : model.newEvent.title,
+                location: model.newEvent.location,
+                start: moment(model.newEvent.start),
+                end: moment(model.newEvent.end),
+                userId : model.newEvent.userId
+            }
+
+            console.log(event);
+
             EventService
-                .createEventForUser(user._id, model.newEvent)
+                .createEventForUser(user._id, event)
                 .then(eventAdd)
                 .then($('#calendar').fullCalendar('renderEvent', model.newEvent, 'stick'));
 
