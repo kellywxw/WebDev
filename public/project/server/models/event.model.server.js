@@ -16,12 +16,24 @@ module.exports = function(mongoose, db) {
     return api;
 
     function createEventForUser(userId, event) {
+        if(event.start) {
+            var start = new Date(event.start);
+        } else {
+            var start = null;
+        }
+
+        if(event.end) {
+            var end = new Date(event.end);
+        } else {
+            var end = null;
+        }
+
         var event = new Event ({
             poster: event.poster,
             title: event.title,
             location: event.location,
-            start: new Date(event.start),
-            end: new Date(event.end),
+            start: start,
+            end: end,
             userId: userId
         });
 
